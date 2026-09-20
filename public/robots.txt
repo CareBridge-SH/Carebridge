@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# CareBridge is a single-page application, so every route below is served by
+# index.html. Listing them keeps crawlers from treating a deep link as unknown.
+Allow: /about
+Allow: /events
+Allow: /get-involved
+Allow: /transparency
+
+# No /sitemap.xml yet — add one when the production domain is fixed, then
+# re-enable the line below (a wrong absolute URL is worse than none):
+# Sitemap: https://<your-domain>/sitemap.xml

@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  /* CareBridge design tokens — shared contract, do not rename */
+  --color-navy: #0b1b3f;
+  --color-navy-deep: #060f26;
+  --color-navy-soft: #16294f;
+  --color-lavender: #b8a9db;
+  --color-lavender-dk: #8b7ab8;
+  --color-cream: #f5e6c8;
+  --color-ink: #0b1b3f;
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/*
+ * Light theme.
+ *
+ * Components reference the palette by NAME (bg-navy, text-white, text-lavender...).
+ * Rather than rewrite ~114 call sites, the token *values* are re-pointed here, so
+ * every existing utility resolves to a light-appropriate colour automatically.
+ *
+ * `html[data-theme='light']` is (0,1,1) and out-specifies Tailwind's `:root`
+ * (0,1,0), so source order is not critical and no !important is needed.
+ *
+ * The names are historical (the site began dark-only). If a light-mode design pass
+ * happens later, rename these to semantic tokens -- see docs/THEMING.md.
+ */
+html[data-theme='light'] {
+  color-scheme: light;
+
+  --color-navy: #f7f5f0; /* page background */
+  --color-navy-deep: #ffffff; /* header, footer, raised surfaces */
+  --color-navy-soft: #ece7dd; /* inset surfaces, hover fills */
+  --color-lavender: #5b4a94; /* accent -- darkened so it reads on a light bg */
+  --color-lavender-dk: #453a70;
+  --color-cream: #7a5300; /* accent text AND focus ring -- must be dark here.
+                             Was #8a6100, which measured 4.49:1 on --color-navy-soft
+                             and so failed AA by a hair. This measures 5.56:1. */
+  --color-ink: #0b1b3f;
+  --color-white: #0b1b3f; /* primary text on light */
+}
+
+html {
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-navy text-white font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+
+  /* Visible, high-contrast focus rings everywhere — never remove without replacement */
+  :focus-visible {
+    outline: 3px solid var(--color-cream);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-lavender);
+    color: var(--color-navy-deep);
+  }
+}
+
+@layer utilities {
+  .skip-link {
+    @apply sr-only;
+  }
+
+  .skip-link:focus {
+    @apply not-sr-only fixed top-2 left-2 z-50 rounded-md bg-cream px-4 py-2 font-sans text-sm font-semibold text-navy-deep shadow-lg;
+  }
+}
