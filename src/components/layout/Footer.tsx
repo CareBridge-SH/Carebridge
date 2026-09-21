@@ -8,13 +8,14 @@ export interface FooterProps {
 
 /**
  * The project's single Instagram URL, frozen in `docs/team/INTERFACES.md` §5
- * (`INSTAGRAM_PROFILE_URL`). It is Instagram's real homepage, not an invented
- * profile -- the handle beside it stays a visible `[placeholder]`.
+ * and **canonically exported from here**. It is Instagram's real homepage, not
+ * an invented profile -- the handle beside it stays a visible `[placeholder]`.
  *
- * T09 owns the same constant inside `InstagramFeed.tsx`, which does not exist
- * yet; these two will need consolidating once it does.
+ * `InstagramFeed.tsx` (T09) imports it from here rather than declaring a second
+ * copy: two constants pointing at the same string is exactly how they silently
+ * drift the day the real handle lands.
  */
-const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/';
+export const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/';
 
 const NAV_ITEMS = [
   { to: '/', key: 'nav.home' },

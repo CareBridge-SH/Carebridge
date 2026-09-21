@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "prebuild": "node docs/team/check-instagram.mjs",
+    "check:instagram": "node docs/team/check-instagram.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },
