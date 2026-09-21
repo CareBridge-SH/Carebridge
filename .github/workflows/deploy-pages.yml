@@ -1,0 +1,77 @@
+name: Deploy to GitHub Pages
+
+# Publishes the built site to GitHub Pages on every push to `master`, and on
+# demand from the Actions tab.
+#
+# One-time setup, once per repository (Settings -> Pages):
+#   Source: GitHub Actions
+# Nothing else is needed -- no branch, no gh-pages, no build artifacts committed.
+#
+# To preview the exact production output locally before pushing:
+#   PowerShell :  $env:VITE_BASE_PATH='/carebridge-website/'; npm run build; npm run preview
+#   bash/zsh   :  VITE_BASE_PATH=/carebridge-website/ npm run build && npm run preview
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Gives the workflow a token that can publish to Pages and prove its identity.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. A newer push supersedes an in-flight build rather than
+# racing it, but never cancels a deploy that is already publishing.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        # A project page is served from https://<user>.github.io/<repo>/, so every
+        # absolute asset URL needs the repository name as a prefix. This is the
+        # one line that decides between a working site and a blank page.
+        # A user site or a custom domain would want '/' instead.
+        env:
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+        run: npm run build
+
+      - name: Confirm the output is deployable
+        # `postbuild` writes 404.html (the SPA deep-link fallback) and .nojekyll.
+        # Fail loudly here rather than discovering a blank site in production.
+        run: |
+          test -f dist/index.html || { echo "dist/index.html missing"; exit 1; }
+          test -f dist/404.html   || { echo "dist/404.html missing"; exit 1; }
+          test -f dist/.nojekyll  || { echo "dist/.nojekyll missing"; exit 1; }
+          echo "asset base:" $(grep -o 'src="[^"]*assets/' dist/index.html | head -1)
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
