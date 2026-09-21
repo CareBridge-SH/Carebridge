@@ -1,0 +1,246 @@
+{
+  "common": {
+    "siteName": "CareBridge",
+    "slogan": "support, motivate, and empower"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "events": "Events",
+    "getInvolved": "Get Involved",
+    "transparency": "Transparency"
+  },
+  "home": {
+    "meta": {
+      "title": "CareBridge — Bridging Care and Compassion",
+      "description": "CareBridge is a 100% youth-led club at SHSID. We support, motivate and empower children in healthcare through fundraising, awareness and hospital volunteering."
+    },
+    "hero": {
+      "headline": "Bridging Care and Compassion.",
+      "subheadline": "A 100% youth-led initiative by SHSID students and international schools across Shanghai, dedicated to supporting, motivating, and empowering children in healthcare.",
+      "cta": {
+        "join": "Join Our Team",
+        "partner": "Partner With Us",
+        "follow": "Follow Our Journey"
+      }
+    },
+    "impact": {
+      "title": "Our Impact",
+      "subtitle": "How we support, motivate, and empower children in healthcare.",
+      "fundraising": {
+        "title": "Fundraising",
+        "description": "Events such as the Fall Themed DIY Workshop and the Christmas Charity Sale raise funds through entry fees and sales."
+      },
+      "awareness": {
+        "title": "Awareness",
+        "description": "Awareness Raising Trivia and PA Lectures raise awareness of children in healthcare."
+      },
+      "directAction": {
+        "title": "Direct Action (hospital visits)",
+        "description": "Volunteers visit Fudan Children's Hospital on Fridays to read stories, assist with crafts, talk with the children, and play games."
+      }
+    },
+    "events": {
+      "title": "Upcoming Events",
+      "subtitle": "Fundraising, awareness and direct volunteering across the year.",
+      "viewAll": "View All Events",
+      "items": {
+        "fallWorkshop": {
+          "title": "Fall DIY Workshop",
+          "date": "3rd week of October, Friday",
+          "summary": "At ZXB. Fundraising, with an entry fee: fall bracelets and paint mini-pumpkins."
+        },
+        "triviaNight": {
+          "title": "Awareness Trivia",
+          "date": "Mid-November (three days after midterm exams)",
+          "summary": "A trivia night that raises awareness of children in healthcare."
+        },
+        "christmasSale": {
+          "title": "Christmas Sale",
+          "date": "Week before Christmas",
+          "summary": "Our Christmas charity sale, part of our fundraising."
+        },
+        "paLectures": {
+          "title": "PA Lectures",
+          "date": "Early December",
+          "summary": "Medical professionals, organisers and initiators of Children Homes."
+        },
+        "hospitalVisits": {
+          "title": "Hospital Visits",
+          "date": "Fridays, 90 minutes per session",
+          "summary": "Reading stories, assisting with crafts, talking with the children, and playing games with them."
+        }
+      }
+    },
+    "instagram": {
+      "title": "Instagram",
+      "subtitle": "Moments from our events and hospital visits.",
+      "followCta": "Follow Our Journey",
+      "emptyTitle": "Photos coming soon",
+      "emptyBody": "We are a student club and post in batches after each event. Our latest moments will appear here soon.",
+      "altFallback": "Photo from a CareBridge event.",
+      "viewPost": "View this post on Instagram",
+      "videoLabel": "Video"
+    },
+    "closing": {
+      "title": "Support, motivate, and empower.",
+      "body": "We are open to all students across international schools in Shanghai.",
+      "cta": "Join Our Team"
+    }
+  },
+  "about": {
+    "meta": {
+      "title": "About Us — CareBridge",
+      "description": "CareBridge is a 100% youth-led club based at SHSID. Our structure: Treasurer, Outreach, Event and Design."
+    },
+    "title": "About Us",
+    "story": {
+      "title": "Our Story",
+      "body": "[Insert Club Story Here - Content Pending]"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "body": "We support, motivate, and empower children in healthcare. We bridge the gap between youth and healthcare communities through fundraising, awareness, and direct volunteering."
+    },
+    "structure": {
+      "title": "Our Structure",
+      "intro": "CareBridge is 100% youth-led, with four operational pillars.",
+      "pillars": {
+        "treasurer": {
+          "title": "Treasurer",
+          "description": "Transparent tracking (Google Sheets), calculating profits for charity, ensuring every purchase has an official receipt (发票)."
+        },
+        "outreach": {
+          "title": "Outreach",
+          "description": "Surveys, event proposals, contacting outside organisations."
+        },
+        "event": {
+          "title": "Event",
+          "description": "Planning materials, ideating activities, purchasing lists."
+        },
+        "design": {
+          "title": "Design",
+          "description": "Promotional posters, Instagram content, activity tickets."
+        }
+      }
+    }
+  },
+  "events": {
+    "meta": {
+      "title": "Events & Initiatives — CareBridge",
+      "description": "Our events and initiatives: Fall Themed DIY Workshop, Awareness Raising Trivia, Christmas Charity Sale, PA Lectures, and Fudan Children's Hospital Visits."
+    },
+    "title": "Events & Initiatives",
+    "intro": "Fundraising, awareness and direct volunteering — our events and initiatives.",
+    "items": {
+      "fallWorkshop": {
+        "title": "Fall Themed DIY Workshop",
+        "when": "3rd week of October, Friday, at ZXB",
+        "description": "Fundraising, with an entry fee. Fall bracelets and paint mini-pumpkins."
+      },
+      "triviaNight": {
+        "title": "Awareness Raising Trivia",
+        "when": "Mid-November (three days after midterm exams)",
+        "description": "A trivia night that raises awareness of children in healthcare."
+      },
+      "christmasSale": {
+        "title": "Christmas Charity Sale",
+        "when": "Week before Christmas",
+        "description": "Our Christmas charity sale, part of our fundraising."
+      },
+      "paLectures": {
+        "title": "PA Lectures",
+        "when": "Early December",
+        "description": "Medical professionals, organisers and initiators of Children Homes."
+      },
+      "hospitalVisits": {
+        "title": "Fudan Children's Hospital Visits",
+        "when": "Fridays, 90 minutes per session",
+        "description": "Reading stories, assisting with crafts, talking with the children, and playing games with them.",
+        "status": "[Status: Pending Approval / Currently in negotiation - Update upon confirmation]",
+        "team": {
+          "size": "No less than 10 people, at least 2 volunteers per session",
+          "schedule": "Fridays, 90 minutes per session, at least one semester",
+          "activities": "Reading stories, assisting with crafts, talking with the children, and playing games."
+        }
+      }
+    }
+  },
+  "involved": {
+    "meta": {
+      "title": "Get Involved — CareBridge",
+      "description": "Join the team, volunteer at Fudan Children's Hospital, or partner with us."
+    },
+    "title": "Get Involved",
+    "intro": "Join our team, volunteer with us, or partner with us.",
+    "join": {
+      "title": "Join the Team",
+      "body": "Open to all students across international schools in Shanghai.",
+      "email": "[Insert Email Address]",
+      "noFees": "No membership fees required."
+    },
+    "hospital": {
+      "title": "Hospital Volunteering",
+      "commitment": "Fridays, 90 minutes, at least a semester.",
+      "experience": "The rewarding experience of reading, crafting and playing games with the children."
+    },
+    "partner": {
+      "title": "Partner With Us",
+      "body": "For external organisations and schools.",
+      "contact": "[Insert Email Address]"
+    }
+  },
+  "transparency": {
+    "meta": {
+      "title": "Transparency — CareBridge",
+      "description": "How CareBridge records what it receives and what it spends: receipts, a public tracking sheet, and per-event accounting."
+    },
+    "title": "Transparency",
+    "intro": "CareBridge is student-run. This page explains how we record what we receive and what we spend.",
+    "commitment": {
+      "title": "Our Commitment",
+      "body": "Student-run; we record what we receive and what we spend, keep an official receipt for every purchase, and keep the tracking sheet open."
+    },
+    "receipts": {
+      "title": "Receipts & 发票",
+      "body": "Every purchase documented with an official receipt; no exceptions."
+    },
+    "tracking": {
+      "title": "Public Tracking",
+      "body": "A publicly viewable Google Sheets file.",
+      "sheetLink": "[Insert Google Sheets Link]"
+    },
+    "perEvent": {
+      "title": "Per-Event Accounting",
+      "body": "Every item tracked per event so each activity's costs and proceeds can be inspected separately."
+    },
+    "funds": {
+      "title": "Where Funds Go",
+      "body": "Profits consolidated into one account before being donated.",
+      "orgs": "[Children's Home Organizations TBD]",
+      "hospital": "Physical visits go to Fudan Children's Hospital (复旦大学附属儿科医院)."
+    },
+    "questions": {
+      "title": "Questions About Our Finances?",
+      "body": "If you have questions about our finances, contact us.",
+      "email": "[Insert Email Address]"
+    }
+  },
+  "footer": {
+    "tagline": "Support, motivate, and empower.",
+    "sitemapTitle": "Sitemap",
+    "contactTitle": "Contact",
+    "contactEmail": "[Insert Email Address]",
+    "instagramTitle": "Instagram",
+    "instagramHandle": "[Insert Instagram Handle]",
+    "copyright": "© {{year}} CareBridge"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main navigation",
+    "externalLink": "(opens in a new tab)",
+    "themeToggleToDark": "Switch to dark theme",
+    "themeToggleToLight": "Switch to light theme",
+    "languageSwitcherLabel": "Language"
+  }
+}
