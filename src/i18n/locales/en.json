@@ -63,7 +63,7 @@
         "paLectures": {
           "title": "PA Lectures",
           "date": "Early December",
-          "summary": "Medical professionals, organisers and initiators of Children Homes."
+          "summary": "Medical professionals, organizers and initiators of Children Homes."
         },
         "hospitalVisits": {
           "title": "Hospital Visits",
@@ -96,7 +96,7 @@
     "title": "About Us",
     "story": {
       "title": "Our Story",
-      "body": "Dedicated to providing compassionate pediatric care to all children, Carebridge is a 100% youth led nonprofit organization and school club based in SHSID. We aim to empower children whose medical conditions' severity remains unseen by the vast public, especially those who lack parental care. We aim to achieve our goal through hosting awareness-raising sessions, fundraising events, and service opportunities to both develop a sense of empathy amongst teenagers and support children with love and care. We aspire to create a world where joy and respect are no longer privileges to healthy children, but a commodity that surrounds everyone."
+      "body": "Dedicated to providing compassionate pediatric care to all children, Carebridge is a 100% youth led nonprofit organization and school club based in SHSID. We aim to empower children whose medical conditions' severity remains unseen by the vast public, especially those who lack parental care. We aim to achieve our goal through hosting awareness-raising sessions, fundraising events, and service opportunities to both develop a sense of empathy among teenagers and support children with love and care. We aspire to create a world where joy and respect are no longer privileges to healthy children, but a commodity that surrounds everyone."
     },
     "mission": {
       "title": "Our Mission",
@@ -108,11 +108,11 @@
       "pillars": {
         "treasurer": {
           "title": "Treasurer",
-          "description": "Transparent tracking (Google Sheets), calculating profits for charity, ensuring every purchase has an official receipt (发票)."
+          "description": "Transparent tracking (Google Sheets), calculating profits for charity, ensuring every purchase has an official receipt."
         },
         "outreach": {
           "title": "Outreach",
-          "description": "Surveys, event proposals, contacting outside organisations."
+          "description": "Surveys, event proposals, contacting outside organizations."
         },
         "event": {
           "title": "Event",
@@ -151,7 +151,7 @@
       "paLectures": {
         "title": "PA Lectures",
         "when": "Early December",
-        "description": "Medical professionals, organisers and initiators of Children Homes."
+        "description": "Medical professionals, organizers and initiators of Children Homes."
       },
       "hospitalVisits": {
         "title": "Fudan Children's Hospital Visits",
@@ -176,7 +176,7 @@
     "join": {
       "title": "Join the Team",
       "body": "Open to all students across international schools in Shanghai.",
-      "email": "[Insert Email Address]",
+      "email": "melonieema@163.com",
       "noFees": "No membership fees required."
     },
     "hospital": {
@@ -186,8 +186,8 @@
     },
     "partner": {
       "title": "Partner With Us",
-      "body": "For external organisations and schools.",
-      "contact": "[Insert Email Address]"
+      "body": "For external organizations and schools.",
+      "contact": "melonieema@163.com"
     }
   },
   "transparency": {
@@ -202,13 +202,13 @@
       "body": "Student-run; we record what we receive and what we spend, keep an official receipt for every purchase, and keep the tracking sheet open."
     },
     "receipts": {
-      "title": "Receipts & 发票",
+      "title": "Receipts & Invoices",
       "body": "Every purchase documented with an official receipt; no exceptions."
     },
     "tracking": {
       "title": "Public Tracking",
       "body": "A publicly viewable Google Sheets file.",
-      "sheetLink": "[Insert Google Sheets Link]"
+      "sheetLink": "https://docs.google.com/spreadsheets/d/1v7nxrBYn47cY2VHNJmhhzuuH1cn1QL76jbTpqhSh4o4/edit?usp=sharing"
     },
     "perEvent": {
       "title": "Per-Event Accounting",
@@ -223,16 +223,16 @@
     "questions": {
       "title": "Questions About Our Finances?",
       "body": "If you have questions about our finances, contact us.",
-      "email": "[Insert Email Address]"
+      "email": "melonieema@163.com"
     }
   },
   "footer": {
     "tagline": "Support, motivate, and empower.",
     "sitemapTitle": "Sitemap",
     "contactTitle": "Contact",
-    "contactEmail": "[Insert Email Address]",
+    "contactEmail": "melonieema@163.com",
     "instagramTitle": "Instagram",
-    "instagramHandle": "[Insert Instagram Handle]",
+    "instagramHandle": "@CAREBRIDGE.SHANGHAI",
     "copyright": "© {{year}} CareBridge"
   },
   "a11y": {

@@ -176,7 +176,7 @@
     "join": {
       "title": "加入团队",
       "body": "面向上海各国际学校的所有学生开放。",
-      "email": "[Insert Email Address]",
+      "email": "melonieema@163.com",
       "noFees": "无需缴纳会费。"
     },
     "hospital": {
@@ -187,7 +187,7 @@
     "partner": {
       "title": "与我们合作",
       "body": "面向外部机构与学校。",
-      "contact": "[Insert Email Address]"
+      "contact": "melonieema@163.com"
     }
   },
   "transparency": {
@@ -208,7 +208,7 @@
     "tracking": {
       "title": "公开记账",
       "body": "一份公开可查看的 Google Sheets 文件。",
-      "sheetLink": "[Insert Google Sheets Link]"
+      "sheetLink": "https://docs.google.com/spreadsheets/d/1v7nxrBYn47cY2VHNJmhhzuuH1cn1QL76jbTpqhSh4o4/edit?usp=sharing"
     },
     "perEvent": {
       "title": "按活动分别核算",
@@ -223,16 +223,16 @@
     "questions": {
       "title": "对财务有疑问？",
       "body": "如果您对我们的财务有疑问，欢迎联系我们。",
-      "email": "[Insert Email Address]"
+      "email": "melonieema@163.com"
     }
   },
   "footer": {
     "tagline": "支持、激励、赋能。",
     "sitemapTitle": "网站地图",
     "contactTitle": "联系我们",
-    "contactEmail": "[Insert Email Address]",
+    "contactEmail": "melonieema@163.com",
     "instagramTitle": "Instagram",
-    "instagramHandle": "[Insert Instagram Handle]",
+    "instagramHandle": "@CAREBRIDGE.SHANGHAI",
     "copyright": "© {{year}} CareBridge"
   },
   "a11y": {
