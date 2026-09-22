@@ -6,7 +6,7 @@ export interface RouteMetaProps {
    * The i18n namespace whose SEO pair applies, e.g. `'home'`, `'involved'`.
    *
    * A namespace rather than two raw key strings on purpose: the pair is always
-   * `<ns>.meta.title` / `<ns>.meta.description` (INTERFACES.md §2), and this
+   * `<ns>.meta.title` / `<ns>.meta.description`, and this
    * shape makes it impossible to pass the visible `<h1>`/intro key by mistake.
    * Note the namespace is not always the route path -- `/get-involved` -> `involved`.
    */

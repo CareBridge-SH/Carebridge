@@ -3,7 +3,7 @@
  *
  * `src/data/instagram-posts.json` is a JSON array of these, imported at build
  * time. There is **no** network call, no API, no token and no `.env` — a live
- * Instagram integration was deliberately removed (01-project-brief.md §4), so
+ * Instagram integration was deliberately removed, so
  * this type describes static, hand-maintained data only.
  */
 export interface InstagramPost {
@@ -22,7 +22,7 @@ export interface InstagramPost {
   /**
    * REQUIRED. Real, human-written alt text describing the photo (WCAG 1.1.1).
    * Never `""`, `"image"`, `"photo"` or `"instagram post"` — the validator
-   * (`docs/team/check-instagram.mjs`) rejects those.
+   * (`scripts/check-instagram.mjs`) rejects those.
    */
   alt: string;
 

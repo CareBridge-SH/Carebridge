@@ -7,13 +7,13 @@ export interface FooterProps {
 }
 
 /**
- * The project's single Instagram URL, frozen in `docs/team/INTERFACES.md` §5
- * and **canonically exported from here**. It is Instagram's real homepage, not
- * an invented profile -- the handle beside it stays a visible `[placeholder]`.
+ * The project's single Instagram URL, **canonically exported from here**. It is
+ * Instagram's real homepage, not an invented profile -- the handle shown beside
+ * it comes from `footer.instagramHandle` in the locale files.
  *
- * `InstagramFeed.tsx` (T09) imports it from here rather than declaring a second
- * copy: two constants pointing at the same string is exactly how they silently
- * drift the day the real handle lands.
+ * `InstagramFeed.tsx` imports it from here rather than declaring a second copy:
+ * two constants pointing at the same string is exactly how they silently drift
+ * the day the handle changes.
  */
 export const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/';
 
@@ -69,7 +69,7 @@ export function Footer({ className }: FooterProps) {
               {/*
                 A bracketed placeholder, rendered byte-identical and NOT turned
                 into a `mailto:` -- there is no real address, and inventing one
-                would be fabrication (01-project-brief.md §6).
+                would be fabrication.
               */}
               <PlaceholderText as="p" className="mt-3 inline-block">
                 {t('footer.contactEmail')}

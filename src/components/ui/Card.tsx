@@ -4,7 +4,7 @@ export interface CardProps {
   children: ReactNode;
   as?: 'div' | 'article' | 'li';
   className?: string;
-  /* Forwarded to the root element — see the INTERFACES.md §4 addendum. */
+  /* Forwarded to the root element. */
   id?: string;
   'aria-label'?: string;
   'aria-labelledby'?: string;

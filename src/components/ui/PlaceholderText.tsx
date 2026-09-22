@@ -1,13 +1,13 @@
 export interface PlaceholderTextProps {
   /*
-   * `string`, not `ReactNode`, exactly as frozen in INTERFACES.md §4: it is what
+   * `string`, not `ReactNode`, deliberately: it is what
    * `t()` returns, and it makes "renders the bracketed value byte-identical"
    * a type-level guarantee rather than a convention.
    */
   children: string;
   as?: 'span' | 'p' | 'div';
   className?: string;
-  /* Forwarded to the root element — see the INTERFACES.md §4 addendum. */
+  /* Forwarded to the root element. */
   id?: string;
   'aria-label'?: string;
   'aria-labelledby'?: string;

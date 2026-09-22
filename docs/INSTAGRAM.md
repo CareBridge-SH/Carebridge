@@ -2,8 +2,8 @@
 
 > **The whole system in one sentence:** adding a photo means editing **one JSON
 > file** and **dropping one image file** into a folder — nothing else, no code.
-> This page is written so that a human *or* an AI assistant who has never seen
-> this project can do it from these instructions alone.
+> This page is written so that anyone who has never seen this project can do it
+> from these instructions alone.
 
 ---
 
@@ -116,7 +116,7 @@ Before a bad feed can reach the live site, run the validator:
 ```bash
 npm run check:instagram
 # or, directly:
-node docs/team/check-instagram.mjs
+node scripts/check-instagram.mjs
 ```
 
 It is also wired as `prebuild`, so `npm run build` runs it automatically.
@@ -192,7 +192,7 @@ add a second copy anywhere else — one constant, one place.
 
 - **No API, no token, no `.env`, no live sync.** The club posts infrequently, so
   a hand-maintained snapshot is the right trade-off; a live Instagram Graph API
-  integration was removed on purpose (`01-project-brief.md` §4).
+  integration was removed on purpose.
 - **No automatic re-sorting.** Array order is display order. If you want a
   different order, move the entries in the file.
 - **No fallback image.** A post with a missing or bad `image` fails the guard; it

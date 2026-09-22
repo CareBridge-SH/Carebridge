@@ -10,7 +10,7 @@ export interface SectionHeadingProps {
   eyebrow?: ReactNode;
   className?: string;
   /*
-   * INTERFACES.md §4 addendum. Deliberate difference from the other five
+   * Deliberate difference from the other five
    * primitives:
    *
    * - `id` is NOT re-added here. This interface already requires `id: string`

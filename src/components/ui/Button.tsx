@@ -16,7 +16,7 @@ export interface ButtonProps {
   className?: string;
   /*
    * Forwarded to whichever element renders as the root. Three explicit optional
-   * props rather than a `{...rest}` spread (INTERFACES.md §4 addendum): it covers
+   * props rather than a `{...rest}` spread: it covers
    * "name this thing" without reopening the type safety of every other attribute.
    */
   id?: string;

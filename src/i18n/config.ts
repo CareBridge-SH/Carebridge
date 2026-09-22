@@ -67,7 +67,7 @@ void i18n
     // `nonExplicit` + `SupportedLngs`, written here in TWO pieces on purpose so that a
     // grep for the forbidden option cannot hit this comment) must stay ABSENT here.
     // Setting it, to any value, silently breaks resolution for 'zh-CN' and the language
-    // switcher stops working. See docs/TEAM-RULES.md.
+    // switcher stops working.
   });
 
 syncDocumentLanguage(i18n.resolvedLanguage ?? i18n.language ?? 'en');

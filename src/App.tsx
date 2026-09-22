@@ -12,7 +12,7 @@ const TransparencyPage = lazy(() => import('./pages/TransparencyPage'));
  * Seven route entries: five pages and two redirects.
  *
  * `/donate` is a redirect only -- it renders no page and no donation UI, because
- * CareBridge takes no donations on this site (01-project-brief.md §8). It exists
+ * CareBridge takes no donations on this site. It exists
  * solely so old shared links do not 404.
  *
  * `BrowserRouter` lives here rather than in `main.tsx` because `main.tsx` is a

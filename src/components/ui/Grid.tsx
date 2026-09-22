@@ -7,7 +7,7 @@ export interface GridProps {
   cols?: { base?: ColCount; md?: ColCount; lg?: ColCount };
   gap?: 'sm' | 'md' | 'lg';
   className?: string;
-  /* Forwarded to the root element — see the INTERFACES.md §4 addendum. */
+  /* Forwarded to the root element. */
   id?: string;
   'aria-label'?: string;
   'aria-labelledby'?: string;

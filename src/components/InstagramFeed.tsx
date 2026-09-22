@@ -5,7 +5,7 @@ import { Grid } from './ui';
 
 /**
  * Build-time snapshot, imported from JSON — no `fetch`, no network, no token,
- * no `.env` (`01-project-brief.md` §4). Array order is display order; nothing is
+ * no `.env`. Array order is display order; nothing is
  * re-sorted by `date` in code.
  */
 const posts: InstagramPost[] = postsJson;

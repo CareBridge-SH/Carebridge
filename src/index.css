@@ -25,7 +25,7 @@
  * (0,1,0), so source order is not critical and no !important is needed.
  *
  * The names are historical (the site began dark-only). If a light-mode design pass
- * happens later, rename these to semantic tokens -- see docs/THEMING.md.
+ * happens later, rename these to semantic tokens.
  */
 html[data-theme='light'] {
   color-scheme: light;
