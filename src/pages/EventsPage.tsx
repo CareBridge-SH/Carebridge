@@ -33,7 +33,18 @@ export default function EventsPage() {
           {t('events.intro')}
         </p>
 
-        <div className="mt-12 flex flex-col gap-10">
+        {/*
+          The year every initiative on this page belongs to: one label for the
+          whole list, not a date repeated on each event. Styled like a section
+          eyebrow (small, tracked, uppercase) rather than a heading, because the
+          event titles below are the headings here -- and a wrapper element
+          around a list cannot carry a name without an ARIA violation.
+        */}
+        <p className="mt-12 font-sans text-sm font-semibold tracking-wide text-cream uppercase">
+          {t('events.yearLabel')}
+        </p>
+
+        <div className="mt-4 flex flex-col gap-10">
           {EVENT_IDS.map((id) => (
             <EventArticle key={id} id={id} />
           ))}

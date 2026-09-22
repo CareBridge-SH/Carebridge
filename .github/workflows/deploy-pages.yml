@@ -61,6 +61,10 @@ jobs:
           echo "asset base:" $(grep -o 'src="[^"]*assets/' dist/index.html | head -1)
 
       - uses: actions/configure-pages@v5
+        with:
+          # Enable Pages if it has not been switched on yet, so a first-time
+          # deploy (or a fresh fork) cannot fail with "Get Pages site failed".
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
