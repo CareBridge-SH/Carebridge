@@ -1,16 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { INSTAGRAM_PROFILE_URL } from '../../data/site';
+
 export interface FooterProps {
   className?: string;
 }
-
-/**
- * The project's single Instagram profile URL, **canonically exported from here**.
- * It is the real profile the visible handle (`footer.instagramHandle`,
- * `@CAREBRIDGE.SHANGHAI`) points at, not Instagram's generic homepage.
- */
-export const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/carebridge.shanghai/';
 
 const NAV_ITEMS = [
   { to: '/', key: 'nav.home' },

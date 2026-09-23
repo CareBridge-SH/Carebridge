@@ -9,6 +9,13 @@ export interface ButtonProps {
   to?: string;
   /** Present (and no `to`) -> renders an `<a href={href}>`. */
   href?: string;
+  /*
+   * For links that leave the site. `target="_blank"` without
+   * `rel="noreferrer noopener"` hands the opened page a `window.opener`
+   * reference it can navigate us with, so always pass both together.
+   */
+  target?: '_blank' | '_self';
+  rel?: string;
   onClick?: () => void;
   /** Only meaningful when rendered as a `<button>`. */
   type?: 'button' | 'submit';
@@ -49,6 +56,8 @@ export function Button({
   size = 'md',
   to,
   href,
+  target,
+  rel,
   onClick,
   type = 'button',
   disabled = false,
@@ -79,7 +88,14 @@ export function Button({
 
   if (href) {
     return (
-      <a href={href} {...rootProps}>
+      <a
+        href={href}
+        /* react-router's `<Link>` has no equivalent, so `target`/`rel` live on
+           this branch only — they are inert when the root is a `<button>`. */
+        target={target}
+        rel={rel}
+        {...rootProps}
+      >
         {children}
       </a>
     );

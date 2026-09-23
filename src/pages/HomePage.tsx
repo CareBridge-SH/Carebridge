@@ -1,19 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { RouteMeta } from '../components/RouteMeta';
-import {
-  Button,
-  Card,
-  Container,
-  Grid,
-  PlaceholderText,
-  SectionHeading,
-} from '../components/ui';
+import { Button, Card, Container, Grid, SectionHeading } from '../components/ui';
 /*
  * The Instagram section renders `InstagramFeed` and nothing else -- no fetching,
  * skeleton, or empty-state logic lives here. Everything about *where* the posts
  * come from belongs to that component and `src/data/instagram-posts.json`.
  */
 import { InstagramFeed } from '../components/InstagramFeed';
+import { INSTAGRAM_PROFILE_URL } from '../data/site';
 
 const EVENT_IDS = [
   'fallWorkshop',
@@ -153,13 +147,29 @@ export default function HomePage() {
           </div>
 
           {/*
-            Deliberately NOT a link yet. The footer already links the handle to
-            the real profile (`INSTAGRAM_PROFILE_URL` in Footer.tsx); this home
-            CTA waits until the account has posts to land on, so it stays a
-            clearly-marked placeholder rather than a dead `#` link.
+            A real link to the real profile, using the same canonical
+            `INSTAGRAM_PROFILE_URL` the footer uses. This used to be a
+            deliberately-marked placeholder on the grounds that the CTA had
+            "no posts to land on yet" — but the profile has always existed, and
+            `scripts/sync-instagram.mjs` now keeps the feed above it current, so
+            a non-interactive "Follow Our Journey" was just an unfinished-looking
+            dead end on the home page.
+
+            The external hint goes INSIDE the link as `sr-only` text, never as
+            `aria-label`: an `aria-label` here would replace the visible label and
+            break WCAG 2.5.3 (Label in Name).
           */}
           <div className="mt-8">
-            <PlaceholderText as="span">{t('home.instagram.followCta')}</PlaceholderText>
+            <Button
+              href={INSTAGRAM_PROFILE_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              variant="secondary"
+              size="lg"
+            >
+              {t('home.instagram.followCta')}
+              <span className="sr-only"> {t('a11y.externalLink')}</span>
+            </Button>
           </div>
         </Container>
       </section>
