@@ -2,9 +2,13 @@
  * Build-time Instagram snapshot — the shape of one post.
  *
  * `src/data/instagram-posts.json` is a JSON array of these, imported at build
- * time. There is **no** network call, no API, no token and no `.env` — a live
- * Instagram integration was deliberately removed, so
- * this type describes static, hand-maintained data only.
+ * time. There is **no** network call, no API, no token and no `.env` — the file
+ * is bundled, so the visitor's browser never contacts Instagram (which is
+ * unreachable from mainland China, and whose CDN URLs expire).
+ *
+ * The file is *populated* either by hand or by `scripts/sync-instagram.mjs`,
+ * which downloads the newest posts on a schedule and commits them. Either way the
+ * shape below is what this type describes, and nobody reads it at runtime.
  */
 export interface InstagramPost {
   /** Unique id for the post. Used as the React key; must be unique in the file. */

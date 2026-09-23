@@ -53,12 +53,17 @@ jobs:
 
       - name: Commit, if anything actually changed
         run: |
-          if git diff --quiet -- src/data/instagram-posts.json public/instagram; then
+          # Stage FIRST. A plain `git diff` compares the working tree against the
+          # index and ignores UNTRACKED files, so a run that only added new images
+          # would report "no change" and be skipped -- losing the new photos while
+          # the JSON that references them got committed. `--cached` after `add`
+          # is the check that actually covers new files.
+          git add src/data/instagram-posts.json public/instagram
+          if git diff --cached --quiet; then
             echo "No change since the last sync; nothing to commit."
             exit 0
           fi
           git config user.name "CareBridge sync"
           git config user.email "carebridgedev@126.com"
-          git add src/data/instagram-posts.json public/instagram
           git commit -m "chore(instagram): refresh the snapshot"
           git push

@@ -4,9 +4,11 @@ import type { InstagramPost } from '../data/types';
 import { Grid } from './ui';
 
 /**
- * Build-time snapshot, imported from JSON — no `fetch`, no network, no token,
- * no `.env`. Array order is display order; nothing is
- * re-sorted by `date` in code.
+ * Build-time snapshot, imported from JSON — no `fetch` here, no network, no
+ * token, no `.env`. The data may be refreshed by `scripts/sync-instagram.mjs`
+ * (see docs/INSTAGRAM.md §9), but that happens off the visitor's machine: this
+ * component only ever reads the committed file. Array order is display order;
+ * nothing is re-sorted by `date` in code.
  */
 const posts: InstagramPost[] = postsJson;
 
