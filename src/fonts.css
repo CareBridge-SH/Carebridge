@@ -1,0 +1,35 @@
+/*
+ * Webfonts — self-hosted.
+ *
+ * These faces used to be requested from a third-party font CDN in index.html.
+ * That CDN is unreachable from mainland China, so the people this site is
+ * actually for — the families, volunteers and partner hospitals in Shanghai —
+ * were the ones who got the fallback: Georgia and the system sans instead of
+ * Cormorant Garamond and Inter, which is most of the site's typography.
+ *
+ * Every face is now fetched from our own origin, so it renders identically
+ * everywhere. Two requests per page are also gone (the CDN's DNS lookup and TLS
+ * handshake), which is a straight win for first paint.
+ *
+ * Files come from @fontsource, which repackages the upstream Google Fonts
+ * releases unmodified; both families are SIL Open Font License 1.1.
+ *
+ * Only the `latin` subset is bundled. Neither family contains Chinese glyphs —
+ * Chinese text has always fallen through to the system CJK font, and continues
+ * to. If a Chinese webfont is ever added, give it its own @font-face block with
+ * a `unicode-range` so the two never compete.
+ *
+ * Weights match the previous CDN request exactly: Inter 400/500/600/700, and
+ * Cormorant Garamond 400/500/600/700 plus a single italic 500. Keep this list in
+ * agreement with the `--font-serif` / `--font-sans` tokens in `src/index.css` —
+ * the family names below are what those tokens resolve to.
+ */
+@import '@fontsource/cormorant-garamond/latin-400.css';
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-500-italic.css';
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-700.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';

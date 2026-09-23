@@ -13,6 +13,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
     "@tailwindcss/postcss": "^4.3.3",
     "autoprefixer": "^10.6.0",
     "i18next": "^26.4.2",
