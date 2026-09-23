@@ -9,6 +9,7 @@
     "prebuild": "node scripts/check-instagram.mjs",
     "postbuild": "node scripts/postbuild-pages.mjs",
     "check:instagram": "node scripts/check-instagram.mjs",
+    "sync:instagram": "node scripts/sync-instagram.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },

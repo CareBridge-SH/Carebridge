@@ -9,9 +9,9 @@
 
 ## 1. The 30-second version
 
-There is **no Instagram API, no token, no `.env`, and no network request.** The
-feed is a static snapshot: a JSON list of posts plus image files, bundled into
-the site at build time.
+The feed the **browser** sees is a static snapshot: a JSON list of posts plus
+image files, bundled into the site at build time. The browser never contacts
+Instagram — see §9 for why that is not a limitation but the whole point.
 
 To add a photo you touch exactly two things:
 
@@ -19,6 +19,11 @@ To add a photo you touch exactly two things:
 2. `src/data/instagram-posts.json` — add one entry for it.
 
 Then rebuild. That's it.
+
+You can also let this happen **automatically** from the real account — the
+snapshot gets rebuilt every few hours by a scheduled job and committed back. That
+needs a one-time credential (see §9). Setting it up is optional: the manual flow
+above keeps working either way, and is the fallback if the credential ever lapses.
 
 ---
 
@@ -191,11 +196,106 @@ place.
 
 ---
 
-## 9. What this system deliberately does NOT do
+## 9. Automatic refresh (optional) — `scripts/sync-instagram.mjs`
 
-- **No API, no token, no `.env`, no live sync.** The club posts infrequently, so
-  a hand-maintained snapshot is the right trade-off; a live Instagram Graph API
-  integration was removed on purpose.
+This is what makes the feed "live" without the browser ever talking to Instagram.
+A scheduled job runs **outside China**, downloads the newest posts, writes them
+into `public/instagram/` + `src/data/instagram-posts.json`, and commits. The site
+then serves its own files. "Live" becomes "refreshed every 6 hours" — which is a
+fair trade for a page that actually loads for visitors in China.
+
+Run it yourself any time:
+
+```bash
+npm run sync:instagram
+```
+
+### Why the browser cannot do this directly
+
+Two independent blockers, both fatal:
+
+1. **Instagram is not reachable from mainland China.** A client-side embed would
+   spin forever for exactly the audience this site is for.
+2. **Instagram's image URLs are signed and expire.** They work for a while, then
+   every tile breaks silently — everywhere, not just in China.
+
+Fetching server-side on a schedule and committing the *bytes* sidesteps both: the
+visitor's browser only ever requests `carebridge.../instagram/…`.
+
+### Choosing a source (one is required)
+
+The script tries these in order and uses the first one available:
+
+| Priority | Source | What to set |
+|---|---|---|
+| 1 | A local file | `--from-file <path>` (a JSON fixture — handy for testing) |
+| 2 | A hosted feed URL | `INSTAGRAM_FEED_URL` |
+| 3 | The official Instagram Graph API | `INSTAGRAM_TOKEN` + `INSTAGRAM_USER_ID` |
+
+**No credential-free source exists.** That was established by measurement, not
+assumption: a logged-out `instagram.com/<user>/` page contains **zero** profile or
+post data (only the app shell — every image on it is one of Instagram's own
+icons), and the public JSON endpoints (`?__a=1`, `web_profile_info`) return
+**429 / blocked**, as do the third-party mirrors that were tried
+(`rsshub.app`, `behold`, `picuki`, `imginn` — all 403 from Cloudflare).
+So pick one of the two real options:
+
+- **Graph API** — get a long-lived token from the Instagram Graph API and the
+  account's numeric user id. Token-free alternative: the account is a *Business*
+  or *Creator* account, which is what the API requires.
+- **Hosted feed URL** — a service that keeps its own token and hands you a URL.
+
+Whichever you choose goes in the repository secrets, not in the code:
+
+**Settings → Secrets and variables → Actions → New repository secret**
+
+- `INSTAGRAM_TOKEN`
+- `INSTAGRAM_USER_ID`
+- or `INSTAGRAM_FEED_URL`
+
+The scheduled workflow (`.github/workflows/sync-instagram.yml`) runs every 6
+hours and on demand (Actions → *Sync Instagram snapshot* → Run workflow).
+
+### What it refuses to do
+
+- **Refuses to wipe the feed.** An empty result is almost always a broken
+  credential, not a deleted account, so the script stops rather than commit `[]`
+  over a working snapshot. Override deliberately with `--allow-empty`.
+- **Refuses to store a non-image.** A CDN answering `200` with an HTML error page
+  is not a photo; the bytes are sniffed, and a non-image is skipped with a
+  warning.
+- **Refuses to store a post with no usable `alt` text.** `alt` is taken from
+  `src/data/instagram-alt-overrides.json` (keyed by shortcode) if present,
+  otherwise from the caption. If neither yields real text the post is **skipped**
+  with a loud warning — because `alt="Instagram post"` fails the guard, and a
+  silent omission would ship an inaccessible page.
+- **Rolls back on a failed check.** If `check-instagram.mjs` rejects the new
+  snapshot, the previous one is restored.
+
+### Useful flags
+
+```bash
+node scripts/sync-instagram.mjs --dry-run        # fetch and report, write nothing
+node scripts/sync-instagram.mjs --from-file x.json
+node scripts/sync-instagram.mjs --strict         # exit 1 instead of warning
+node scripts/sync-instagram.mjs --allow-empty    # permit an empty snapshot
+```
+
+By default it is **fail-soft**: a network or credential problem warns and exits
+`0`, so a flaky Instagram never turns into a red build. With no credential set at
+all it exits `0` cleanly and prints the setup instructions above.
+
+Tokens and token-shaped strings are scrubbed from all output, so the workflow log
+is safe to read.
+
+---
+
+## 10. What this system deliberately does NOT do
+
+- **No live request from the visitor's browser.** Everything the page needs is
+  bundled or served from this site. The *only* thing that talks to Instagram is
+  the scheduled job in §9 — and if that credential is absent or expires, the site
+  keeps working with the last good snapshot (§2 still applies).
 - **No automatic re-sorting.** Array order is display order. If you want a
   different order, move the entries in the file.
 - **No fallback image.** A post with a missing or bad `image` fails the guard; it

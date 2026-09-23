@@ -1,0 +1,3 @@
+{
+  "_readme": "Alt text for synced Instagram posts, keyed by the post's shortcode (the part of its permalink after /p/ or /reel/). The sync cannot describe a photograph it has never seen, so it falls back to the caption. Use this file for a post with no caption, or to replace a caption that does not describe the image well enough for a screen reader. A post with neither a caption nor an entry here is SKIPPED rather than published undescribed. Example: \"ABC123xyz\": \"Students painting pumpkins at a workshop table\"."
+}

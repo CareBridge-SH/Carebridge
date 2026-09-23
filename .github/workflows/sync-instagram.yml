@@ -1,0 +1,64 @@
+# Refresh the Instagram snapshot, then deploy it.
+#
+# WHY A SCHEDULE AND NOT A LIVE WIDGET: instagram.com is unreachable from
+# mainland China, and Instagram's CDN URLs expire. Fetching here, on GitHub's
+# runners, and committing the images into the repository means the live site
+# serves its own files -- so the photographs are visible in Shanghai even though
+# Instagram is not. See docs/INSTAGRAM.md and scripts/sync-instagram.mjs.
+#
+# Nothing here is required for the site to work. With no source configured the
+# sync prints setup instructions and exits 0; with a source that fails it leaves
+# the previous snapshot in place. The site never breaks because of this job.
+
+name: Sync Instagram snapshot
+
+on:
+  schedule:
+    # Every six hours, offset from the hour so it is not competing for runners
+    # with everything else scheduled on the hour.
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-instagram
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Sync the snapshot
+        env:
+          # Set whichever one your source needs. See docs/INSTAGRAM.md.
+          # These are repository secrets, never committed; the script redacts
+          # them from every line it prints.
+          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_FEED_URL: ${{ secrets.INSTAGRAM_FEED_URL }}
+        run: node scripts/sync-instagram.mjs
+
+      # The sync verifies its own output before writing, but this is the same
+      # gate the build uses, and it is cheap. If it fails, commit nothing.
+      - name: Validate the snapshot
+        run: node scripts/check-instagram.mjs
+
+      - name: Commit, if anything actually changed
+        run: |
+          if git diff --quiet -- src/data/instagram-posts.json public/instagram; then
+            echo "No change since the last sync; nothing to commit."
+            exit 0
+          fi
+          git config user.name "CareBridge sync"
+          git config user.email "carebridgedev@126.com"
+          git add src/data/instagram-posts.json public/instagram
+          git commit -m "chore(instagram): refresh the snapshot"
+          git push

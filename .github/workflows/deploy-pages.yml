@@ -1,7 +1,14 @@
 name: Deploy to GitHub Pages
 
-# Publishes the built site to GitHub Pages on every push to `master`, and on
-# demand from the Actions tab.
+# Publishes the built site to GitHub Pages on every push to `master`, on demand
+# from the Actions tab, and when the Instagram sync finishes.
+#
+# The `workflow_run` trigger looks redundant next to `push`, and is not. A commit
+# made by a workflow using the built-in GITHUB_TOKEN does NOT trigger other
+# workflows -- that is deliberate on GitHub's part, to stop runaway chains. So
+# when the Instagram sync commits a refreshed snapshot, its push deploys nothing.
+# `workflow_run` fires when that run *completes*, which is after it has pushed,
+# and by then the new commit is the head of `master`, so this builds it.
 #
 # One-time setup, once per repository (Settings -> Pages):
 #   Source: GitHub Actions
@@ -15,6 +22,9 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+  workflow_run:
+    workflows: ['Sync Instagram snapshot']
+    types: [completed]
 
 # Gives the workflow a token that can publish to Pages and prove its identity.
 permissions:

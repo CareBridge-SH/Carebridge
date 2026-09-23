@@ -53,9 +53,20 @@ console.log(`postbuild-pages: first asset URL resolves to ${asset ? asset[1] : '
 // request 404s at runtime and the build stays green. The header wordmark shipped
 // that way, and its absence was only visible by loading the deployed site.
 //
-// So every name in public/ is hunted for in the built output as a root-absolute
+// So every FILE in public/ is hunted for in the built output as a root-absolute
 // URL ("/name" or url(/name)). The correct form is always base-prefixed
 // ("/Carebridge/name"), which cannot match. Silence means clean.
+//
+// DIRECTORIES under public/ are deliberately NOT checked here, and that is not a
+// loophole being ignored -- it is a limit of what the bundle can tell us. A file
+// in public/ can only be reached by a literal URL, so a root-absolute literal is
+// always wrong. A directory (public/instagram/) holds data-driven content whose
+// paths live in src/data/*.json as the string "/instagram/<file>", and the
+// component prefixes BASE_URL to them at render time. That string is a PATH, not
+// a URL, and it is supposed to look like that -- this check called it a violation
+// the first time the feed actually had posts in it. Whether those paths get
+// resolved correctly can only be judged by rendering the page, which is what the
+// browser harness does (it fails on any request the page makes that 404s).
 //
 // This can only be judged when the build targets a subpath. At base "/" a
 // root-absolute URL is exactly right, so the check stands down instead of
@@ -65,10 +76,8 @@ const BASE = (process.env.VITE_BASE_PATH ?? '/').replace(/\/*$/, '/')
 
 if (BASE !== '/') {
   const publicDir = 'public'
-  const publicNames = existsSync(publicDir)
-    ? readdirSync(publicDir, { withFileTypes: true }).map((e) =>
-        e.isDirectory() ? `${e.name}/` : e.name,
-      )
+  const publicFiles = existsSync(publicDir)
+    ? readdirSync(publicDir, { withFileTypes: true }).filter((e) => e.isFile()).map((e) => e.name)
     : []
 
   const assetsDir = join(DIST, 'assets')
@@ -83,7 +92,7 @@ if (BASE !== '/') {
   const offenders = []
   for (const file of built) {
     const text = readFileSync(file, 'utf8')
-    for (const name of publicNames) {
+    for (const name of publicFiles) {
       // The opening delimiter is part of the needle and the closing one is NOT,
       // and both halves of that matter.
       //
@@ -118,6 +127,6 @@ if (BASE !== '/') {
   }
 
   console.log(
-    `postbuild-pages: public/ asset paths OK (${publicNames.length} name(s) checked against base ${BASE}).`,
+    `postbuild-pages: public/ asset paths OK (${publicFiles.length} file(s) checked against base ${BASE}).`,
   )
 }
