@@ -11,6 +11,7 @@ is what to do, and what to check when it goes wrong.
 | Base-path switch | `vite.config.ts` | `VITE_BASE_PATH` sets the asset prefix. Unset = `/`, so a local build is unchanged. |
 | SPA deep-link fallback | `scripts/postbuild-pages.mjs` | Copies `dist/index.html` → `dist/404.html`. See below. |
 | Jekyll opt-out | same script | Writes `dist/.nojekyll`. |
+| `public/` path guard | same script | Fails the build if anything in `public/` is referenced root-absolutely. See failure mode 3. |
 | Build + deploy | `.github/workflows/deploy-pages.yml` | On every push to `master`, and on demand. |
 
 `npm run build` produces a deployable `dist/` on its own — the post-build step runs
@@ -27,7 +28,7 @@ automatically through npm's `postbuild` hook.
 
 Redeploys are a push. Nothing is ever committed to a `gh-pages` branch.
 
-## The two things that go wrong, and why
+## The three things that go wrong, and why
 
 ### 1. A blank white page
 
@@ -63,16 +64,51 @@ address.
 This works on GitHub Pages, Netlify and Cloudflare Pages. Hosts with native SPA
 rewrite config (Netlify `_redirects`, Vercel `vercel.json`) can use that instead.
 
+### 3. One image is missing, and nothing else is wrong
+
+Failure mode 1 has a quieter sibling that affects files in `public/`. Vite rewrites
+asset URLs it can see at build time — `index.html`, and `import`s of files under
+`src/` — but it cannot rewrite a string that is put together at runtime:
+
+```jsx
+<img src="/logo.png" />   {/* wrong: resolves against the ORIGIN root */}
+```
+
+On a project page the origin root is `https://<user>.github.io/`, one level *above*
+the app, so that request 404s. On a user/org page or a custom domain the same line
+is correct, which is exactly what makes this nasty: it works everywhere the author
+tries it, and breaks on the deploy.
+
+The header wordmark shipped this way. The page looked fine, the console showed a
+single 404, and the logo was simply absent.
+
+Anything from `public/` must be built from the base:
+
+```jsx
+<img src={`${import.meta.env.BASE_URL}logo.png`} />
+```
+
+`BASE_URL` is always slash-terminated (`/` or `/<repo>/`), so naive concatenation is
+safe. Note the same rule applies to paths that come out of data rather than JSX —
+the Instagram feed stores `"/instagram/<file>"` and has to prefix `BASE_URL` before
+using it in `src`.
+
+The guard: `scripts/postbuild-pages.mjs` looks for every name in `public/` in the
+built output as a root-absolute URL (`"/name"`, `'name'`, `` `/name` ``, `url(/name)`)
+and fails the build if it finds one. The check only runs when `VITE_BASE_PATH` is a
+subpath, since at base `/` a root-absolute URL is correct — so this one is caught in
+CI, not by a local `npm run build`.
+
 ## Previewing production output locally
 
 ```powershell
 # PowerShell -- the project page layout
-$env:VITE_BASE_PATH='/carebridge-website/'; npm run build; npm run preview
+$env:VITE_BASE_PATH='/Carebridge/'; npm run build; npm run preview
 ```
 
 ```bash
 # bash / zsh
-VITE_BASE_PATH=/carebridge-website/ npm run build && npm run preview
+VITE_BASE_PATH=/Carebridge/ npm run build && npm run preview
 ```
 
 Then check two things a plain `npm run build` cannot: open a deep link directly

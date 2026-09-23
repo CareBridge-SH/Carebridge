@@ -89,8 +89,17 @@ export function Header({ className }: HeaderProps) {
           cannot reflow once the PNG arrives.
         */}
         <Link to="/" className="flex shrink-0 items-center">
+          {/*
+            Base-aware, and it has to be. Vite rewrites asset URLs it can see at
+            build time (index.html, imports) but not strings assembled at runtime
+            -- so a bare "/logo.png" here resolves against the ORIGIN root. This
+            site is published under a subpath, so that root is `github.io`, one
+            level above us: the request 404s and the wordmark is simply missing,
+            with no build error to warn anyone. BASE_URL is always
+            slash-terminated, so the concatenation is safe.
+          */}
           <img
-            src="/logo.png"
+            src={`${import.meta.env.BASE_URL}logo.png`}
             width={1008}
             height={454}
             alt={t('common.siteName')}

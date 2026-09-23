@@ -70,7 +70,14 @@ function Tile({ post, eager }: TileProps) {
       style={{ aspectRatio }}
     >
       <img
-        src={post.image}
+        /*
+         * `post.image` is stored as "/instagram/<file>" and validated that way by
+         * check-instagram.mjs, but it is a runtime string, so Vite cannot rewrite
+         * it. Used verbatim it would resolve against the ORIGIN root, which on
+         * GitHub Pages sits one level above this site -- every feed image would
+         * 404 once the account has posts. BASE_URL is always slash-terminated.
+         */
+        src={`${import.meta.env.BASE_URL}${post.image.replace(/^\/+/, '')}`}
         alt={post.alt || t('home.instagram.altFallback')}
         loading={eager ? 'eager' : 'lazy'}
         width={post.width}
