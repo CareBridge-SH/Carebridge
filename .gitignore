@@ -28,9 +28,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# AionUi runtime state (the app writes its own backend database relative to the
-# conversation workspace). Never a source file, never commit it.
+# Local runtime state written next to the project. Never a source file, never
+# commit it.
 # Scoped to the repo root only — an unscoped "data/" also matched src/data/**,
 # silently dropping the Instagram source of truth (types.ts, instagram-posts.json)
-# at commit time. Confirmed via `git check-ignore -v` (T09, 2026-09-21).
+# at commit time. Confirmed via `git check-ignore -v`.
 /data/

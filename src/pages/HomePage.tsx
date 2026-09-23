@@ -9,10 +9,9 @@ import {
   SectionHeading,
 } from '../components/ui';
 /*
- * T09 (next in this slot) creates `InstagramFeed.tsx`. This import is deliberate:
- * `npm run build` fails until it lands, which is expected and resolved by T09 in
- * this same conversation. The Instagram section renders it, nothing more -- no
- * fetching, skeleton, or empty-state logic lives here.
+ * The Instagram section renders `InstagramFeed` and nothing else -- no fetching,
+ * skeleton, or empty-state logic lives here. Everything about *where* the posts
+ * come from belongs to that component and `src/data/instagram-posts.json`.
  */
 import { InstagramFeed } from '../components/InstagramFeed';
 
@@ -154,10 +153,10 @@ export default function HomePage() {
           </div>
 
           {/*
-            T09 wires this to the real `INSTAGRAM_PROFILE_URL` (canonically
-            exported from Footer.tsx). Until then it is a clearly-marked
-            placeholder rather than a dead `#` link -- the destination is still
-            pending, so the follow CTA is rendered through PlaceholderText.
+            Deliberately NOT a link yet. The footer already links the handle to
+            the real profile (`INSTAGRAM_PROFILE_URL` in Footer.tsx); this home
+            CTA waits until the account has posts to land on, so it stays a
+            clearly-marked placeholder rather than a dead `#` link.
           */}
           <div className="mt-8">
             <PlaceholderText as="span">{t('home.instagram.followCta')}</PlaceholderText>
