@@ -179,12 +179,15 @@ INSTAGRAM_PROFILE_URL
 It lives in `src/components/layout/Footer.tsx` and is currently:
 
 ```ts
-export const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/';
+export const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/carebridge.shanghai/';
 ```
 
-When the club's real handle is known (it is currently the `[Insert Instagram
-Handle]` placeholder), change **this one line** to the real profile URL. Do not
-add a second copy anywhere else — one constant, one place.
+The real handle landed in `b700208` (`footer.instagramHandle`,
+`@CAREBRIDGE.SHANGHAI`), so the line above now points at the live profile
+(`https://www.instagram.com/carebridge.shanghai/` — the handle lowercased with
+the `@` stripped). If the handle ever changes, change **this one line** to the
+new profile URL. Do not add a second copy anywhere else — one constant, one
+place.
 
 ---
 

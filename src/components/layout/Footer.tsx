@@ -1,21 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { PlaceholderText } from '../ui';
 
 export interface FooterProps {
   className?: string;
 }
 
 /**
- * The project's single Instagram URL, **canonically exported from here**. It is
- * Instagram's real homepage, not an invented profile -- the handle shown beside
- * it comes from `footer.instagramHandle` in the locale files.
- *
- * `InstagramFeed.tsx` imports it from here rather than declaring a second copy:
- * two constants pointing at the same string is exactly how they silently drift
- * the day the handle changes.
+ * The project's single Instagram profile URL, **canonically exported from here**.
+ * It is the real profile the visible handle (`footer.instagramHandle`,
+ * `@CAREBRIDGE.SHANGHAI`) points at, not Instagram's generic homepage.
  */
-export const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/';
+export const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/carebridge.shanghai/';
 
 const NAV_ITEMS = [
   { to: '/', key: 'nav.home' },
@@ -66,14 +61,12 @@ export function Footer({ className }: FooterProps) {
               <h2 id="footer-contact" className={HEADING}>
                 {t('footer.contactTitle')}
               </h2>
-              {/*
-                A bracketed placeholder, rendered byte-identical and NOT turned
-                into a `mailto:` -- there is no real address, and inventing one
-                would be fabrication.
-              */}
-              <PlaceholderText as="p" className="mt-3 inline-block">
+              <a
+                href={`mailto:${t('footer.contactEmail')}`}
+                className={`${BODY_LINK} mt-3 inline-block`}
+              >
                 {t('footer.contactEmail')}
-              </PlaceholderText>
+              </a>
             </div>
 
             <div>
@@ -90,11 +83,9 @@ export function Footer({ className }: FooterProps) {
                 href={INSTAGRAM_PROFILE_URL}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="mt-3 inline-block"
+                className={`${BODY_LINK} mt-3 inline-block`}
               >
-                <PlaceholderText as="span">
-                  {t('footer.instagramHandle')}
-                </PlaceholderText>
+                {t('footer.instagramHandle')}
                 <span className="sr-only">
                   {' '}
                   {t('a11y.externalLink')}

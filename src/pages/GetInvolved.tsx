@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { RouteMeta } from '../components/RouteMeta';
 import {
   Container,
-  PlaceholderText,
   SectionHeading,
 } from '../components/ui';
 
@@ -31,13 +30,12 @@ export default function GetInvolved() {
           <p className="mt-3 max-w-2xl font-sans text-white">
             {t('involved.join.body')}
           </p>
-          {/*
-            A bracketed placeholder, rendered byte-identical — NOT a `mailto:`
-            to an invented address (that would be a fabrication).
-          */}
-          <PlaceholderText as="p" className="mt-4 inline-block">
+          <a
+            href={`mailto:${t('involved.join.email')}`}
+            className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 hover:text-cream"
+          >
             {t('involved.join.email')}
-          </PlaceholderText>
+          </a>
           {/*
             A reassurance, not a price: rendered with a checkmark so it reads as
             "good news" rather than a cost line.
@@ -73,10 +71,12 @@ export default function GetInvolved() {
           <p className="mt-3 max-w-2xl font-sans text-white">
             {t('involved.partner.body')}
           </p>
-          {/* Same bracketed placeholder as the join block — not a `mailto:`. */}
-          <PlaceholderText as="p" className="mt-4 inline-block">
+          <a
+            href={`mailto:${t('involved.partner.contact')}`}
+            className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 hover:text-cream"
+          >
             {t('involved.partner.contact')}
-          </PlaceholderText>
+          </a>
         </section>
       </Container>
     </>

@@ -59,12 +59,22 @@ export default function TransparencyPage() {
               {t('transparency.tracking.body')}
             </p>
             {/*
-              A bracketed placeholder — NOT a link to a spreadsheet that does
-              not exist, and NOT a bare `#`.
+              The visible URL is the accessible name; the new-tab hint is
+              `sr-only` text INSIDE the link, never an `aria-label`, which would
+              replace the visible label and break WCAG 2.5.3.
             */}
-            <PlaceholderText as="p" className="mt-4 inline-block">
+            <a
+              href={t('transparency.tracking.sheetLink')}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="mt-4 inline-block break-all font-sans text-lavender underline underline-offset-4 hover:text-cream"
+            >
               {t('transparency.tracking.sheetLink')}
-            </PlaceholderText>
+              <span className="sr-only">
+                {' '}
+                {t('a11y.externalLink')}
+              </span>
+            </a>
           </section>
 
           {/* 4. Per-Event Accounting */}
@@ -103,10 +113,12 @@ export default function TransparencyPage() {
             <p className="mt-3 max-w-3xl font-sans text-white">
               {t('transparency.questions.body')}
             </p>
-            {/* Bracketed placeholder — not a `mailto:`. */}
-            <PlaceholderText as="p" className="mt-4 inline-block">
+            <a
+              href={`mailto:${t('transparency.questions.email')}`}
+              className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 hover:text-cream"
+            >
               {t('transparency.questions.email')}
-            </PlaceholderText>
+            </a>
           </section>
         </div>
       </Container>
