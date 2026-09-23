@@ -8,8 +8,8 @@ name: Deploy to GitHub Pages
 # Nothing else is needed -- no branch, no gh-pages, no build artifacts committed.
 #
 # To preview the exact production output locally before pushing:
-#   PowerShell :  $env:VITE_BASE_PATH='/carebridge-website/'; npm run build; npm run preview
-#   bash/zsh   :  VITE_BASE_PATH=/carebridge-website/ npm run build && npm run preview
+#   PowerShell :  $env:VITE_BASE_PATH='/Carebridge/'; npm run build; npm run preview
+#   bash/zsh   :  VITE_BASE_PATH=/Carebridge/ npm run build && npm run preview
 
 on:
   push:
