@@ -13,13 +13,13 @@
   "home": {
     "meta": {
       "title": "CareBridge — 架起关怀与爱心的桥梁",
-      "description": "CareBridge 是 SHSID 一个 100% 由青少年主导的社团。我们通过筹款、宣传与医院志愿服务，支持、激励并赋能就医儿童。"
+      "description": "CareBridge 是 SHSID 的一个 100% 由青少年主导的社团。我们通过筹款、宣传与医院志愿服务，支持、激励并赋能就医儿童。"
     },
     "hero": {
       "headline": "架起关怀与爱心的桥梁。",
-      "subheadline": "由 SHSID 学生与上海多所国际学校学生发起的 100% 青少年主导项目，致力于支持、激励并赋能就医儿童。",
+      "subheadline": "一个 100% 由青少年主导的项目，由 SHSID 学生和上海多所国际学校的学生共同发起，致力于支持、激励并赋能就医儿童。",
       "cta": {
-        "join": "加入我们",
+        "join": "加入我们的团队",
         "partner": "与我们合作",
         "follow": "关注我们的动态"
       }
@@ -29,46 +29,46 @@
       "subtitle": "我们如何支持、激励并赋能就医儿童。",
       "fundraising": {
         "title": "筹款",
-        "description": "秋季主题 DIY 工作坊、圣诞慈善义卖等活动通过报名费与义卖筹集资金。"
+        "description": "秋季主题 DIY 工作坊、圣诞慈善义卖等活动通过报名费和现场售卖筹集资金。"
       },
       "awareness": {
         "title": "宣传",
-        "description": "通过公益知识竞赛与 PA Lectures，让更多人关注就医儿童。"
+        "description": "公益知识竞赛与 PA Lectures 让更多人了解并关注就医儿童。"
       },
       "directAction": {
         "title": "直接行动（医院探访）",
-        "description": "志愿者在每周五前往复旦大学附属儿科医院，为孩子们读故事、协助手工、交流并一起游戏。"
+        "description": "志愿者每周五前往复旦大学附属儿科医院，为孩子们读故事、协助他们做手工、陪他们聊天，并一起做游戏。"
       }
     },
     "events": {
       "title": "近期活动",
-      "subtitle": "贯穿全年的筹款、宣传与志愿服务。",
+      "subtitle": "贯穿全年的筹款、宣传与直接志愿服务。",
       "viewAll": "查看全部活动",
       "items": {
         "fallWorkshop": {
           "title": "秋季 DIY 工作坊",
           "date": "10 月第三周，周五",
-          "summary": "在 ZXB 举行。筹款活动，设有报名费：制作秋季手链、彩绘迷你南瓜。"
+          "summary": "地点在 ZXB，属筹款活动，需缴纳报名费：制作秋季手链、彩绘迷你南瓜。"
         },
         "triviaNight": {
           "title": "公益知识竞赛",
           "date": "11 月中旬（期中考试三天后）",
-          "summary": "通过知识竞赛，提升大家对就医儿童的关注。"
+          "summary": "一场让更多人关注就医儿童的知识竞赛。"
         },
         "christmasSale": {
           "title": "圣诞义卖",
           "date": "圣诞节前一周",
-          "summary": "我们的圣诞慈善义卖，属于筹款活动之一。"
+          "summary": "我们的圣诞慈善义卖，是我们筹款活动的一部分。"
         },
         "paLectures": {
           "title": "PA Lectures",
           "date": "12 月初",
-          "summary": "医疗专业人士、儿童之家的组织者与发起人。"
+          "summary": "医疗专业人士，以及儿童之家的组织者与发起人。"
         },
         "hospitalVisits": {
           "title": "医院探访",
           "date": "每周五，每次 90 分钟",
-          "summary": "为孩子们读故事、协助手工、与他们交流并一起游戏。"
+          "summary": "为孩子们读故事、协助他们做手工、陪他们聊天，并一起做游戏。"
         }
       }
     },
@@ -76,39 +76,39 @@
       "title": "Instagram",
       "subtitle": "来自我们各项活动与医院探访的瞬间。",
       "followCta": "关注我们的动态",
-      "emptyTitle": "照片即将上线",
-      "emptyBody": "我们是一个学生社团，会在每次活动后集中发布照片。最新照片很快会出现在这里。",
+      "emptyTitle": "照片即将发布",
+      "emptyBody": "我们是学生社团，会在每次活动结束后集中发布照片，最新的照片很快就会出现在这里。",
       "altFallback": "CareBridge 活动照片。",
       "viewPost": "在 Instagram 上查看这条帖子",
       "videoLabel": "视频"
     },
     "closing": {
       "title": "支持、激励、赋能。",
-      "body": "我们欢迎来自上海各国际学校的同学加入。",
-      "cta": "加入我们"
+      "body": "我们欢迎上海各国际学校的同学加入。",
+      "cta": "加入我们的团队"
     }
   },
   "about": {
     "meta": {
       "title": "关于我们 — CareBridge",
-      "description": "CareBridge 是 SHSID 一个 100% 由青少年主导的社团，下设财务、外联、活动与设计四个部门。"
+      "description": "CareBridge 是 SHSID 的一个 100% 由青少年主导的社团，下设财务、外联、活动与设计四个部门。"
     },
     "title": "关于我们",
     "story": {
       "title": "我们的故事",
-      "body": "CareBridge 致力于为所有儿童提供充满关怀的儿科照护，是一个 100% 由青少年主导的非营利组织，也是位于 SHSID 的学校社团。我们希望赋能那些病情严重程度尚未被大众看见的孩子，尤其是缺少父母照料的孩子。为此，我们通过举办认知普及活动、筹款活动和志愿服务机会，既培养青少年的同理心，也以爱心和关怀支持这些孩子。我们期望创造一个这样的世界：快乐与尊重不再是健康孩子的特权，而是环绕在每个人身边的日常。"
+      "body": "CareBridge 是一家 100% 由青少年主导的非营利组织，也是位于 SHSID 的学校社团，致力于为所有儿童提供充满关怀的儿科照护。我们希望赋能那些病情严重程度尚未被大众了解的孩子，尤其是缺少父母照料的孩子。为此，我们通过举办认知普及活动、筹款活动和志愿服务机会，既培养青少年的同理心，也以爱心和关怀支持这些孩子。我们期望创造一个这样的世界：快乐与尊重不再是健康孩子的特权，而是环绕在每个人身边的平常事。"
     },
     "mission": {
       "title": "我们的使命",
       "body": "我们支持、激励并赋能就医儿童。我们通过筹款、宣传与直接志愿服务，架起青少年与医疗社群之间的桥梁。"
     },
     "structure": {
-      "title": "我们的架构",
+      "title": "我们的组织架构",
       "intro": "CareBridge 100% 由青少年主导，下设四个职能部门。",
       "pillars": {
         "treasurer": {
           "title": "财务",
-          "description": "透明记账（Google Sheets），核算用于慈善的利润，确保每笔采购都有正式发票。"
+          "description": "公开透明地记账（Google Sheets），核算用于慈善的利润，确保每笔采购都有正式发票。"
         },
         "outreach": {
           "title": "外联",
@@ -116,7 +116,7 @@
         },
         "event": {
           "title": "活动",
-          "description": "准备物料、策划活动内容、制定采购清单。"
+          "description": "准备活动物料、策划活动内容、整理采购清单。"
         },
         "design": {
           "title": "设计",
@@ -128,41 +128,41 @@
   "events": {
     "meta": {
       "title": "活动与项目 — CareBridge",
-      "description": "我们的活动与项目：秋季主题 DIY 工作坊、公益知识竞赛、圣诞慈善义卖、PA Lectures，以及复旦大学附属儿科医院探访。"
+      "description": "我们的活动与项目：秋季主题 DIY 工作坊、公益知识竞赛、圣诞慈善义卖、PA Lectures，以及复旦大学附属儿科医院的探访。"
     },
     "title": "活动与项目",
     "yearLabel": "2026年",
-    "intro": "筹款、宣传与直接志愿服务 —— 我们的活动与项目。",
+    "intro": "我们的活动与项目涵盖筹款、宣传与直接志愿服务。",
     "items": {
       "fallWorkshop": {
         "title": "秋季主题 DIY 工作坊",
-        "when": "10 月第三周，周五，在 ZXB",
-        "description": "筹款活动，设有报名费。制作秋季手链、彩绘迷你南瓜。"
+        "when": "10 月第三周的周五，地点在 ZXB",
+        "description": "筹款活动，需缴纳报名费：制作秋季手链、彩绘迷你南瓜。"
       },
       "triviaNight": {
         "title": "公益知识竞赛",
         "when": "11 月中旬（期中考试三天后）",
-        "description": "通过知识竞赛，提升大家对就医儿童的关注。"
+        "description": "一场让更多人关注就医儿童的知识竞赛。"
       },
       "christmasSale": {
         "title": "圣诞慈善义卖",
         "when": "圣诞节前一周",
-        "description": "我们的圣诞慈善义卖，属于筹款活动之一。"
+        "description": "我们的圣诞慈善义卖，是我们筹款活动的一部分。"
       },
       "paLectures": {
         "title": "PA Lectures",
         "when": "12 月初",
-        "description": "医疗专业人士、儿童之家的组织者与发起人。"
+        "description": "医疗专业人士，以及儿童之家的组织者与发起人。"
       },
       "hospitalVisits": {
-        "title": "复旦大学附属儿科医院探访",
+        "title": "探访复旦大学附属儿科医院",
         "when": "每周五，每次 90 分钟",
-        "description": "为孩子们读故事、协助手工、与他们交流并一起游戏。",
+        "description": "为孩子们读故事、协助他们做手工、陪他们聊天，并一起做游戏。",
         "status": "[Status: Pending Approval / Currently in negotiation - Update upon confirmation]",
         "team": {
-          "size": "不少于 10 人，每次活动至少 2 名志愿者",
+          "size": "团队不少于 10 人，每次活动至少 2 名志愿者",
           "schedule": "每周五，每次 90 分钟，至少持续一个学期",
-          "activities": "读故事、协助手工、与孩子们交流、一起玩游戏"
+          "activities": "读故事、协助做手工、陪孩子们聊天、一起玩游戏"
         }
       }
     }
@@ -183,7 +183,7 @@
     "hospital": {
       "title": "医院志愿服务",
       "commitment": "每周五，每次 90 分钟，至少持续一个学期。",
-      "experience": "与孩子们一起阅读、做手工、玩游戏，是一段很有意义的经历。"
+      "experience": "和孩子们一起阅读、做手工、玩游戏，是一段很有意义的经历。"
     },
     "partner": {
       "title": "与我们合作",
@@ -200,30 +200,30 @@
     "intro": "CareBridge 由学生自主运营。本页说明我们如何记录收入与支出。",
     "commitment": {
       "title": "我们的承诺",
-      "body": "学生自主运营；我们记录收到的资金与支出，每笔采购都保留正式收据，并保持记账表格公开。"
+      "body": "我们由学生自主运营，记录收到的资金与支出，为每笔采购保留正式收据，并始终公开记账表格。"
     },
     "receipts": {
       "title": "收据与发票",
-      "body": "每笔采购都有正式收据记录，没有例外。"
+      "body": "每笔采购都有正式收据可查，绝无例外。"
     },
     "tracking": {
       "title": "公开记账",
-      "body": "一份公开可查看的 Google Sheets 文件。",
+      "body": "一份可公开查看的 Google Sheets 表格。",
       "sheetLink": "https://docs.google.com/spreadsheets/d/1v7nxrBYn47cY2VHNJmhhzuuH1cn1QL76jbTpqhSh4o4/edit?usp=sharing"
     },
     "perEvent": {
       "title": "按活动分别核算",
-      "body": "每一项都按活动分别记录，因此每个活动的成本与收入都可以单独查看。"
+      "body": "所有项目都按活动分别记录，因此每项活动的成本与收入都能单独查看。"
     },
     "funds": {
       "title": "资金去向",
       "body": "利润先汇总至一个账户，再统一捐赠。",
       "orgs": "[Children's Home Organizations TBD]",
-      "hospital": "实地探访前往复旦大学附属儿科医院。"
+      "hospital": "实地探访的地点是复旦大学附属儿科医院。"
     },
     "questions": {
       "title": "对财务有疑问？",
-      "body": "如果您对我们的财务有疑问，欢迎联系我们。",
+      "body": "如对我们的财务有任何疑问，欢迎联系我们。",
       "email": "melonieema@163.com"
     }
   },
