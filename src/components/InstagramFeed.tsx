@@ -32,8 +32,8 @@ export function InstagramFeed() {
 /**
  * `[]` is the shipped state until real photos exist, so this is the primary
  * design, not a fallback: it renders real copy (`home.instagram.emptyTitle` /
- * `.emptyBody`) and no `<img>` at all, so it can never show a broken image, a
- * spinner, or a network error.
+ * `.emptyBody`) and no image element at all, so it can never show a broken
+ * image, a spinner, or a network error.
  */
 function EmptyState() {
   const { t } = useTranslation();

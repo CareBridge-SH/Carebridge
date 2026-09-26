@@ -34,3 +34,10 @@ dist-ssr
 # silently dropping the Instagram source of truth (types.ts, instagram-posts.json)
 # at commit time. Confirmed via `git check-ignore -v`.
 /data/
+
+# Local design-tooling state. Kept out of the repository on purpose: this is a
+# public site, and its contents are an AI coding assistant's working files, not
+# part of the product. Everything here is re-installable from
+# Carebridge-internal/docs/team/ROUND3-PLAN.md, "Installing Impeccable".
+.claude/
+.impeccable/
