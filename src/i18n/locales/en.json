@@ -108,7 +108,7 @@
       "pillars": {
         "treasurer": {
           "title": "Treasurer",
-          "description": "Transparent tracking (Google Sheets), calculating profits for charity, ensuring every purchase has an official receipt."
+          "description": "Transparent tracking (spreadsheets), calculating profits for charity, ensuring every purchase has an official receipt."
         },
         "outreach": {
           "title": "Outreach",
@@ -208,7 +208,7 @@
     },
     "tracking": {
       "title": "Public Tracking",
-      "body": "A publicly viewable Google Sheets file.",
+      "body": "A publicly viewable spreadsheet.",
       "sheetLink": "https://docs.google.com/spreadsheets/d/1v7nxrBYn47cY2VHNJmhhzuuH1cn1QL76jbTpqhSh4o4/edit?usp=sharing"
     },
     "perEvent": {

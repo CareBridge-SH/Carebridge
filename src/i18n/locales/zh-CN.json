@@ -108,7 +108,7 @@
       "pillars": {
         "treasurer": {
           "title": "财务",
-          "description": "公开透明地记账（Google Sheets），核算用于慈善的利润，确保每笔采购都有正式发票。"
+          "description": "公开透明地记账（电子表格），核算用于慈善的利润，确保每笔采购都有正式发票。"
         },
         "outreach": {
           "title": "外联",
@@ -208,7 +208,7 @@
     },
     "tracking": {
       "title": "公开记账",
-      "body": "一份可公开查看的 Google Sheets 表格。",
+      "body": "一份可公开查看的电子表格。",
       "sheetLink": "https://docs.google.com/spreadsheets/d/1v7nxrBYn47cY2VHNJmhhzuuH1cn1QL76jbTpqhSh4o4/edit?usp=sharing"
     },
     "perEvent": {
