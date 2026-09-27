@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import postsJson from '../data/instagram-posts.json';
 import type { InstagramPost } from '../data/types';
 import { INSTAGRAM_PROFILE_URL } from '../data/site';
+import { Container } from './ui';
 
 /**
  * Build-time snapshot, imported from JSON — no `fetch`, no network, no token,
@@ -10,20 +11,56 @@ import { INSTAGRAM_PROFILE_URL } from '../data/site';
  */
 const posts: InstagramPost[] = postsJson;
 
+/**
+ * This component is rendered **outside** a `Container`, inside a full-bleed
+ * band (ROUND4-PLAN §3.1), so it owns its own gutters in both branches.
+ */
 export function InstagramFeed() {
   if (posts.length === 0) {
-    return <EmptyState />;
+    return (
+      <Container>
+        <EmptyState />
+      </Container>
+    );
   }
 
   return (
-    <div>
-      <ProfileChrome count={posts.length} />
-      <ul className="grid grid-cols-3 gap-1">
-        {posts.map((post) => (
-          <Tile key={post.id} post={post} />
-        ))}
-      </ul>
-    </div>
+    <>
+      <Container>
+        <ProfileChrome count={posts.length} />
+      </Container>
+
+      {/*
+        The row, not the grid: it runs edge to edge and the tiles past the
+        viewport are cut, which is what says "there is more where this came
+        from". A plain `overflow-x-auto` — no `snap-mandatory` and no touch
+        handler, so a vertical swipe still scrolls the page and the row is not
+        a scroll jail.
+
+        The track is `w-max` so it takes its natural width and overflows; the
+        `px-*` gutter matches `Container`'s, so the first tile lines up with the
+        heading above it. `pb-2` keeps a scrollbar off the tiles.
+
+        Keyboard: `tabIndex={0}` makes the row itself scrollable from the
+        keyboard, which matters for the case where a snapshot has no tile to
+        focus (a post with no `permalink` renders a `<figure>`, not a link) —
+        content past the edge would otherwise be unreachable, and that is WCAG
+        2.1.1, not a nicety. Measured clean by axe in both themes at 375 and
+        1440 with a populated, overflowing row.
+
+        No `role`/`aria-label` here: a name would need a locale key that does not
+        exist yet (`home.instagram.rowLabel`, raised in T21's key list), and
+        guessing one is not allowed. Adding the role without a name would be
+        worse than the honest nameless tab stop.
+      */}
+      <div className="overflow-x-auto" tabIndex={0}>
+        <ul className="flex w-max gap-3 px-5 pb-2 sm:px-6 lg:px-8">
+          {posts.map((post) => (
+            <Tile key={post.id} post={post} />
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
 
@@ -79,6 +116,13 @@ function EmptyState() {
     </div>
   );
 }
+
+/*
+ * A fixed width, because the tiles are a flex row now rather than grid cells:
+ * without it each tile would collapse to its content and the row would never
+ * overflow, so nothing would be cut and the bleed would be decorative.
+ */
+const TILE_WIDTH = 'w-40 shrink-0 sm:w-56 lg:w-64';
 
 interface TileProps {
   post: InstagramPost;
@@ -141,7 +185,7 @@ function Tile({ post }: TileProps) {
 
   if (post.permalink) {
     return (
-      <li>
+      <li className={TILE_WIDTH}>
         <a
           href={post.permalink}
           target="_blank"
@@ -159,7 +203,7 @@ function Tile({ post }: TileProps) {
   }
 
   return (
-    <li>
+    <li className={TILE_WIDTH}>
       <figure className="group relative aspect-square overflow-hidden bg-navy-soft">
         {inner}
       </figure>

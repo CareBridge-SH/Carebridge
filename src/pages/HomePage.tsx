@@ -1,11 +1,12 @@
+import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RouteMeta } from '../components/RouteMeta';
 import {
   Button,
-  Card,
   Container,
-  Grid,
   Numeral,
+  Rule,
+  Section,
   SectionHeading,
 } from '../components/ui';
 /*
@@ -26,6 +27,15 @@ const EVENT_IDS = [
 
 const IMPACT_IDS = ['fundraising', 'awareness', 'directAction'] as const;
 
+/**
+ * Home's signature composition is **The Poster** (ROUND4-PLAN §3.1): one message
+ * at display scale on the tinted ground, then a ruled band of figures, then
+ * quiet, with the Instagram row running off the edge of the viewport.
+ *
+ * Everything that is not the poster or the bleed is deliberately plain —
+ * `Section` + `Rule` + prose, no boxes. A page with two competing ideas reads as
+ * an accident, not as a design.
+ */
 export default function HomePage() {
   const { t } = useTranslation();
 
@@ -33,22 +43,45 @@ export default function HomePage() {
     <>
       <RouteMeta namespace="home" />
 
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section aria-labelledby="home-hero">
-        <Container className="py-20 md:py-28">
+      {/* ── The Poster ───────────────────────────────────────────────────── */}
+      <Section
+        as="section"
+        aria-labelledby="home-hero"
+        rhythm="loose"
+        bleed="full"
+        tone="tint"
+        className="relative isolate"
+      >
+        {/*
+          The poster's media slot.
+
+          It is empty, and `aria-hidden`, because there is nothing to describe:
+          §3.1 specifies a photograph as the poster's ground, `public/` holds
+          none, and alt text for an image that does not exist would be invented
+          copy. Structurally it is already where a photograph needs to be —
+          absolutely positioned, full-bleed, behind the content — so filling it
+          means adding the image utilities to this one element and a scrim above
+          it. No layout change, no recomposition. `tone="tint"` keeps painting
+          the ground underneath until then.
+        */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10" />
+
+        <Container>
           {/*
-            The slogan is the "script" kicker: elegant serif italic in cream, led
-            by a hairline rule. Left-aligned so the hero reads as an editorial
-            masthead rather than a centred stack.
+            The slogan, at display scale: the site's own words, in the display
+            serif, led by a hairline rule. Not a new string — `common.slogan`.
           */}
-          <p className="flex items-center gap-4 font-serif text-xl italic text-cream md:text-2xl">
-            <span aria-hidden="true" className="h-px w-12 shrink-0 bg-cream" />
+          <p className="flex items-center gap-4 font-serif text-2xl italic text-cream md:text-3xl lg:text-4xl">
+            <span
+              aria-hidden="true"
+              className="h-px w-10 shrink-0 bg-cream md:w-16"
+            />
             {t('common.slogan')}
           </p>
 
           <h1
             id="home-hero"
-            className="mt-4 max-w-4xl font-serif text-4xl font-semibold leading-tight text-balance text-white sm:text-5xl lg:text-6xl"
+            className="mt-6 max-w-4xl font-serif text-4xl font-semibold leading-tight text-balance text-white sm:text-5xl lg:text-6xl"
           >
             {t('home.hero.headline')}
           </h1>
@@ -69,82 +102,98 @@ export default function HomePage() {
             </Button>
           </div>
         </Container>
-      </section>
+      </Section>
 
-      {/* ── Impact snapshot ──────────────────────────────────────────────── */}
-      <section aria-labelledby="home-impact" className="py-16 md:py-24">
-        <Container>
-          <SectionHeading id="home-impact" level={2}>
-            {t('home.impact.title')}
-          </SectionHeading>
-          <p className="mt-3 max-w-2xl font-sans text-white">
-            {t('home.impact.subtitle')}
-          </p>
+      {/* ── The numeral strip ────────────────────────────────────────────── */}
+      <Section as="section" aria-labelledby="home-impact" rhythm="default">
+        <SectionHeading id="home-impact" level={2}>
+          {t('home.impact.title')}
+        </SectionHeading>
+        <p className="mt-3 max-w-2xl font-sans text-white">
+          {t('home.impact.subtitle')}
+        </p>
 
-          <Grid cols={{ base: 1, md: 2, lg: 3 }} gap="md" className="mt-8">
-            {IMPACT_IDS.map((id, index) => (
-              <Card key={id} as="article" aria-labelledby={`impact-${id}-title`}>
-                {/*
-                  Wayfinding, not content: the heading immediately below names the
-                  entry, so the figure is `decorative` and stays out of the
-                  accessibility tree. It replaces the per-card icon — the same
-                  decorative slot, now filled with structure instead of a glyph.
-                */}
-                <Numeral decorative size="sm">
-                  {String(index + 1).padStart(2, '0')}
-                </Numeral>
-                <SectionHeading
-                  id={`impact-${id}-title`}
-                  level={3}
-                  className="mt-2"
-                >
-                  {t(`home.impact.${id}.title`)}
-                </SectionHeading>
-                <p className="mt-2 font-sans text-white">
-                  {t(`home.impact.${id}.description`)}
-                </p>
-              </Card>
-            ))}
-          </Grid>
-        </Container>
-      </section>
+        {/*
+          A ruled band, not a 3-up card grid. The three are peers with no primary
+          item, so they share one row and are divided by rules rather than
+          boxed — an `<ol>`, because the visible `01/02/03` claims an order and
+          the markup should not contradict it.
 
-      {/* ── Events preview ───────────────────────────────────────────────── */}
-      <section aria-labelledby="home-events" className="py-16 md:py-24">
-        <Container>
-          <SectionHeading id="home-events" level={2}>
-            {t('home.events.title')}
-          </SectionHeading>
-          <p className="mt-3 max-w-2xl font-sans text-white">
-            {t('home.events.subtitle')}
-          </p>
+          The numerals are `decorative`: each one's heading already names the
+          entry, so announcing "01" first would be noise. The headings carry the
+          meaning.
+        */}
+        <Rule className="mt-8" />
+        <ol className="grid grid-cols-1 md:grid-cols-3">
+          {IMPACT_IDS.map((id, index) => (
+            <li
+              key={id}
+              className={[
+                'flex flex-col md:border-l md:border-lavender-dk md:pl-8',
+                'md:first:border-l-0 md:first:pl-0',
+                index > 0
+                  ? 'border-t border-lavender-dk pt-6 md:border-t-0 md:pt-0'
+                  : 'pt-6',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
+              <Numeral decorative size="md">
+                {String(index + 1).padStart(2, '0')}
+              </Numeral>
+              <SectionHeading id={`impact-${id}-title`} level={3} className="mt-3">
+                {t(`home.impact.${id}.title`)}
+              </SectionHeading>
+              <p className="mt-2 font-sans text-white">
+                {t(`home.impact.${id}.description`)}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </Section>
 
-          <Grid cols={{ base: 1, md: 2, lg: 3 }} gap="md" className="mt-8">
-            {EVENT_IDS.map((id) => (
-              <Card key={id} as="article" aria-labelledby={`event-${id}-title`}>
+      {/* ── Events preview — quiet: a ruled list, no boxes ────────────────── */}
+      <Section as="section" aria-labelledby="home-events" rhythm="tight">
+        <SectionHeading id="home-events" level={2}>
+          {t('home.events.title')}
+        </SectionHeading>
+        <p className="mt-3 max-w-2xl font-sans text-white">
+          {t('home.events.subtitle')}
+        </p>
+
+        <div className="mt-8">
+          {EVENT_IDS.map((id, index) => (
+            <Fragment key={id}>
+              {index > 0 ? <Rule /> : null}
+              <div className="py-6 first:pt-0">
                 <SectionHeading id={`event-${id}-title`} level={3}>
                   {t(`home.events.items.${id}.title`)}
                 </SectionHeading>
-                <p className="mt-2 font-sans text-sm font-medium text-lavender">
+                <p className="mt-1 font-sans text-sm font-medium text-lavender">
                   {t(`home.events.items.${id}.date`)}
                 </p>
-                <p className="mt-3 font-sans text-white">
+                <p className="mt-2 font-sans text-white">
                   {t(`home.events.items.${id}.summary`)}
                 </p>
-              </Card>
-            ))}
-          </Grid>
+              </div>
+            </Fragment>
+          ))}
+        </div>
 
-          <div className="mt-8">
-            <Button to="/events" variant="ghost">
-              {t('home.events.viewAll')}
-            </Button>
-          </div>
-        </Container>
-      </section>
+        <div className="mt-8">
+          <Button to="/events" variant="ghost">
+            {t('home.events.viewAll')}
+          </Button>
+        </div>
+      </Section>
 
-      {/* ── Instagram ────────────────────────────────────────────────────── */}
-      <section aria-labelledby="home-instagram" className="py-16 md:py-24">
+      {/* ── Instagram — the row bleeds off the viewport edge ─────────────── */}
+      <Section
+        as="section"
+        aria-labelledby="home-instagram"
+        rhythm="loose"
+        bleed="full"
+      >
         <Container>
           <SectionHeading id="home-instagram" level={2}>
             {t('home.instagram.title')}
@@ -152,22 +201,26 @@ export default function HomePage() {
           <p className="mt-3 max-w-2xl font-sans text-white">
             {t('home.instagram.subtitle')}
           </p>
+        </Container>
 
-          <div className="mt-8">
-            <InstagramFeed />
-          </div>
+        {/*
+          No `Container` around the row: this is the full-bleed band. The row
+          owns its own gutter so its first tile lines up with the text above,
+          and the tiles past the viewport edge are cut — which is what says
+          "there is more where this came from".
+        */}
+        <div className="mt-8">
+          <InstagramFeed />
+        </div>
 
+        <Container>
           {/*
             A real link to the real profile, using the same canonical
-            `INSTAGRAM_PROFILE_URL` the footer uses. This used to be a
-            deliberately-marked placeholder on the grounds that the CTA had
-            "no posts to land on yet" — but the profile has always existed, so
-            a non-interactive "Follow Our Journey" was just an unfinished-looking
-            dead end on the home page.
+            `INSTAGRAM_PROFILE_URL` the footer uses.
 
             The external hint goes INSIDE the link as `sr-only` text, never as
-            `aria-label`: an `aria-label` here would replace the visible label and
-            break WCAG 2.5.3 (Label in Name).
+            `aria-label`: an `aria-label` here would replace the visible label
+            and break WCAG 2.5.3 (Label in Name).
           */}
           <div className="mt-8">
             <Button
@@ -182,11 +235,21 @@ export default function HomePage() {
             </Button>
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* ── Closing CTA ──────────────────────────────────────────────────── */}
-      <section aria-labelledby="home-closing" className="bg-navy-deep">
-        <Container className="py-16 text-center md:py-24">
+      {/*
+        `tone` is a two-value contract (`plain` | `tint`), and the closing needs
+        a third ground, so the band's fill comes through `className` rather than
+        by widening the primitive. Same token the page used before.
+      */}
+      <Section
+        as="section"
+        aria-labelledby="home-closing"
+        rhythm="default"
+        className="bg-navy-deep"
+      >
+        <div className="text-center">
           <SectionHeading id="home-closing" level={2} className="text-center">
             {t('home.closing.title')}
           </SectionHeading>
@@ -198,8 +261,8 @@ export default function HomePage() {
               {t('home.closing.cta')}
             </Button>
           </div>
-        </Container>
-      </section>
+        </div>
+      </Section>
     </>
   );
 }
