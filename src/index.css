@@ -208,6 +208,45 @@ html {
 }
 
 @layer utilities {
+  /*
+   * ── Round 5: motion — only what a page turn does (§2.6) ─────────────────
+   *
+   * The page's opening settles in: opacity and transform only, never a property
+   * that changes layout, which is how T27's CLS fix would come undone. 320ms is
+   * inside §2.6's 200-400ms band.
+   *
+   * `both` fill-mode means the element is fully opaque when the animation ends,
+   * so nothing is ever left invisible if the animation never runs.
+   *
+   * It is a CSS animation rather than a scroll-triggered IntersectionObserver on
+   * purpose: a scroll reveal means loading the page with content at `opacity: 0`
+   * and depending on JS to bring it back, which risks a blank page if the
+   * observer never fires and leaves axe measuring hidden text. An entrance costs
+   * none of that. Stated plainly in the report as the narrower choice.
+   *
+   * `prefers-reduced-motion: reduce` removes all of it.
+   */
+  @keyframes page-turn {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .page-turn {
+    animation: page-turn 320ms ease-out both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-turn {
+      animation: none;
+    }
+  }
+
   .skip-link {
     @apply sr-only;
   }

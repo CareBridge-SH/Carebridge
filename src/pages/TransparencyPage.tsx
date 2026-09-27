@@ -48,9 +48,24 @@ export default function TransparencyPage() {
     <>
       <RouteMeta namespace="transparency" />
       <Section as="section" rhythm="loose" aria-labelledby="transparency-title">
+        {/*
+          The seal: one small accent square, used once on the page, as a
+          printer's mark over the title. It is `aria-hidden` — it carries no
+          text and no meaning, and the heading beside it does the naming.
+
+          The plan calls it "a small square accent mark in the display face".
+          A square has no typeface, so I read that as the mark belonging to the
+          display layer rather than being set in a font: it sits directly above a
+          display-1 heading and is the only filled accent on the page.
+        */}
+        <span
+          aria-hidden="true"
+          className="mb-6 block h-4 w-4 bg-lavender"
+        />
+
         <h1
           id="transparency-title"
-          className="font-serif text-4xl font-semibold leading-tight text-balance text-white md:text-5xl"
+          className="page-turn font-serif text-display-1 font-semibold leading-[0.95] tracking-display text-balance text-white"
         >
           {t('transparency.title')}
         </h1>

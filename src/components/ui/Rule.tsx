@@ -10,11 +10,10 @@ export interface RuleProps {
   /**
    * **Round 5: two weights instead of one.**
    *
-   * `hairline` (the default) is a structure line — quiet, one pixel, and
-   * deliberately softer than the lavender it used to be (2.38:1 against the
-   * dark ground where `--color-lavender-dk` measures 4.48:1). `strong` is two
-   * pixels and keeps the round-4 strength for the places a rule has to carry
-   * emphasis rather than just separate.
+   * `hairline` (the default) is one pixel at the round-4 strength. T27 briefly
+   * made it quieter than round 4 and that changed how four existing pages look;
+   * T30 reverted it on the Lead's instruction. `strong` is the same colour at
+   * two pixels, for a rule that has to carry emphasis rather than just separate.
    *
    * A rule is never a highlight; that is what the accent is for, and the accent
    * is rationed to three uses a page.
@@ -36,7 +35,14 @@ export interface RuleProps {
  * than assumes, not because a rule is owed a contrast budget.
  */
 const LINE: Record<NonNullable<RuleProps['weight']>, string> = {
-  hairline: 'border-t border-rule',
+  /*
+   * `--color-rule-strong` carries the round-4 strength, so pointing the hairline
+   * back at it restores the previous appearance WITHOUT changing a token value —
+   * which this round forbids. `--color-rule` (T27's quieter hairline) therefore
+   * has no consumer today; it stays defined rather than deleted, because
+   * removing a token is as much a change as editing one.
+   */
+  hairline: 'border-t border-rule-strong',
   strong: 'border-t-2 border-rule-strong',
 };
 

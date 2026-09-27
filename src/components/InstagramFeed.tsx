@@ -126,7 +126,13 @@ function Tile({ post }: TileProps) {
        * slash-terminated.
        */
       src={`${import.meta.env.BASE_URL}${post.image.replace(/^\/+/, '')}`}
-      alt={post.alt}
+      /*
+       * The documented fallback, wired at last. `docs/team/INTERFACES.md`
+       * describes `home.instagram.altFallback` as what a post with no alt shows,
+       * but this rendered a bare `alt={post.alt}` — so a post without one got an
+       * empty alt and read as decorative. Round 4 deferred it; T30 closes it.
+       */
+      alt={post.alt || t('home.instagram.altFallback')}
       loading="lazy"
       className="h-full w-full object-cover"
     />

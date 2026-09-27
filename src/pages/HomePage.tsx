@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   Numeral,
+  Plate,
   Rule,
   Section,
   SectionHeading,
@@ -49,22 +50,22 @@ export default function HomePage() {
         aria-labelledby="home-hero"
         rhythm="loose"
         bleed="full"
-        tone="tint"
-        className="relative isolate"
+        className="relative isolate overflow-hidden"
       >
         {/*
-          The poster's media slot.
+          **The cover.** The headline at `--text-display-1` sits over a plate
+          that reaches the page edge.
 
-          It is empty, and `aria-hidden`, because there is nothing to describe:
-          §3.1 specifies a photograph as the poster's ground, `public/` holds
-          none, and alt text for an image that does not exist would be invented
-          copy. Structurally it is already where a photograph needs to be —
-          absolutely positioned, full-bleed, behind the content — so filling it
-          means adding the image utilities to this one element and a scrim above
-          it. No layout change, no recomposition. `tone="tint"` keeps painting
-          the ground underneath until then.
+          The plate is the ground, not a picture beside the text: it is
+          absolutely positioned behind the content and clipped by the section, so
+          the poster reads as one full-bleed panel. With no photograph in the
+          manifest it is the engraved plate — which is the state the site ships
+          in — and it becomes a photograph the moment the operator adds one at
+          the slug `cover`. No recomposition either way.
         */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <Plate slug="cover" number="01" className="absolute inset-0" />
+        </div>
 
         <Container>
           {/*
@@ -81,7 +82,7 @@ export default function HomePage() {
 
           <h1
             id="home-hero"
-            className="mt-6 max-w-4xl font-serif text-4xl font-semibold leading-tight text-balance text-white sm:text-5xl lg:text-6xl"
+            className="page-turn mt-6 font-serif text-display-1 font-semibold leading-[0.95] tracking-display text-balance text-white"
           >
             {t('home.hero.headline')}
           </h1>
@@ -169,7 +170,12 @@ export default function HomePage() {
                 <SectionHeading id={`event-${id}-title`} level={3}>
                   {t(`home.events.items.${id}.title`)}
                 </SectionHeading>
-                <p className="mt-1 font-sans text-sm font-medium text-lavender">
+                {/*
+                  Cream, not the accent. Five accent dates would spend the whole
+                  page's accent ration before a single call to action, and a date
+                  is a caption — the same voice the Events ledger's rails use.
+                */}
+                <p className="mt-1 font-sans text-sm font-medium text-cream">
                   {t(`home.events.items.${id}.date`)}
                 </p>
                 <p className="mt-2 font-sans text-white">

@@ -5,6 +5,7 @@ import {
   Button,
   EditorialSplit,
   Numeral,
+  Plate,
   Rule,
   Section,
   SectionHeading,
@@ -38,13 +39,16 @@ export default function GetInvolved() {
       <Section as="section" rhythm="loose" aria-labelledby="involved-title">
         <h1
           id="involved-title"
-          className="font-serif text-4xl font-semibold leading-tight text-balance text-white md:text-5xl"
+          className="page-turn font-serif text-display-1 font-semibold leading-[0.95] tracking-display text-balance text-white"
         >
           {t('involved.title')}
         </h1>
         <p className="mt-6 max-w-2xl font-sans text-lg text-white">
           {t('involved.intro')}
         </p>
+
+        {/* The frontispiece: the routes open on a plate. */}
+        <Plate slug="involved" number="03" className="mt-10" />
 
         <ol className="mt-12">
           <li>
@@ -57,11 +61,16 @@ export default function GetInvolved() {
                 A reassurance, not a price: rendered with a checkmark so it reads
                 as "good news" rather than a cost line.
               */}
-              <p className="mt-4 flex items-center gap-2 font-sans text-sm font-medium text-lavender">
+              {/*
+                Cream, not the accent: the three pathway CTAs are the page's
+                accent, and this reassurance is a statement of fact rather than
+                an action.
+              */}
+              <p className="mt-4 flex items-center gap-2 font-sans text-sm font-medium text-cream">
                 <CheckIcon />
                 {t('involved.join.noFees')}
               </p>
-              <PathwayCta to={t('involved.join.email')} variant="secondary" />
+              <PathwayCta to={t('involved.join.email')} variant="primary" />
             </Pathway>
           </li>
 
@@ -127,8 +136,14 @@ function Pathway({ n, id, primary = false, children }: PathwayProps) {
           Wayfinding only. The heading in the wide column already names the
           pathway, so the number stays out of the accessibility tree rather than
           being announced as content with no referent.
-        */
-        <Numeral decorative size={primary ? 'lg' : 'sm'}>
+         *
+         * T30: EVERY pathway now opens on an oversized numeral at plate scale —
+         * `size="lg"` is `text-5xl md:text-6xl`, 60px at 1440. The primary is
+         * still the larger pathway, but it no longer says so with the number:
+         * it says it with a bigger title, twice the air, and the page's one
+         * accent-filled control.
+         */
+        <Numeral decorative size="lg">
           {n}
         </Numeral>
       }
@@ -148,7 +163,12 @@ function Pathway({ n, id, primary = false, children }: PathwayProps) {
 interface PathwayCtaProps {
   /** A `mailto:` address. The visible label IS the address — see the note in `Pathway`. */
   to: string;
-  variant: 'secondary' | 'ghost';
+  /**
+   * `primary` is an accent FILL, and T30 puts exactly one of them on the page:
+   * the front door's. The other two pathways keep underlined ghost links, so the
+   * accent fill is what says which door to walk through.
+   */
+  variant: 'primary' | 'secondary' | 'ghost';
 }
 
 /**

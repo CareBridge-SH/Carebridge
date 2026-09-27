@@ -3,6 +3,7 @@ import { RouteMeta } from '../components/RouteMeta';
 import {
   EditorialSplit,
   PlaceholderText,
+  Plate,
   Rule,
   Section,
   SectionHeading,
@@ -35,13 +36,16 @@ export default function EventsPage() {
       <Section as="section" rhythm="loose" aria-labelledby="events-title">
         <h1
           id="events-title"
-          className="font-serif text-4xl font-semibold leading-tight text-balance text-white md:text-5xl"
+          className="page-turn font-serif text-display-1 font-semibold leading-[0.95] tracking-display text-balance text-white"
         >
           {t('events.title')}
         </h1>
         <p className="mt-6 max-w-2xl font-sans text-lg text-white">
           {t('events.intro')}
         </p>
+
+        {/* The frontispiece: the season opens on a plate. */}
+        <Plate slug="events" number="02" className="mt-10" />
 
         {/*
           The year every initiative on this page belongs to: ONE label for the
@@ -71,8 +75,12 @@ export default function EventsPage() {
             <ol aria-labelledby="events-year" className="mt-6">
               {EVENT_IDS.map((id, index) => (
                 <li key={id} className={index === 0 ? undefined : 'mt-10'}>
-                  {/* A `Rule` between entries — the ruled-list affordance, not a repeated border. */}
-                  {index === 0 ? null : <Rule className="mb-10" />}
+                  {/*
+                    A hairline above EVERY entry, the first included — that is
+                    what the ledger's rule does. It was previously drawn only
+                    between entries, which left the first one unhung.
+                  */}
+                  <Rule className="mb-10" />
                   <EventEntry id={id} />
                 </li>
               ))}
@@ -93,8 +101,21 @@ function EventEntry({ id }: { id: EventId }) {
       as="article"
       aria-labelledby={titleId}
       rail={
-        /* The date is the rail: reading the rail down the page reads the season. */
-        <p className="font-sans text-sm font-medium text-lavender">
+        /*
+         * The date rail: set in the display face at the third display step, so
+         * reading the rail down the page reads the season.
+         *
+         * The treatment asks for the day at display scale and the month in the
+         * label voice. That needs the `when` string split, and the Lead has ruled
+         * it is NOT split: the values are prose ("Week before Christmas",
+         * "Fridays, 90 minutes per session"), not dates, and splitting them would
+         * make the operator author ~ten new strings in two locales. So the whole
+         * string is set in one voice, at display scale. Nothing was invented.
+         *
+         * Cream, not the accent: five accent rails would blow the page's accent
+         * ration on their own.
+         */
+        <p className="font-serif text-display-3 leading-tight text-balance text-cream">
           {t(`events.items.${id}.when`)}
         </p>
       }

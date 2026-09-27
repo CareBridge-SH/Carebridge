@@ -33,7 +33,13 @@ function columnLetter(index: number): string {
  * cell needs an opaque fill or the rows scroll through it.
  */
 const GRID = 'border-b border-r border-white/40';
-const RAIL = 'bg-navy-soft font-sans text-xs whitespace-nowrap text-white/70';
+/*
+ * T30: the table heads move to the LABEL VOICE (round 5 §2.5), which is what a
+ * printed table's column heads are. Roman numerals are not involved, so the
+ * label voice is safe here — it is Latin-only and the heads are Latin.
+ */
+const RAIL =
+  'bg-navy-soft font-mono text-label tracking-label whitespace-nowrap text-white/70';
 const DATA = 'font-sans text-xs whitespace-nowrap text-white';
 
 export default function LedgerTable() {
