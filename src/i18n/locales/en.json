@@ -80,7 +80,9 @@
       "emptyBody": "We are a student club and post in batches after each event. Our latest moments will appear here soon.",
       "altFallback": "Photo from a CareBridge event.",
       "viewPost": "View this post on Instagram",
-      "videoLabel": "Video"
+      "videoLabel": "Video",
+      "postCount_one": "{{count}} post",
+      "postCount_other": "{{count}} posts"
     },
     "closing": {
       "title": "Support, motivate, and empower.",
@@ -208,8 +210,7 @@
     },
     "tracking": {
       "title": "Public Tracking",
-      "body": "A publicly viewable spreadsheet.",
-      "sheetLink": "https://docs.google.com/spreadsheets/d/1v7nxrBYn47cY2VHNJmhhzuuH1cn1QL76jbTpqhSh4o4/edit?usp=sharing"
+      "body": "A publicly viewable spreadsheet."
     },
     "perEvent": {
       "title": "Per-Event Accounting",

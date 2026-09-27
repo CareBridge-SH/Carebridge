@@ -40,10 +40,23 @@ html[data-theme='light'] {
                              and so failed AA by a hair. This measures 5.56:1. */
   --color-ink: #0b1b3f;
   --color-white: #0b1b3f; /* primary text on light */
+
+  --shadow-ambient-low: 0 4px 16px rgba(11, 27, 63, 0.08);
+  --shadow-ambient-hover: 0 8px 24px rgba(11, 27, 63, 0.12);
 }
 
 html {
   color-scheme: dark;
+
+  /*
+   * Shadow vocabulary (DESIGN.md, Elevation & Depth). A plain custom property,
+   * NOT an `@theme` token: Tailwind v4 bakes the colour out of `@theme` shadow
+   * tokens, so re-pointing one in light mode would only move the shape, not the
+   * colour. Here the whole box-shadow flips with the theme. A surface "earns"
+   * the lift (Earned-Lift Rule).
+   */
+  --shadow-ambient-low: 0 4px 16px rgba(6, 15, 38, 0.24);
+  --shadow-ambient-hover: 0 8px 24px rgba(6, 15, 38, 0.32);
 }
 
 @layer base {

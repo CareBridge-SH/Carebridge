@@ -43,7 +43,7 @@ export function SectionHeading({
   const Tag = level === 2 ? 'h2' : 'h3';
 
   const classes = [
-    'font-serif font-semibold text-white',
+    'font-serif font-semibold leading-tight text-white',
     level === 2 ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl',
     className,
   ]

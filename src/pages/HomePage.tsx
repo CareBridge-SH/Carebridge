@@ -28,28 +28,29 @@ export default function HomePage() {
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section aria-labelledby="home-hero">
-        <Container className="py-20 text-center md:py-28">
+        <Container className="py-20 md:py-28">
           {/*
-            The slogan is the "script" element: elegant serif italic in cream
-            (--color-cream is the palette's soft yellow/cream accent), not an
-            invented token.
+            The slogan is the "script" kicker: elegant serif italic in cream, led
+            by a hairline rule. Left-aligned so the hero reads as an editorial
+            masthead rather than a centred stack.
           */}
-          <p className="font-serif text-xl italic text-cream md:text-2xl">
+          <p className="flex items-center gap-4 font-serif text-xl italic text-cream md:text-2xl">
+            <span aria-hidden="true" className="h-px w-12 shrink-0 bg-cream" />
             {t('common.slogan')}
           </p>
 
           <h1
             id="home-hero"
-            className="mx-auto mt-4 max-w-4xl font-serif text-4xl font-semibold text-white sm:text-5xl lg:text-6xl"
+            className="mt-4 max-w-4xl font-serif text-4xl font-semibold leading-tight text-balance text-white sm:text-5xl lg:text-6xl"
           >
             {t('home.hero.headline')}
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl font-sans text-lg text-white">
+          <p className="mt-6 max-w-2xl font-sans text-lg text-white">
             {t('home.hero.subheadline')}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-10 flex flex-wrap items-center gap-4">
             <Button to="/get-involved" variant="primary" size="lg">
               {t('home.hero.cta.join')}
             </Button>
@@ -150,8 +151,7 @@ export default function HomePage() {
             A real link to the real profile, using the same canonical
             `INSTAGRAM_PROFILE_URL` the footer uses. This used to be a
             deliberately-marked placeholder on the grounds that the CTA had
-            "no posts to land on yet" — but the profile has always existed, and
-            `scripts/sync-instagram.mjs` now keeps the feed above it current, so
+            "no posts to land on yet" — but the profile has always existed, so
             a non-interactive "Follow Our Journey" was just an unfinished-looking
             dead end on the home page.
 

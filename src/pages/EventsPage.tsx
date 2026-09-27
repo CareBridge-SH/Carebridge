@@ -25,7 +25,7 @@ export default function EventsPage() {
       <Container className="py-16 md:py-24">
         <h1
           id="events-title"
-          className="font-serif text-4xl font-semibold text-white md:text-5xl"
+          className="font-serif text-4xl font-semibold leading-tight text-balance text-white md:text-5xl"
         >
           {t('events.title')}
         </h1>
@@ -60,24 +60,30 @@ function EventArticle({ id }: { id: EventId }) {
 
   return (
     <article aria-labelledby={titleId} className="border-b border-lavender-dk pb-10 last:border-b-0">
-      {/* The LONG title — deliberately distinct from the home page's short title. */}
-      <SectionHeading id={titleId} level={2}>
-        {t(`events.items.${id}.title`)}
-      </SectionHeading>
+      <div className="grid gap-2 lg:grid-cols-3 lg:gap-8">
+        <div className="lg:col-span-2">
+          {/* The LONG title — deliberately distinct from the home page's short title. */}
+          <SectionHeading id={titleId} level={2}>
+            {t(`events.items.${id}.title`)}
+          </SectionHeading>
 
-      {id === 'hospitalVisits' ? (
-        /*
-          The status is a bracketed placeholder, rendered byte-identical and
-          visually distinct from real copy — never reworded.
-        */
-        <PlaceholderText as="p" className="mt-4 inline-block text-base">
-          {t('events.items.hospitalVisits.status')}
-        </PlaceholderText>
-      ) : null}
+          {id === 'hospitalVisits' ? (
+            /*
+              The status is a bracketed placeholder, rendered byte-identical and
+              visually distinct from real copy — never reworded.
+            */
+            <PlaceholderText as="p" className="mt-4 inline-block text-base">
+              {t('events.items.hospitalVisits.status')}
+            </PlaceholderText>
+          ) : null}
+        </div>
 
-      <p className="mt-3 font-sans text-sm font-medium text-lavender">
-        {t(`events.items.${id}.when`)}
-      </p>
+        {/* The "when" is a marginal note: right-aligned beside the title on lg. */}
+        <p className="font-sans text-sm font-medium text-lavender lg:justify-self-end lg:text-right">
+          {t(`events.items.${id}.when`)}
+        </p>
+      </div>
+
       <p className="mt-3 max-w-3xl font-sans text-white">
         {t(`events.items.${id}.description`)}
       </p>

@@ -18,30 +18,39 @@ export default function AboutUs() {
       <Container className="py-16 md:py-24">
         <h1
           id="about-title"
-          className="font-serif text-4xl font-semibold text-white md:text-5xl"
+          className="font-serif text-4xl font-semibold leading-tight text-balance text-white md:text-5xl"
         >
           {t('about.title')}
         </h1>
 
         {/* ── Our Story ─────────────────────────────────────────────────── */}
         <section aria-labelledby="about-story" className="mt-12">
-          <SectionHeading id="about-story" level={2}>
-            {t('about.story.title')}
-          </SectionHeading>
-          {/* The client supplied the real club story — rendered as body text. */}
-          <p className="mt-4 max-w-3xl font-sans text-lg text-white">
-            {t('about.story.body')}
-          </p>
+          {/*
+            Editorial offset: the heading sits in the left column and the body
+            runs in the right two-thirds, so a prose section does not read as the
+            same "heading over paragraph" stack as the card grids.
+          */}
+          <div className="grid gap-4 lg:grid-cols-3 lg:gap-8">
+            <SectionHeading id="about-story" level={2}>
+              {t('about.story.title')}
+            </SectionHeading>
+            {/* The client supplied the real club story — rendered as body text. */}
+            <p className="max-w-3xl font-sans text-lg text-white lg:col-span-2">
+              {t('about.story.body')}
+            </p>
+          </div>
         </section>
 
         {/* ── Our Mission ───────────────────────────────────────────────── */}
         <section aria-labelledby="about-mission" className="mt-12">
-          <SectionHeading id="about-mission" level={2}>
-            {t('about.mission.title')}
-          </SectionHeading>
-          <p className="mt-4 max-w-3xl font-sans text-lg text-white">
-            {t('about.mission.body')}
-          </p>
+          <div className="grid gap-4 lg:grid-cols-3 lg:gap-8">
+            <SectionHeading id="about-mission" level={2}>
+              {t('about.mission.title')}
+            </SectionHeading>
+            <p className="max-w-3xl font-sans text-lg text-white lg:col-span-2">
+              {t('about.mission.body')}
+            </p>
+          </div>
         </section>
 
         {/* ── Our Structure ─────────────────────────────────────────────── */}

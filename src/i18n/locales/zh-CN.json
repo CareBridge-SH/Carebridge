@@ -80,7 +80,8 @@
       "emptyBody": "我们是学生社团，会在每次活动结束后集中发布照片，最新的照片很快就会出现在这里。",
       "altFallback": "CareBridge 活动照片。",
       "viewPost": "在 Instagram 上查看这条帖子",
-      "videoLabel": "视频"
+      "videoLabel": "视频",
+      "postCount_other": "{{count}} 条帖子"
     },
     "closing": {
       "title": "支持、激励、赋能。",
@@ -208,8 +209,7 @@
     },
     "tracking": {
       "title": "公开记账",
-      "body": "一份可公开查看的电子表格。",
-      "sheetLink": "https://docs.google.com/spreadsheets/d/1v7nxrBYn47cY2VHNJmhhzuuH1cn1QL76jbTpqhSh4o4/edit?usp=sharing"
+      "body": "一份可公开查看的电子表格。"
     },
     "perEvent": {
       "title": "按活动分别核算",

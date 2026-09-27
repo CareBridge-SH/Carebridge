@@ -28,6 +28,18 @@ automatically through npm's `postbuild` hook.
 
 Redeploys are a push. Nothing is ever committed to a `gh-pages` branch.
 
+## Updating the financial ledger
+
+The Transparency page reads a build-time snapshot extracted from
+`content/ledger.xlsx` — see `content/README.md` for the 5-step upload flow. Two
+things worth knowing here:
+
+- The workbook is **never published**. `scripts/build-ledger.mjs` extracts only the
+  visible sheets' values into `src/data/ledger.json`, and no `.xlsx` ever reaches
+  `dist/` (or the site).
+- The file must live at **`content/ledger.xlsx`**, not `data/` — `.gitignore` has a
+  root-scoped `/data/`, so a workbook dropped there is silently never committed.
+
 ## The three things that go wrong, and why
 
 ### 1. A blank white page

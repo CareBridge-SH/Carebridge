@@ -17,7 +17,7 @@ const NAV_ITEMS = [
 
 const HEADING = 'font-serif text-base font-semibold text-white';
 const BODY_LINK =
-  'rounded font-sans text-sm text-white underline underline-offset-4 hover:text-lavender';
+  'rounded font-sans text-sm text-white underline underline-offset-4 transition-colors hover:text-lavender';
 
 export function Footer({ className }: FooterProps) {
   const { t } = useTranslation();

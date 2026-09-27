@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { RouteMeta } from '../components/RouteMeta';
+import LedgerTable from '../components/LedgerTable';
 import {
   Container,
   PlaceholderText,
@@ -21,7 +22,7 @@ export default function TransparencyPage() {
       <Container className="py-16 md:py-24">
         <h1
           id="transparency-title"
-          className="font-serif text-4xl font-semibold text-white md:text-5xl"
+          className="font-serif text-4xl font-semibold leading-tight text-balance text-white md:text-5xl"
         >
           {t('transparency.title')}
         </h1>
@@ -29,9 +30,9 @@ export default function TransparencyPage() {
           {t('transparency.intro')}
         </p>
 
-        <div className="mt-12 flex flex-col gap-12">
+        <div className="mt-12 flex flex-col">
           {/* 1. Our Commitment */}
-          <section aria-labelledby="transparency-commitment">
+          <section aria-labelledby="transparency-commitment" className="border-t border-navy-soft pt-12 first:border-t-0 first:pt-0">
             <SectionHeading id="transparency-commitment" level={2}>
               {t('transparency.commitment.title')}
             </SectionHeading>
@@ -41,7 +42,7 @@ export default function TransparencyPage() {
           </section>
 
           {/* 2. Receipts & 发票 — the ampersand + CJK render as text */}
-          <section aria-labelledby="transparency-receipts">
+          <section aria-labelledby="transparency-receipts" className="border-t border-navy-soft pt-12 first:border-t-0 first:pt-0">
             <SectionHeading id="transparency-receipts" level={2}>
               {t('transparency.receipts.title')}
             </SectionHeading>
@@ -51,34 +52,18 @@ export default function TransparencyPage() {
           </section>
 
           {/* 3. Public Tracking */}
-          <section aria-labelledby="transparency-tracking">
+          <section aria-labelledby="transparency-tracking" className="border-t border-navy-soft pt-12 first:border-t-0 first:pt-0">
             <SectionHeading id="transparency-tracking" level={2}>
               {t('transparency.tracking.title')}
             </SectionHeading>
             <p className="mt-3 max-w-3xl font-sans text-white">
               {t('transparency.tracking.body')}
             </p>
-            {/*
-              The visible URL is the accessible name; the new-tab hint is
-              `sr-only` text INSIDE the link, never an `aria-label`, which would
-              replace the visible label and break WCAG 2.5.3.
-            */}
-            <a
-              href={t('transparency.tracking.sheetLink')}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="mt-4 inline-block break-all font-sans text-lavender underline underline-offset-4 hover:text-cream"
-            >
-              {t('transparency.tracking.sheetLink')}
-              <span className="sr-only">
-                {' '}
-                {t('a11y.externalLink')}
-              </span>
-            </a>
+            <LedgerTable />
           </section>
 
           {/* 4. Per-Event Accounting */}
-          <section aria-labelledby="transparency-per-event">
+          <section aria-labelledby="transparency-per-event" className="border-t border-navy-soft pt-12 first:border-t-0 first:pt-0">
             <SectionHeading id="transparency-per-event" level={2}>
               {t('transparency.perEvent.title')}
             </SectionHeading>
@@ -88,7 +73,7 @@ export default function TransparencyPage() {
           </section>
 
           {/* 5. Where Funds Go */}
-          <section aria-labelledby="transparency-funds">
+          <section aria-labelledby="transparency-funds" className="border-t border-navy-soft pt-12 first:border-t-0 first:pt-0">
             <SectionHeading id="transparency-funds" level={2}>
               {t('transparency.funds.title')}
             </SectionHeading>
@@ -106,7 +91,7 @@ export default function TransparencyPage() {
           </section>
 
           {/* 6. Questions About Our Finances? */}
-          <section aria-labelledby="transparency-questions">
+          <section aria-labelledby="transparency-questions" className="border-t border-navy-soft pt-12 first:border-t-0 first:pt-0">
             <SectionHeading id="transparency-questions" level={2}>
               {t('transparency.questions.title')}
             </SectionHeading>
@@ -115,7 +100,7 @@ export default function TransparencyPage() {
             </p>
             <a
               href={`mailto:${t('transparency.questions.email')}`}
-              className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 hover:text-cream"
+              className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 transition-colors hover:text-cream"
             >
               {t('transparency.questions.email')}
             </a>

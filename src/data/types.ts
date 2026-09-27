@@ -2,13 +2,9 @@
  * Build-time Instagram snapshot — the shape of one post.
  *
  * `src/data/instagram-posts.json` is a JSON array of these, imported at build
- * time. There is **no** network call, no API, no token and no `.env` — the file
- * is bundled, so the visitor's browser never contacts Instagram (which is
- * unreachable from mainland China, and whose CDN URLs expire).
- *
- * The file is *populated* either by hand or by `scripts/sync-instagram.mjs`,
- * which downloads the newest posts on a schedule and commits them. Either way the
- * shape below is what this type describes, and nobody reads it at runtime.
+ * time. There is **no** network call, no API, no token and no `.env` — a live
+ * Instagram integration was deliberately removed, so
+ * this type describes static, hand-maintained data only.
  */
 export interface InstagramPost {
   /** Unique id for the post. Used as the React key; must be unique in the file. */
@@ -50,4 +46,30 @@ export interface InstagramPost {
 
   /** Intrinsic image height (px). Optional, but avoids layout shift. */
   height?: number;
+}
+
+/**
+ * Build-time ledger snapshot — the financial ledger extracted from
+ * `content/ledger.xlsx` by `scripts/build-ledger.mjs`. Non-visible sheets are
+ * never included, so this is always a filtered projection, never the file.
+ */
+export interface LedgerRow {
+  /** The real Excel row number this came from (1-based), for the on-page row rail. */
+  sourceRow: number;
+  /** Cell values in column order: number, string, date (YYYY-MM-DD), or null. */
+  values: (string | number | null)[];
+  /** Detected (never computed) totals row. */
+  isTotal: boolean;
+}
+
+export interface LedgerSnapshot {
+  /** The rendered sheet's name, or null when nothing has been uploaded yet. */
+  sheetName: string | null;
+  /** The header row, in display order (string or null). */
+  columns: (string | null)[];
+  rows: LedgerRow[];
+  /** Visible sheets that were not rendered. */
+  ignoredSheets: string[];
+  /** The workbook's own last-saved time (provenance, not a build timestamp), or null. */
+  workbookModifiedAt: string | null;
 }

@@ -16,9 +16,13 @@ export interface CardProps {
  * differently in each theme, and this project has already shipped a 3.32:1
  * failure that way. The border measured 3.8:1 on dark and 8.1:1 on light against
  * this card's own fill.
+ *
+ * `shadow-[var(--shadow-ambient-low)]` is DESIGN.md's Ambient Low lift (a theme
+ * custom property, not a hard-coded shadow) — the one component that earns the
+ * elevation vocabulary, per the Earned-Lift Rule.
  */
 const SURFACE =
-  'flex h-full flex-col rounded-lg border border-lavender-dk bg-navy-soft p-6';
+  'flex h-full flex-col rounded-lg border border-lavender-dk bg-navy-soft p-6 shadow-[var(--shadow-ambient-low)]';
 
 export function Card({
   children,

@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "prebuild": "node scripts/check-instagram.mjs",
+    "prebuild": "node scripts/check-instagram.mjs && node scripts/build-ledger.mjs",
+    "predev": "node scripts/build-ledger.mjs",
     "postbuild": "node scripts/postbuild-pages.mjs",
     "check:instagram": "node scripts/check-instagram.mjs",
-    "sync:instagram": "node scripts/sync-instagram.mjs",
+    "ledger:build": "node scripts/build-ledger.mjs",
+    "ledger:check": "node scripts/build-ledger.mjs --check",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -32,6 +34,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
+    "exceljs": "4.4.0",
     "oxlint": "^1.81.0",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"

@@ -41,3 +41,15 @@ dist-ssr
 # Carebridge-internal/docs/team/ROUND3-PLAN.md, "Installing Impeccable".
 .claude/
 .impeccable/
+
+# Impeccable's product/design working files (root only) -- same reasoning as
+# above: AI working files, not product source, never committed to this
+# public repo.
+/PRODUCT.md
+/DESIGN.md
+
+# Team working papers -- internal process reports, screenshots and evidence.
+# Removed from the public repo once already (cb987f6); ignored here so that
+# doesn't have to happen again every round. Preserved outside the repo, same
+# as docs/team/** and docs/verify/**.
+/reports/
