@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export interface ButtonProps {
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'neutral';
   size?: 'sm' | 'md' | 'lg';
   /** Present -> renders a react-router `<Link to={to}>`. Beats `href`. */
   to?: string;
@@ -38,6 +38,23 @@ const VARIANT: Record<NonNullable<ButtonProps['variant']>, string> = {
   primary: 'bg-lavender text-navy-deep hover:bg-lavender-dk',
   secondary: 'border-2 border-lavender text-lavender hover:bg-navy-soft',
   ghost: 'text-lavender underline underline-offset-4 hover:text-cream',
+  /*
+   * ROUND 5, T30b — a quiet variant that spends no accent.
+   *
+   * `--color-white` is the text colour, so this outline is the text colour
+   * drawn as a border: near-white on the dark ground, near-navy on paper. It is
+   * neutral by construction rather than by picking a colour that merely does not
+   * match the accent detector, and it clears AA in both skies with room —
+   * 16.9:1 on dark and 16.4:1 on light, for both the label and the outline
+   * (WCAG 1.4.11 wants 3:1 for a control's boundary).
+   *
+   * Rejected: a border of `--color-rule` (2.38:1 dark, 2.06:1 light — fails
+   * 1.4.11, which is the failure mode this project has already paid for once)
+   * and a border of `--color-rule-strong` (passes, but it is Hopeful Lavender
+   * Deep, so it would only look neutral to a detector keyed on the other
+   * lavender).
+   */
+  neutral: 'border-2 border-white text-white hover:bg-navy-soft',
 };
 
 const SIZE: Record<NonNullable<ButtonProps['size']>, string> = {

@@ -75,7 +75,13 @@ export default function HomePage() {
           <p className="flex items-center gap-4 font-serif text-2xl italic text-cream md:text-3xl lg:text-4xl">
             <span
               aria-hidden="true"
-              className="h-px w-10 shrink-0 bg-cream md:w-16"
+              /*
+                `bg-rule`, not `bg-cream`: this is a decorative rule, and a rule
+                has a token of its own. It is `aria-hidden`, so it owes no
+                contrast budget — but it does not need to spend the accent
+                either, and on the cover the accent has a ration.
+              */
+              className="h-px w-10 shrink-0 bg-rule md:w-16"
             />
             {t('common.slogan')}
           </p>
@@ -95,7 +101,8 @@ export default function HomePage() {
             <Button to="/get-involved" variant="primary" size="lg">
               {t('home.hero.cta.join')}
             </Button>
-            <Button to="/get-involved" variant="secondary" size="lg">
+            {/* Neutral, not accent: same label, same destination, same place. */}
+            <Button to="/get-involved" variant="neutral" size="lg">
               {t('home.hero.cta.partner')}
             </Button>
             <Button href="#home-instagram" variant="ghost" size="lg">
@@ -233,7 +240,7 @@ export default function HomePage() {
               href={INSTAGRAM_PROFILE_URL}
               target="_blank"
               rel="noreferrer noopener"
-              variant="secondary"
+              variant="neutral"
               size="lg"
             >
               {t('home.instagram.followCta')}

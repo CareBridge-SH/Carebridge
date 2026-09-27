@@ -54,8 +54,19 @@ export function Plate({
 
   return (
     <figure className={className}>
+      {/*
+        `shadow-[var(--shadow-plate)]` — T30b. `--shadow-plate` was defined in
+        both themes and read by nothing, which is dead code; the plate is the
+        case that earns the lift (DESIGN.md, the Earned-Lift Rule), so it is now
+        the component that spends it. A plate sits ON the page rather than
+        floating in it.
+       *
+        The shadow flips with the theme through the token, and it is drawn
+        outside the box, so `overflow-hidden` clips the plate's corners without
+        clipping its lift.
+       */}
       <div
-        className="relative isolate overflow-hidden border border-rule bg-plate-field"
+        className="relative isolate overflow-hidden border border-rule bg-plate-field shadow-[var(--shadow-plate)]"
         style={{ aspectRatio: ratio }}
       >
         {entry ? (
