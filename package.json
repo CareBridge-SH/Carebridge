@@ -6,12 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "prebuild": "node scripts/check-instagram.mjs && node scripts/build-ledger.mjs",
-    "predev": "node scripts/build-ledger.mjs",
+    "prebuild": "node scripts/check-instagram.mjs && node scripts/build-ledger.mjs --header-row 2",
+    "predev": "node scripts/build-ledger.mjs --header-row 2",
     "postbuild": "node scripts/postbuild-pages.mjs",
     "check:instagram": "node scripts/check-instagram.mjs",
-    "ledger:build": "node scripts/build-ledger.mjs",
-    "ledger:check": "node scripts/build-ledger.mjs --check",
+    "ledger:build": "node scripts/build-ledger.mjs --header-row 2",
+    "ledger:check": "node scripts/build-ledger.mjs --check --header-row 2",
     "lint": "oxlint",
     "preview": "vite preview"
   },

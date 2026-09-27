@@ -9,10 +9,17 @@
  *
  *     node scripts/build-ledger.mjs                 # extract + write
  *     node scripts/build-ledger.mjs --check         # validate, write nothing
- *     node scripts/build-ledger.mjs --from-file x.xlsx --sheet Ledger --header-row 1
+ *     node scripts/build-ledger.mjs --from-file x.xlsx --sheet Ledger --header-row 2
+ *
+ * `--header-row` is where the column names live. The operator's workbook keeps a
+ * title row above the real header, so the header is on **row 2**; that value is
+ * passed by the `package.json` scripts (`prebuild`, `predev`, `ledger:build`,
+ * `ledger:check`) rather than baked in here, so changing the workbook layout is
+ * a one-line npm edit and not a code change. The fallback below is 1 only for a
+ * bare direct invocation.
  *
  * Exit codes: 0 = nothing wrong (including "not uploaded yet"); 1 = a present-but-
- * wrong input that would otherwise silently ship a stale table.
+ * wrong input that would otherwise silently ship a stale or empty table.
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -66,8 +73,18 @@ function hasMagic(buf, magic) {
   return buf.length >= magic.length && magic.every((b, i) => buf[i] === b);
 }
 
+/**
+ * Blank means "carries no value": null, undefined, the empty string, **or a
+ * string that is only whitespace**.
+ *
+ * The whitespace case is the whole point. `"   "` used to count as a value, so a
+ * header row of spaces produced a `columns` array of `"   "` and a data row of
+ * spaces produced a row that was not null — and `--check` exited 0 on both.
+ */
 function isBlank(v) {
-  return v === null || v === undefined || v === '';
+  if (v === null || v === undefined) return true;
+  if (typeof v === 'string') return v.trim() === '';
+  return false;
 }
 
 /** Last column index (1-based) whose cell is not blank; 0 if the row is empty. */
@@ -182,7 +199,10 @@ async function main() {
   const headerRowObj = sheet.getRow(headerRow);
   let columnCount = lastNonEmptyColumn(headerRowObj);
   if (columnCount === 0) {
-    error(`header row ${headerRow} is empty (anti-wipe)`);
+    error(
+      `header row ${headerRow} has no column names (blank or whitespace only) — ` +
+        `pass --header-row if the real header is on a different row (anti-wipe)`,
+    );
     process.exit(1);
   }
 
@@ -198,7 +218,10 @@ async function main() {
     if (lastCol > columnCount) columnCount = lastCol;
   });
   if (firstDataRow === 0) {
-    error('no data rows found (anti-wipe)');
+    error(
+      `no data rows below header row ${headerRow} — header-only workbooks are ` +
+        `mis-shaped, not empty (anti-wipe)`,
+    );
     process.exit(1);
   }
 
@@ -221,6 +244,21 @@ async function main() {
       (v) => typeof v === 'string' && TOTAL_RE.test(v.trim()),
     );
     rows.push({ sourceRow: r, values, isTotal });
+  }
+
+  // 7. Rows that exist but hold no value at all. This is the case the old guard
+  //    missed entirely: `lastNonEmptyColumn` counts a formula cell or an error
+  //    cell as "not blank", so the sheet gets past `firstDataRow` and ships a
+  //    table of nulls with a green build. A workbook whose every data row is
+  //    null is mis-shaped, not empty.
+  const populatedRows = rows.filter((r) => r.values.some((v) => v !== null));
+  if (populatedRows.length === 0) {
+    error(
+      `all ${rows.length} data row(s) below header row ${headerRow} are empty — ` +
+        `every cell coerced to null, so this workbook would publish an all-null ` +
+        `table (anti-wipe)`,
+    );
+    process.exit(1);
   }
 
   const extraVisible = visibleSheets.filter((ws) => ws !== sheet);

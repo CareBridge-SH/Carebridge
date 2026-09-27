@@ -17,11 +17,19 @@ function columnLetter(index: number): string {
 }
 
 /*
- * Excel-look styling. The sheet is a raised surface; gridlines are a low-alpha
- * tint of the flipping `--color-white` token, which reads as a neutral grey in
- * both themes. This is a decorative grid, not text, so it carries no WCAG
- * contrast requirement — but the number cells and labels use full-strength
- * tokens (text-white, text-lavender) and are measured in §Verification.
+ * Excel-look styling, opened out into a ledger (ROUND4-PLAN §3.5): row and
+ * column rules, figures right-aligned on `tabular-nums` so digits line up down
+ * the page — and **no outer border and no fill**, so it reads as a ruled table
+ * on the page rather than as a bordered card floating on it.
+ *
+ * The gridlines are a low-alpha tint of the flipping `--color-white` token,
+ * which reads as a neutral grey in both themes. This is a decorative grid, not
+ * text, so it carries no WCAG contrast requirement — but the number cells and
+ * labels use full-strength tokens (`text-white`, `text-lavender`) and are
+ * measured in the report.
+ *
+ * `RAIL` keeps `bg-navy-soft` because the header cells are `sticky`: a sticky
+ * cell needs an opaque fill or the rows scroll through it.
  */
 const GRID = 'border-b border-r border-white/40';
 const RAIL = 'bg-navy-soft font-sans text-xs whitespace-nowrap text-white/70';
@@ -30,7 +38,18 @@ const DATA = 'font-sans text-xs whitespace-nowrap text-white';
 export default function LedgerTable() {
   const { i18n } = useTranslation();
 
-  // Empty snapshot -> render nothing (no frame, no link, no placeholder).
+  /*
+   * Empty snapshot -> render nothing: no frame, no header row, no link, no
+   * placeholder.
+   *
+   * This is the SHIPPED state (src/data/ledger.json is `sheetName: null,
+   * columns: [], rows: []`), so §3.5's "must look deliberate when empty" has to
+   * be answered by what is here. Deliberate silence is the honest answer: a
+   * half-drawn table, an empty ruled frame, or a lone sheet-tab strip would all
+   * read as breakage, and the one thing that would read as intentional — a
+   * sentence explaining that the ledger is not published yet — needs a locale
+   * key that exists in neither language. Reported, not invented.
+   */
   if (!ledger.sheetName || ledger.rows.length === 0) {
     return null;
   }
@@ -65,7 +84,7 @@ export default function LedgerTable() {
         tabIndex={0}
         className="overflow-x-auto"
       >
-        <table className="min-w-full border-separate border-spacing-0 border-t border-l border-white/40 bg-navy-deep">
+        <table className="min-w-full border-separate border-spacing-0">
           <thead>
             {/* Column-letter rail — decoration only. */}
             <tr aria-hidden="true">
