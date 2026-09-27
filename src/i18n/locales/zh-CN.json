@@ -76,8 +76,6 @@
       "title": "Instagram",
       "subtitle": "记录我们在各项活动和医院探访中的瞬间。",
       "followCta": "关注我们的动态",
-      "emptyTitle": "照片即将发布",
-      "emptyBody": "我们是学生社团，会在每次活动结束后集中发布照片，最新的照片很快就会出现在这里。",
       "altFallback": "CareBridge 活动照片。",
       "viewPost": "在 Instagram 上查看这条帖子",
       "videoLabel": "视频",
@@ -227,6 +225,9 @@
       "body": "如果对我们的财务有任何疑问，欢迎联系我们。",
       "email": "melonieema@163.com"
     }
+  },
+  "plate": {
+    "label": "图版"
   },
   "footer": {
     "tagline": "支持、激励、赋能。",

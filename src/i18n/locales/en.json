@@ -76,8 +76,6 @@
       "title": "Instagram",
       "subtitle": "Moments from our events and hospital visits.",
       "followCta": "Follow Our Journey",
-      "emptyTitle": "Photos coming soon",
-      "emptyBody": "We are a student club and post in batches after each event. Our latest moments will appear here soon.",
       "altFallback": "Photo from a CareBridge event.",
       "viewPost": "View this post on Instagram",
       "videoLabel": "Video",
@@ -227,6 +225,9 @@
       "body": "If you have questions about our finances, contact us.",
       "email": "melonieema@163.com"
     }
+  },
+  "plate": {
+    "label": "PLATE"
   },
   "footer": {
     "tagline": "Support, motivate, and empower.",
