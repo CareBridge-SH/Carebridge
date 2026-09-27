@@ -28,6 +28,16 @@ import {
  * heading. Real group *names* would be client copy and do not exist in either
  * locale; that is reported, not guessed.
  *
+ * **The banding is not only visual (D-2).** Each band is a real `region`
+ * landmark — a `<section>` named by `aria-labelledby` pointing at its FIRST
+ * entry's heading, which is existing copy. A screen reader therefore gets three
+ * named groups of two headings rather than six equal peers, which is what the
+ * page shows. The entries themselves are plain `<div>`s: making them regions too
+ * would put a `region` named "Our Commitment" inside a `region` also named "Our
+ * Commitment", and axe's `landmark-unique` is right to call that a defect.
+ * A structure that is implied to the eye must be real in the accessibility tree,
+ * or it must not be implied at all.
+ *
  * There is no CTA, no button, and no money-requesting affordance anywhere on the
  * page; the only mention of money is the factual "where funds go" copy.
  */
@@ -50,7 +60,7 @@ export default function TransparencyPage() {
 
         {/* ── Band 1 — how we record ──────────────────────────────────────── */}
         <Rule className="mt-12" />
-        <div className="mt-10 flex flex-col gap-10">
+        <DocBand labelledBy="transparency-commitment" className="mt-10">
           <DocEntry
             n="01"
             id="transparency-commitment"
@@ -71,11 +81,11 @@ export default function TransparencyPage() {
               {t('transparency.receipts.body')}
             </p>
           </DocEntry>
-        </div>
+        </DocBand>
 
         {/* ── Band 2 — how you can inspect it ─────────────────────────────── */}
         <Rule className="mt-12" />
-        <div className="mt-10 flex flex-col gap-10">
+        <DocBand labelledBy="transparency-tracking" className="mt-10">
           <DocEntry
             n="03"
             id="transparency-tracking"
@@ -96,11 +106,11 @@ export default function TransparencyPage() {
               {t('transparency.perEvent.body')}
             </p>
           </DocEntry>
-        </div>
+        </DocBand>
 
         {/* ── Band 3 — where it goes, and asking us ───────────────────────── */}
         <Rule className="mt-12" />
-        <div className="mt-10 flex flex-col gap-10">
+        <DocBand labelledBy="transparency-funds" className="mt-10">
           <DocEntry
             n="05"
             id="transparency-funds"
@@ -134,16 +144,47 @@ export default function TransparencyPage() {
               {t('transparency.questions.email')}
             </a>
           </DocEntry>
-        </div>
+        </DocBand>
       </Section>
     </>
+  );
+}
+
+interface DocBandProps {
+  /**
+   * The `id` of this band's **first** entry heading. A named `<section>` is a
+   * `region` landmark, and the name has to come from copy that already exists —
+   * there is no key for a band name in either locale, and inventing one is not
+   * allowed. So the band borrows the heading of the entry it opens with.
+   *
+   * ⚠ The caller must keep this equal to the first child's `id`. Binding the two
+   * would mean restructuring the children, which is not worth what it would cost
+   * the JSX's readability.
+   */
+  labelledBy: string;
+  className?: string;
+  children: ReactNode;
+}
+
+/**
+ * One band of the document: a real `region` so the grouping the page draws is
+ * also the grouping a screen reader hears (D-2).
+ */
+function DocBand({ labelledBy, className, children }: DocBandProps) {
+  return (
+    <section
+      aria-labelledby={labelledBy}
+      className={['flex flex-col gap-10', className].filter(Boolean).join(' ')}
+    >
+      {children}
+    </section>
   );
 }
 
 interface DocEntryProps {
   /** `01` … `06` — a numeral, not a translatable string. */
   n: string;
-  /** Target for the entry's `aria-labelledby`. */
+  /** The heading's `id`. Its band points `aria-labelledby` at the first of these. */
   id: string;
   title: string;
   children: ReactNode;
@@ -153,13 +194,17 @@ interface DocEntryProps {
  * One numbered entry of the document: the number in a narrow aligned gutter, the
  * heading and body in the column beside it.
  *
+ * A `<div>`, deliberately: its band is already a named `region`, and a second
+ * region with the same name nested inside it would be a `landmark-unique`
+ * defect rather than a structure.
+ *
  * The number is `decorative`. Nothing on the page refers to "note 03", so the
  * number is wayfinding, not content, and the heading already names the entry —
  * announcing the number first would be noise.
  */
 function DocEntry({ n, id, title, children }: DocEntryProps) {
   return (
-    <section aria-labelledby={id} className="flex gap-5">
+    <div className="flex gap-5">
       <Numeral decorative size="sm" className="w-10 shrink-0 leading-tight">
         {n}
       </Numeral>
@@ -169,6 +214,6 @@ function DocEntry({ n, id, title, children }: DocEntryProps) {
         </SectionHeading>
         {children}
       </div>
-    </section>
+    </div>
   );
 }
