@@ -50,6 +50,30 @@ dist-ssr
 
 # Team working papers -- internal process reports, screenshots and evidence.
 # Removed from the public repo once already (cb987f6); ignored here so that
-# doesn't have to happen again every round. Preserved outside the repo, same
-# as docs/team/** and docs/verify/**.
+# doesn't have to happen again every round.
 /reports/
+
+# The team's working documents: the kit (briefs, plans, rules), the verification
+# evidence and harness, the diagrams. The MASTER copy lives outside this
+# repository, in D:\桌面\Carebridge-internal -- nothing here belongs in a public
+# repo. It is mirrored into this tree anyway, because the team runs with its
+# working directory here and every brief, rule and kickoff addresses these files
+# relative to that directory ("docs/team/prompts/...", "docs/TEAM-RULES.md",
+# "STATUS.md"). Without the mirror those paths do not exist and a member stalls --
+# or improvises from a brief that arrived truncated, which is what happened in
+# Round 3 (reports/fixer-T15-T16.md, line 22).
+#
+#   keep in sync with : node docs/team/sync-kit.mjs          (master -> here)
+#   take the team's work back : node docs/team/sync-kit.mjs --pull
+#   verify : node docs/team/sync-kit.mjs --check   (also run by check-kit.mjs)
+#
+# Scoped to the repo root on purpose: an unscoped "team/" would also hide any
+# src/**/team/** that ever appears. The two real docs in docs/ -- DEPLOYMENT.md
+# and INSTAGRAM.md -- are tracked product documentation and stay tracked.
+/docs/team/
+/docs/verify/
+/docs/diagrams/
+/docs/plans/
+/docs/TEAM-RULES.md
+/docs/PLACEHOLDERS.md
+/STATUS.md
