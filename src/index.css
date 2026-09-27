@@ -115,6 +115,9 @@ html[data-theme='light'] {
   --color-plate-field: #eee9df;
   --paper-grain-opacity: 0.035;
   --shadow-plate: 0 6px 20px rgba(11, 27, 63, 0.1);
+  /* T28, added. Weaker on paper than on the dark ground: the light accent is a
+     dark purple, and the same strength would muddy every photograph. */
+  --plate-duotone-opacity: 0.55;
 }
 
 html {
@@ -141,6 +144,8 @@ html {
    */
   --paper-grain-opacity: 0.05;
   --shadow-plate: 0 6px 20px rgba(6, 15, 38, 0.45);
+  /* T28, added. */
+  --plate-duotone-opacity: 0.8;
 }
 
 @layer base {

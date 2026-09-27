@@ -18,6 +18,9 @@ export type { NumeralProps } from './Numeral';
 
 export { Folio, RunningHead } from './PageFurniture';
 
+export { Plate } from './Plate';
+export type { PlateProps } from './Plate';
+
 export { PlaceholderText } from './PlaceholderText';
 export type { PlaceholderTextProps } from './PlaceholderText';
 

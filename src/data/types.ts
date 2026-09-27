@@ -49,6 +49,40 @@ export interface InstagramPost {
 }
 
 /**
+ * One photograph in the operator-owned manifest — `src/data/photos.json`.
+ *
+ * **The manifest is `{}` in the repository, and it is meant to be.** No
+ * photograph is committed; the site ships with every plate engraved, and it
+ * gets better the moment the operator drops files in. `Plate` reads this map and
+ * falls back to the engraved plate for any slug it cannot find.
+ */
+export interface PhotoEntry {
+  /** Intrinsic width in px. With `height`, this is the plate's `aspect-ratio`. */
+  width: number;
+  /** Intrinsic height in px. Reserving the box is what keeps a photograph from
+   *  reintroducing the layout shift T27 closed. */
+  height: number;
+  /** Full locale key for the alt text, e.g. `photos.fall-workshop.alt`. */
+  altKey: string;
+  /** Full locale key for the caption, e.g. `photos.fall-workshop.caption`. */
+  captionKey: string;
+  /** CSS `object-position`, e.g. `"50% 30%"` — which part survives the crop. */
+  focus: string;
+  /**
+   * Set when `public/photos/<slug>@2x.webp` exists.
+   *
+   * Declared rather than detected, and that is deliberate: `public/` is not a
+   * module tree, so a build cannot ask whether the file is there, and emitting a
+   * `srcset` that points at a missing file is worse than emitting none — the
+   * browser would pick the 2x candidate and paint nothing.
+   */
+  has2x?: boolean;
+}
+
+/** `slug -> entry`. Absent slug means engraved plate; that is a normal state, not an error. */
+export type PhotoManifest = Record<string, PhotoEntry>;
+
+/**
  * Build-time ledger snapshot — the financial ledger extracted from
  * `content/ledger.xlsx` by `scripts/build-ledger.mjs`. Non-visible sheets are
  * never included, so this is always a filtered projection, never the file.

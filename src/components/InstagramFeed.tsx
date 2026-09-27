@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import postsJson from '../data/instagram-posts.json';
 import type { InstagramPost } from '../data/types';
 import { INSTAGRAM_PROFILE_URL } from '../data/site';
-import { Container } from './ui';
+import { Container, Plate } from './ui';
 
 /**
  * Build-time snapshot, imported from JSON — no `fetch`, no network, no token,
@@ -16,12 +16,17 @@ const posts: InstagramPost[] = postsJson;
  * band (ROUND4-PLAN §3.1), so it owns its own gutters in both branches.
  */
 export function InstagramFeed() {
+  /*
+   * `[]` is the shipped state, so this is the design and not a fallback.
+   *
+   * It used to be an `EmptyState` — a dashed box carrying "Photos coming soon",
+   * which is an apology and reads as a void. It is now the **plate band**: the
+   * engraved plate at bleed width, captioned with the club's real handle. Nothing
+   * is invented and nothing is promised; the band is simply composed. The caption
+   * is an existing key (`footer.instagramHandle`), not new copy.
+   */
   if (posts.length === 0) {
-    return (
-      <Container>
-        <EmptyState />
-      </Container>
-    );
+    return <Plate slug="instagram" number="01" captionKey="footer.instagramHandle" />;
   }
 
   return (
@@ -93,26 +98,6 @@ function ProfileChrome({ count }: { count: number }) {
       <span className="font-sans text-sm font-medium text-lavender">
         {t('home.instagram.postCount', { count })}
       </span>
-    </div>
-  );
-}
-
-/**
- * `[]` is the shipped state until real photos exist, so this is the primary
- * design, not a fallback: it renders real copy (`home.instagram.emptyTitle` /
- * `.emptyBody`) and no image element at all, so it can never show a broken
- * image, a spinner, or a network error.
- */
-function EmptyState() {
-  const { t } = useTranslation();
-  return (
-    <div className="rounded-lg border border-dashed border-lavender-dk p-8 text-center sm:p-12">
-      <p className="font-serif text-xl font-semibold text-white sm:text-2xl">
-        {t('home.instagram.emptyTitle')}
-      </p>
-      <p className="mx-auto mt-3 max-w-xl font-sans text-sm text-white">
-        {t('home.instagram.emptyBody')}
-      </p>
     </div>
   );
 }
