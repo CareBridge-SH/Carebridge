@@ -33,3 +33,18 @@
 @import '@fontsource/inter/latin-500.css';
 @import '@fontsource/inter/latin-600.css';
 @import '@fontsource/inter/latin-700.css';
+
+/*
+ * ── Round 5: the label voice ───────────────────────────────────────────────
+ *
+ * IBM Plex Mono, 400/500 only — the label voice is 11–12px and never bold
+ * enough to need 600. Self-hosted from the same vendor and under the same
+ * licence as the other two (SIL OFL 1.1), which is what keeps the China rule:
+ * the round adds no third-party runtime request, and this adds no request at
+ * all beyond our own origin.
+ *
+ * Latin subset only, like the others. The CJK fallback for this voice is in the
+ * `--font-mono` token in `src/index.css`.
+ */
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-500.css';

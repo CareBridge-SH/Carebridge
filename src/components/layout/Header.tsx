@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { RunningHead } from '../ui';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -182,6 +183,16 @@ export function Header({ className }: HeaderProps) {
           </div>
         </nav>
       </div>
+
+      {/*
+        The running head is the last row of the masthead, and it is INSIDE the
+        `<header>` landmark on purpose. Outside every landmark it was bare
+        content on the body and axe's `region` rule failed on all 60 matrix
+        cells — correctly: a page whose text is not in a landmark is a page a
+        screen reader cannot skim. It is still outside `<main>`, so it is not in
+        the reading order of the content.
+      */}
+      <RunningHead />
     </header>
   );
 }

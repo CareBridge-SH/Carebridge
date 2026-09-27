@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+/*
+ * ── Round 5: safelist the display scale ─────────────────────────────────────
+ *
+ * Tailwind v4 emits a utility only when it finds the class name in scanned
+ * source. `text-display-1` is not used by anything yet — T30 is what puts it on
+ * the five pages — so without this it would be ABSENT from the shipped
+ * stylesheet, and a misspelled theme key would fail silently at T30's call site
+ * instead of here, where it is cheap to notice.
+ *
+ * `@source inline(...)` forces those utilities into the build, which is what
+ * makes "the display scale is addressable" a fact to grep rather than a claim
+ * to trust. The cost is a few hundred bytes of CSS.
+ */
+@source inline("text-display-1");
+@source inline("text-display-2");
+@source inline("text-display-3");
+@source inline("tracking-display");
+@source inline("bg-plate-field");
+
 @theme {
   /* CareBridge design tokens — shared contract, do not rename */
   --color-navy: #0b1b3f;
@@ -12,6 +31,52 @@
 
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
+
+  /*
+   * ── Round 5: The Printed Report ────────────────────────────────────────
+   *
+   * Everything from here down was ADDED in round 5. No value above this line
+   * changed — that is a hard rule for the round, and `git diff src/index.css`
+   * is the proof.
+   *
+   * These live in `@theme` on purpose: Tailwind v4 reads its `--text-*`,
+   * `--tracking-*`, `--color-*` and `--font-*` namespaces to EMIT UTILITIES, so
+   * a token defined here is addressable as `text-display-1`, `tracking-label`,
+   * `border-rule`, `bg-plate-field`, `font-mono`. The brief asks for exactly
+   * that. The two that no utility needs (`--paper-grain-opacity`,
+   * `--shadow-plate`) are plain custom properties further down instead, for the
+   * reason recorded there.
+   */
+
+  /* The loud voice. Fluid, and never a replacement for an existing size. */
+  --text-display-1: clamp(3.5rem, 9vw, 9rem); /* 129.6px at 1440 */
+  --text-display-2: clamp(2.25rem, 5vw, 4.5rem); /* 72px at 1440 */
+  --text-display-3: clamp(1.5rem, 2.6vw, 2.25rem); /* 36px at 1440 */
+  --text-label: 0.6875rem; /* 11px — the label voice, and nothing else */
+  --tracking-display: -0.02em; /* a display line is set tight */
+  --tracking-label: 0.16em; /* a label is set loose and small */
+
+  /*
+   * Two rule weights instead of one. The hairline is deliberately QUIETER than
+   * the `--color-lavender-dk` the rules used through round 4 (2.38:1 against
+   * the dark ground, where lavender-dk measured 4.48:1): a printed rule is a
+   * structure line, not a highlight, and the strong weight keeps the old
+   * strength for anywhere a rule has to carry emphasis.
+   */
+  --color-rule: #455785; /* 2.38:1 on the dark ground */
+  --color-rule-strong: #8b7ab8; /* the round-4 rule strength, 4.48:1 */
+
+  /* The field a plate is mounted on — one tonal step off the page. */
+  --color-plate-field: #14264a;
+
+  /*
+   * The label voice. Self-hosted like the other two, and deliberately confined
+   * to 11–12px text (folios, plate numbers, captions, table heads) so that a
+   * metrics mismatch in this face cannot move a line of body or display copy.
+   */
+  --font-mono:
+    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, 'PingFang SC',
+    'Microsoft YaHei', monospace;
 }
 
 /*
@@ -43,6 +108,13 @@ html[data-theme='light'] {
 
   --shadow-ambient-low: 0 4px 16px rgba(11, 27, 63, 0.08);
   --shadow-ambient-hover: 0 8px 24px rgba(11, 27, 63, 0.12);
+
+  /* ── Round 5, added. No value above changed. ─────────────────────────── */
+  --color-rule: #b6ac99; /* 2.06:1 on the light ground */
+  --color-rule-strong: #453a70; /* the round-4 rule strength, 9.21:1 */
+  --color-plate-field: #eee9df;
+  --paper-grain-opacity: 0.035;
+  --shadow-plate: 0 6px 20px rgba(11, 27, 63, 0.1);
 }
 
 html {
@@ -57,6 +129,18 @@ html {
    */
   --shadow-ambient-low: 0 4px 16px rgba(6, 15, 38, 0.24);
   --shadow-ambient-hover: 0 8px 24px rgba(6, 15, 38, 0.32);
+
+  /*
+   * ── Round 5, added. No value above changed. ────────────────────────────
+   *
+   * These two are plain custom properties rather than `@theme` tokens, for the
+   * reason already recorded above: Tailwind v4 bakes the colour out of an
+   * `@theme` shadow token, so re-pointing one in light mode would move the
+   * shape and not the colour. `--paper-grain-opacity` needs no utility, so it
+   * has no reason to be a theme token either.
+   */
+  --paper-grain-opacity: 0.05;
+  --shadow-plate: 0 6px 20px rgba(6, 15, 38, 0.45);
 }
 
 @layer base {
@@ -87,6 +171,34 @@ html {
   ::selection {
     background-color: var(--color-lavender);
     color: var(--color-navy-deep);
+  }
+
+  /*
+   * ── Round 5: the paper ─────────────────────────────────────────────────
+   *
+   * A fine grain over the whole sheet. It is a `data:` URI, so it costs no
+   * request and no file — the China rule holds — and it is DETERMINISTIC:
+   * `feTurbulence` with no `seed` attribute is seed 0, so every build paints
+   * the identical pattern. Nothing here reads a clock or a random number.
+   *
+   * It is a pseudo-element of `body` with `pointer-events: none`, so it is not
+   * focusable, not clickable and not in the accessibility tree; it carries no
+   * text and no role. `z-index: 40` puts it over the page but under the skip
+   * link (`z-50`), so the first focusable element is never veiled.
+   *
+   * Strength flips with the theme (`--paper-grain-opacity`): 0.05 on the dark
+   * ground, where a light speck reads as texture, and 0.035 on paper, where the
+   * same value would read as dirt.
+   */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+    opacity: var(--paper-grain-opacity);
+    background-repeat: repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)'/%3E%3C/svg%3E");
   }
 }
 

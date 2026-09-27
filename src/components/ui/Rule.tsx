@@ -7,20 +7,38 @@ export interface RuleProps {
    * text is already the adjacent heading: it would be read out twice.
    */
   label?: ReactNode;
+  /**
+   * **Round 5: two weights instead of one.**
+   *
+   * `hairline` (the default) is a structure line — quiet, one pixel, and
+   * deliberately softer than the lavender it used to be (2.38:1 against the
+   * dark ground where `--color-lavender-dk` measures 4.48:1). `strong` is two
+   * pixels and keeps the round-4 strength for the places a rule has to carry
+   * emphasis rather than just separate.
+   *
+   * A rule is never a highlight; that is what the accent is for, and the accent
+   * is rationed to three uses a page.
+   */
+  weight?: 'hairline' | 'strong';
   className?: string;
 }
 
 /*
- * `--color-lavender-dk` at full strength, not a low-alpha tint of a flipping
- * token: a tint measures differently in each theme, and this project has already
- * shipped a 3.32:1 AA failure that way. Against the page ground this hairline is
- * 4.48:1 on dark and 9.21:1 on light.
+ * Full class strings, not interpolated names: Tailwind v4 resolves utilities by
+ * scanning source text, so a computed class name compiles to nothing.
  *
- * It is nonetheless decoration, not a UI component, so WCAG 1.4.11 does not
- * apply to it — the numbers are recorded because this project measures rather
+ * Both weights name a token rather than a literal colour, and neither is a
+ * low-alpha tint of a flipping token: a tint measures differently in each
+ * theme, and this project has already shipped a 3.32:1 AA failure that way.
+ *
+ * A rule is decoration, not a UI component, so WCAG 1.4.11 does not apply to
+ * it — the contrast figures are recorded because this project measures rather
  * than assumes, not because a rule is owed a contrast budget.
  */
-const LINE = 'border-t border-lavender-dk';
+const LINE: Record<NonNullable<RuleProps['weight']>, string> = {
+  hairline: 'border-t border-rule',
+  strong: 'border-t-2 border-rule-strong',
+};
 
 /**
  * A hairline that separates **entries**, not sections — the ruled-list
@@ -32,15 +50,18 @@ const LINE = 'border-t border-lavender-dk';
  * list entries. When it carries a `label`, the line stays hidden and only the
  * label is announced.
  */
-export function Rule({ label, className }: RuleProps) {
+export function Rule({ label, weight = 'hairline', className }: RuleProps) {
   if (label === undefined || label === null) {
-    return <hr aria-hidden="true" className={[LINE, className].filter(Boolean).join(' ')} />;
+    return (
+      <hr aria-hidden="true" className={[LINE[weight], className].filter(Boolean).join(' ')} />
+    );
   }
 
   return (
     <div className={['flex items-center gap-3', className].filter(Boolean).join(' ')}>
-      <hr aria-hidden="true" className={[LINE, 'flex-1'].join(' ')} />
-      <span className="font-sans text-xs font-semibold tracking-wide text-lavender uppercase">
+      <hr aria-hidden="true" className={[LINE[weight], 'flex-1'].join(' ')} />
+      {/* The label voice — small, loose and monospaced, per §2.5. */}
+      <span className="font-mono text-label tracking-label text-lavender uppercase">
         {label}
       </span>
     </div>

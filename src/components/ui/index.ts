@@ -16,6 +16,8 @@ export type { GridProps } from './Grid';
 export { Numeral } from './Numeral';
 export type { NumeralProps } from './Numeral';
 
+export { Folio, RunningHead } from './PageFurniture';
+
 export { PlaceholderText } from './PlaceholderText';
 export type { PlaceholderTextProps } from './PlaceholderText';
 
