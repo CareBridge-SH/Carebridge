@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteMeta } from '../components/RouteMeta';
 import {
   Container,
+  EditorialSplit,
   SectionHeading,
 } from '../components/ui';
 
@@ -23,73 +24,79 @@ export default function GetInvolved() {
         </p>
 
         {/* ── Join the Team ─────────────────────────────────────────────── */}
-        <section aria-labelledby="involved-join" className="mt-12">
-          <div className="grid gap-4 lg:grid-cols-3 lg:gap-8">
+        <EditorialSplit
+          as="section"
+          aria-labelledby="involved-join"
+          className="mt-12"
+          rail={
             <SectionHeading id="involved-join" level={2}>
               {t('involved.join.title')}
             </SectionHeading>
-            <div className="lg:col-span-2">
-              <p className="max-w-2xl font-sans text-white">
-                {t('involved.join.body')}
-              </p>
-              <a
-                href={`mailto:${t('involved.join.email')}`}
-                className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 transition-colors hover:text-cream"
-              >
-                {t('involved.join.email')}
-              </a>
-              {/*
-                A reassurance, not a price: rendered with a checkmark so it reads as
-                "good news" rather than a cost line.
-              */}
-              <p className="mt-4 flex items-center gap-2 font-sans text-sm font-medium text-lavender">
-                <CheckIcon />
-                {t('involved.join.noFees')}
-              </p>
-            </div>
-          </div>
-        </section>
+          }
+        >
+          <p className="max-w-2xl font-sans text-white">
+            {t('involved.join.body')}
+          </p>
+          <a
+            href={`mailto:${t('involved.join.email')}`}
+            className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 transition-colors hover:text-cream"
+          >
+            {t('involved.join.email')}
+          </a>
+          {/*
+            A reassurance, not a price: rendered with a checkmark so it reads as
+            "good news" rather than a cost line.
+          */}
+          <p className="mt-4 flex items-center gap-2 font-sans text-sm font-medium text-lavender">
+            <CheckIcon />
+            {t('involved.join.noFees')}
+          </p>
+        </EditorialSplit>
 
         {/* ── Volunteer at Hospital Visits ───────────────────────────────── */}
-        <section aria-labelledby="involved-hospital" className="mt-12">
-          <div className="grid gap-4 lg:grid-cols-3 lg:gap-8">
+        <EditorialSplit
+          as="section"
+          aria-labelledby="involved-hospital"
+          className="mt-12"
+          rail={
             <SectionHeading id="involved-hospital" level={2}>
               {t('involved.hospital.title')}
             </SectionHeading>
-            <div className="lg:col-span-2">
-              {/*
-                The commitment is a scannable fact, separated from the prose rather
-                than buried in it.
-              */}
-              <p className="inline-block border-l-2 border-lavender-dk pl-4 font-sans text-lg font-medium text-white">
-                {t('involved.hospital.commitment')}
-              </p>
-              <p className="mt-3 max-w-2xl font-sans text-white">
-                {t('involved.hospital.experience')}
-              </p>
-            </div>
-          </div>
-        </section>
+          }
+        >
+          {/*
+            The commitment is a scannable fact, separated from the prose rather
+            than buried in it.
+          */}
+          <p className="inline-block border-l-2 border-lavender-dk pl-4 font-sans text-lg font-medium text-white">
+            {t('involved.hospital.commitment')}
+          </p>
+          <p className="mt-3 max-w-2xl font-sans text-white">
+            {t('involved.hospital.experience')}
+          </p>
+        </EditorialSplit>
 
         {/* ── Partner With Us ───────────────────────────────────────────── */}
-        <section aria-labelledby="involved-partner" className="mt-12">
-          <div className="grid gap-4 lg:grid-cols-3 lg:gap-8">
+        <EditorialSplit
+          as="section"
+          aria-labelledby="involved-partner"
+          className="mt-12"
+          rail={
             <SectionHeading id="involved-partner" level={2}>
               {t('involved.partner.title')}
             </SectionHeading>
-            <div className="lg:col-span-2">
-              <p className="max-w-2xl font-sans text-white">
-                {t('involved.partner.body')}
-              </p>
-              <a
-                href={`mailto:${t('involved.partner.contact')}`}
-                className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 transition-colors hover:text-cream"
-              >
-                {t('involved.partner.contact')}
-              </a>
-            </div>
-          </div>
-        </section>
+          }
+        >
+          <p className="max-w-2xl font-sans text-white">
+            {t('involved.partner.body')}
+          </p>
+          <a
+            href={`mailto:${t('involved.partner.contact')}`}
+            className="mt-4 inline-block font-sans text-lavender underline underline-offset-4 transition-colors hover:text-cream"
+          >
+            {t('involved.partner.contact')}
+          </a>
+        </EditorialSplit>
       </Container>
     </>
   );

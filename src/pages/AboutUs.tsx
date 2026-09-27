@@ -4,6 +4,9 @@ import {
   Card,
   Container,
   Grid,
+  Prose,
+  ProseLead,
+  PullQuote,
   SectionHeading,
 } from '../components/ui';
 
@@ -34,10 +37,14 @@ export default function AboutUs() {
             <SectionHeading id="about-story" level={2}>
               {t('about.story.title')}
             </SectionHeading>
-            {/* The client supplied the real club story — rendered as body text. */}
-            <p className="max-w-3xl font-sans text-lg text-white lg:col-span-2">
-              {t('about.story.body')}
-            </p>
+            {/*
+              The client supplied the real club story — rendered as body text in
+              the long-read scope: it is the opening statement of the page, so it
+              is the lead, and the scope caps the measure at ~65ch.
+            */}
+            <Prose className="lg:col-span-2">
+              <ProseLead>{t('about.story.body')}</ProseLead>
+            </Prose>
           </div>
         </section>
 
@@ -47,9 +54,14 @@ export default function AboutUs() {
             <SectionHeading id="about-mission" level={2}>
               {t('about.mission.title')}
             </SectionHeading>
-            <p className="max-w-3xl font-sans text-lg text-white lg:col-span-2">
-              {t('about.mission.body')}
-            </p>
+            {/*
+              The mission is the club's own formal statement, pulled out at
+              display scale rather than set as another paragraph — the one
+              pull-quote on the page. Same string, same locale key, restyled.
+            */}
+            <Prose className="lg:col-span-2">
+              <PullQuote>{t('about.mission.body')}</PullQuote>
+            </Prose>
           </div>
         </section>
 
