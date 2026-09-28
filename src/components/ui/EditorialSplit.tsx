@@ -22,13 +22,18 @@ export interface EditorialSplitProps {
  * Full class strings, not interpolated names: Tailwind v4 resolves utilities by
  * scanning source text, so a computed class name compiles to nothing.
  *
+ * T44: the rail was 1fr of a 1fr:2fr split — a THIRD OF THE PAGE — for what is now a
+ * small label. It is capped at 12rem, so the column that carries the event title gets
+ * everything else. The label column is content-sized rather than proportional, because
+ * a proportion gives a caption a share of the page and a label only needs its words.
+ *
  * `reverse` swaps BOTH the track sizes and the explicit column placement. Flipping
  * only the placement would land the content in the narrow track — the rail would
  * stay the wide one, which is the opposite of the intent.
  */
 const COLS: Record<'normal' | 'reverse', string> = {
-  normal: 'md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]',
-  reverse: 'md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]',
+  normal: 'md:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]',
+  reverse: 'md:grid-cols-[minmax(0,1fr)_minmax(0,12rem)]',
 };
 
 const RAIL_POS: Record<'normal' | 'reverse', string> = {

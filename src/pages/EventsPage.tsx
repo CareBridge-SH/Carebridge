@@ -102,20 +102,32 @@ function EventEntry({ id }: { id: EventId }) {
       aria-labelledby={titleId}
       rail={
         /*
-         * The date rail: set in the display face at the third display step, so
-         * reading the rail down the page reads the season.
+         * The date rail is a LABEL, not a display moment.
          *
-         * The treatment asks for the day at display scale and the month in the
-         * label voice. That needs the `when` string split, and the Lead has ruled
-         * it is NOT split: the values are prose ("Week before Christmas",
-         * "Fridays, 90 minutes per session"), not dates, and splitting them would
-         * make the operator author ~ten new strings in two locales. So the whole
-         * string is set in one voice, at display scale. Nothing was invented.
+         * The operator, looking at the built page:
          *
-         * Cream, not the accent: five accent rails would blow the page's accent
-         * ration on their own.
+         *   "The left column of Events page, in Gold, only signify the time of
+         *    the events and are way too big. Remake the format of the page and
+         *    make it smaller."
+         *
+         * They were right, and measured: the rail was `--text-display-3` —
+         * 24 / 24 / 26.624 / 36.0 px at 375 / 768 / 1024 / 1440 — in a column a
+         * third of the page. At 1440 the rail (36px) was LARGER than the event
+         * title (30px), so the biggest thing in every entry after the `<h1>` was
+         * a caption. A time is not a headline.
+         *
+         * It is now built like the page's own label — the same idiom, and the
+         * same gold, as the `yearLabel` about fifty lines above: small, sans,
+         * upper, tracked. The rail answers "when" the way the year label answers
+         * "which year", so it belongs to that family.
+         *
+         * The strings are PROSE ("Week before Christmas", "Fridays, 90 minutes
+         * per session"), and a previous task refused to split them into day and
+         * month because that would have meant the operator authoring about ten
+         * new strings. That refusal stands; the whole string is set in the one
+         * voice, and nothing was invented.
          */
-        <p className="font-serif text-display-3 leading-tight text-balance text-cream">
+        <p className="font-sans text-sm font-semibold tracking-wide text-cream uppercase">
           {t(`events.items.${id}.when`)}
         </p>
       }
