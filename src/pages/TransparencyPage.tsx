@@ -1,4 +1,33 @@
 import type { ReactNode } from 'react';
+/*
+ * ── The document's rhythm, T40 ──────────────────────────────────────────────
+ *
+ * Every body paragraph used to be a bare `mt-3` (12px) under a `leading-tight`
+ * serif heading, with NO line-height class at all — it inherited whatever the
+ * element happened to have. Nobody chose those numbers; they are the defaults
+ * that were left, which is why the page read as cramped without anyone being
+ * able to point at the culprit. The operator asked for exactly this:
+ *
+ *   "just fix the distance between lines and headings"
+ *
+ * So the numbers now come from T38's measure tokens, and the measure is stated
+ * in characters rather than in pixels.
+ */
+const BODY = {
+  marginTop: 'var(--gap-heading-body)',
+  lineHeight: 'var(--leading-prose)',
+  maxWidth: '66ch',
+} as const;
+
+/*
+ * The entry-to-entry gap inside a band: 40px, REVIEWED and KEPT. It was
+ * `gap-10` and it stays `gap-10`, but it is now named and reasoned about
+ * rather than left as a default: against the 20px heading gap it gives each
+ * numbered entry exactly twice the internal air, which is what makes the band
+ * read as a group of entries instead of a run of paragraphs.
+ */
+const BAND_GAP = 'gap-10';
+
 import { useTranslation } from 'react-i18next';
 import { RouteMeta } from '../components/RouteMeta';
 import LedgerTable from '../components/LedgerTable';
@@ -65,7 +94,7 @@ export default function TransparencyPage() {
 
         <h1
           id="transparency-title"
-          className="page-turn font-serif text-display-1 font-semibold leading-[0.95] tracking-display text-balance text-white"
+          className="page-turn font-serif text-display-2 font-semibold leading-[0.95] tracking-display text-balance text-white"
         >
           {t('transparency.title')}
         </h1>
@@ -81,7 +110,7 @@ export default function TransparencyPage() {
             id="transparency-commitment"
             title={t('transparency.commitment.title')}
           >
-            <p className="mt-3 max-w-3xl font-sans text-white">
+            <p className="font-sans text-white" style={BODY}>
               {t('transparency.commitment.body')}
             </p>
           </DocEntry>
@@ -92,7 +121,7 @@ export default function TransparencyPage() {
             id="transparency-receipts"
             title={t('transparency.receipts.title')}
           >
-            <p className="mt-3 max-w-3xl font-sans text-white">
+            <p className="font-sans text-white" style={BODY}>
               {t('transparency.receipts.body')}
             </p>
           </DocEntry>
@@ -106,7 +135,7 @@ export default function TransparencyPage() {
             id="transparency-tracking"
             title={t('transparency.tracking.title')}
           >
-            <p className="mt-3 max-w-3xl font-sans text-white">
+            <p className="font-sans text-white" style={BODY}>
               {t('transparency.tracking.body')}
             </p>
             <LedgerTable />
@@ -117,7 +146,7 @@ export default function TransparencyPage() {
             id="transparency-per-event"
             title={t('transparency.perEvent.title')}
           >
-            <p className="mt-3 max-w-3xl font-sans text-white">
+            <p className="font-sans text-white" style={BODY}>
               {t('transparency.perEvent.body')}
             </p>
           </DocEntry>
@@ -131,7 +160,7 @@ export default function TransparencyPage() {
             id="transparency-funds"
             title={t('transparency.funds.title')}
           >
-            <p className="mt-3 max-w-3xl font-sans text-white">
+            <p className="font-sans text-white" style={BODY}>
               {t('transparency.funds.body')}
             </p>
             {/* Bracketed placeholder — the organisations are still TBD. */}
@@ -139,7 +168,7 @@ export default function TransparencyPage() {
               {t('transparency.funds.orgs')}
             </PlaceholderText>
             {/* Fudan Children's Hospital — the CJK renders verbatim. */}
-            <p className="mt-4 max-w-3xl font-sans text-white">
+            <p className="font-sans text-white" style={BODY}>
               {t('transparency.funds.hospital')}
             </p>
           </DocEntry>
@@ -149,7 +178,7 @@ export default function TransparencyPage() {
             id="transparency-questions"
             title={t('transparency.questions.title')}
           >
-            <p className="mt-3 max-w-3xl font-sans text-white">
+            <p className="font-sans text-white" style={BODY}>
               {t('transparency.questions.body')}
             </p>
             <a
@@ -189,7 +218,7 @@ function DocBand({ labelledBy, className, children }: DocBandProps) {
   return (
     <section
       aria-labelledby={labelledBy}
-      className={['flex flex-col gap-10', className].filter(Boolean).join(' ')}
+      className={['flex flex-col', BAND_GAP, className].filter(Boolean).join(' ')}
     >
       {children}
     </section>
@@ -220,7 +249,7 @@ interface DocEntryProps {
 function DocEntry({ n, id, title, children }: DocEntryProps) {
   return (
     <div className="flex gap-5">
-      <Numeral decorative size="sm" className="w-10 shrink-0 leading-tight">
+      <Numeral decorative size="sm" className="figures w-10 shrink-0">
         {n}
       </Numeral>
       <div className="min-w-0 flex-1">

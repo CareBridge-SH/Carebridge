@@ -63,7 +63,25 @@ export default function LedgerTable() {
    * honest shape of "there is a ledger here, and it is not published yet".
    */
   if (!ledger.sheetName || ledger.rows.length === 0) {
-    return <Plate slug="ledger" className="mt-6" />;
+    /*
+     * The RESERVED FOOTPRINT. The empty state is the flat field, held at a
+     * stated height so the region cannot collapse — and so the table that
+     * replaces it lands in a space that was already the right size.
+     *
+     * 20rem = 320px at every viewport. A semester ledger is a header row plus
+     * roughly ten data rows plus the sheet-tab strip; 320px holds that with
+     * room to spare, and it is a FIXED height rather than the plate field's
+     * own 3:2 ratio, because a ratio would make the reservation change with
+     * the viewport width while the table it is reserving for does not.
+     *
+     * The inner box takes the height explicitly. The Plate sets an inline
+     * `aspect-ratio`, and the ratio applies whenever EITHER dimension is auto.
+     * A definite height alone therefore made it 480px WIDE at a 375px viewport —
+     * 320 x 1.5, the width derived from the ratio. Both dimensions have to be
+     * definite for the ratio to be ignored, which is what `w-full` does; the
+     * first version of this shipped that overflow and the matrix caught it.
+     */
+    return <Plate slug="ledger" className="mt-6 [&>div]:h-[20rem] [&>div]:w-full" />;
   }
 
   const numberFormat = new Intl.NumberFormat(i18n.language, {
@@ -89,7 +107,7 @@ export default function LedgerTable() {
     numericCols[ci] ? 'text-right tabular-nums' : 'text-left';
 
   return (
-    <div className="mt-4">
+    <div className="mt-6 min-h-[20rem]">
       <div
         role="region"
         aria-label={ledger.sheetName}
