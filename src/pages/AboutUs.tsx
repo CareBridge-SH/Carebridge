@@ -5,7 +5,7 @@ import { Rule, Section, SectionHeading } from '../components/ui';
 const PILLAR_IDS = ['treasurer', 'outreach', 'event', 'design'] as const;
 
 /** The one column, and the line box every paragraph of running text takes. */
-const COLUMN = 'max-w-[62ch]';
+const COLUMN = 'mx-auto w-full max-w-[var(--measure-article)]';
 const PROSE = { lineHeight: 'var(--leading-prose)' };
 const HEADING_GAP = 'var(--gap-heading-body)';
 
@@ -55,26 +55,33 @@ export default function AboutUs() {
           </p>
 
           {/*
-            ── The one display moment ────────────────────────────────────────
-            The mission sentence, in the TEXT face at weight 500 and the display
-            tracking, in cream.
+            ── The one display moment — REVERSED in T45 ──────────────────────
+            This sentence was set in the TEXT face — Inter, weight 500, display
+            tracking, 24-34px — and this comment argued for it: a sentence in the
+            text face reads as a commitment, while the ornamented serif reads as
+            a caption someone styled.
 
-            The operator asked for the font to change — *"the golden 'we
-            support…healthcare' can have a better font"* — and the reason is
-            structural: the serif is the heading voice, and it holds at heading
-            sizes because its thin strokes are large enough to survive. A
-            sentence of purpose set in the text face reads as a commitment; the
-            same sentence in an ornamented display serif, in gold, reads as a
-            caption someone styled.
+            **The operator saw that rendered and overruled it**, verbatim: *"the
+            Golden sentence below looks too big and informal. Try to use fonts
+            with curly edges and with a smaller font and Italics for that."* The
+            old argument is recorded rather than deleted — the next reader needs
+            to know it was made and lost, not that nobody made it.
 
-            The size is fluid between the lede and --text-display-3:
-            24 px at 375, 25.15 px at 768, 34 px at 1440. Tracking is the
-            display tracking on the sans, which is the pairing that makes it a
-            statement rather than body copy. The measure is 24ch so the sentence
-            breaks as a sentence.
+            So it is Cormorant Garamond 500 italic: the only italic the site
+            loads, and not a new voice — `HomePage` sets its cream serif italic
+            line in it at 20-24px, and `Prose` sets a pull-quote in it at
+            24-30px.
+
+            Size is `clamp(1.625rem, 1vw + 1.25rem, 2rem)` — 26 / 27.7 / 32px at
+            375 / 768 / 1440, against the old 24 / 25.15 / 34. It cannot go much
+            smaller than this: the page's section headings are 30px at 1440 and
+            the acceptance keeps this sentence the SECOND-LARGEST text on the
+            page, so "smaller" and "second-largest" leave about two pixels of
+            room between them. Cormorant's smaller x-height does the rest — the
+            operator asked for smaller, not for a caption.
           */}
           <p
-            className="max-w-[24ch] text-balance font-sans font-medium tracking-display text-cream text-[clamp(1.5rem,1.4vw+0.9rem,2.125rem)]"
+            className="mx-auto max-w-[26ch] text-balance font-serif font-medium italic text-cream text-[clamp(1.625rem,1vw+1.25rem,2rem)]"
             style={{ marginTop: 'calc(var(--gap-heading-body) * 2)', lineHeight: 1.25 }}
           >
             {t('about.mission.body')}

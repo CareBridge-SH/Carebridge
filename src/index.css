@@ -165,6 +165,25 @@ html {
    */
   --leading-prose: 1.6;
   --gap-heading-body: 1.25rem;
+
+  /*
+   * ── Round 6, T45: the article measure ────────────────────────────────────
+   *
+   * A fixed 62ch column is the right MEASURE and the wrong PAGE. Gate B18
+   * certified it as readable, and it is — but B18 was silent about the window,
+   * and the operator saw what that costs: "it is currently not adjusting its
+   * width by window size, so my fullscreen does not have the sentences extended
+   * but rather clustered to the left side."
+   *
+   * So the measure scales INSIDE the band B18 certified: 62ch at 1024 and below,
+   * rising to 72ch by 1440 and holding there. It never exceeds 72ch, because
+   * prose much past ~72 characters is measurably harder to read and the operator
+   * asking for wider lines does not make that untrue.
+   *
+   * The rising term is deliberately small — about a quarter of each pixel of
+   * window growth — so the band is reached gradually rather than snapped.
+   */
+  --measure-article: clamp(62ch, calc(62ch + (100vw - 1024px) * 0.243), 72ch);
 }
 
 @layer base {
