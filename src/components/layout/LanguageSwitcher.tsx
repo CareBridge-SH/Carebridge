@@ -1,24 +1,25 @@
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { supportedLngs } from '../../i18n/config';
+import { languageLabel } from '../../i18n/locale';
 
 export interface LanguageSwitcherProps {
   className?: string;
 }
 
 /**
- * Each language is listed in **its own** language ("English", "中文（中国）"),
- * which is what a reader who cannot read the current UI language needs. That is
- * `Intl.DisplayNames` with the tag as both the locale and the argument, so no
- * per-language key is needed and adding a third language stays a config-only
- * change (`src/i18n/config.ts`).
+ * Each language is listed in **its own** language ("English", "中文"), which is what a
+ * reader who cannot read the current UI language needs. The name comes from
+ * `Intl.DisplayNames` with the tag as both the locale and the argument — so adding a
+ * third language stays a config-only change.
+ *
+ * The exception is a name `Intl.DisplayNames` gets wrong for this site's purposes: ICU
+ * renders `zh-CN` as "中文（中国）", which names a country rather than the language, so
+ * `LANGUAGE_LABELS` (`src/i18n/locale.ts`) overrides it to exactly `中文`. Only overridden
+ * languages need an entry — every other tag still goes through `Intl.DisplayNames`.
  */
 function autonym(tag: string): string {
-  try {
-    return new Intl.DisplayNames([tag], { type: 'language' }).of(tag) ?? tag;
-  } catch {
-    return tag;
-  }
+  return languageLabel(tag);
 }
 
 /**

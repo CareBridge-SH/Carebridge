@@ -5,6 +5,16 @@ import { initReactI18next } from 'react-i18next';
 import en from './locales/en.json';
 import zhCN from './locales/zh-CN.json';
 
+import { toSupportedLocale } from './locale';
+
+/**
+ * Two language names are not left to `Intl.DisplayNames` (see `./locale`): `zh-CN` reads
+ * `中文`, because ICU would print "中文（中国）". Everything else, and any language added
+ * later, still gets its `Intl.DisplayNames` name — no per-language key is needed unless a
+ * name is actually wrong.
+ */
+export { LANGUAGE_LABELS } from './locale';
+
 /**
  * Where a returning visitor's choice is remembered.
  * `i18next-browser-languagedetector` both reads and writes this key; nothing else
@@ -17,7 +27,8 @@ export const LANGUAGE_STORAGE_KEY = 'carebridge-language';
  *
  * Adding a language = drop `locales/<bcp47-tag>.json` next to the others (same keys,
  * same order) and add the tag here. Nothing else changes: the switcher labels every
- * supported language from `Intl.DisplayNames`, so no component edit is involved.
+ * supported language from `Intl.DisplayNames` (the only exception being a name that
+ * override in `LANGUAGE_LABELS` corrects), so no component edit is involved.
  */
 export const supportedLngs = ['en', 'zh-CN'] as const;
 
@@ -61,6 +72,13 @@ void i18n
       order: ['localStorage', 'navigator'],
       lookupLocalStorage: LANGUAGE_STORAGE_KEY,
       caches: ['localStorage'],
+
+      // Every detected tag is resolved by the rule in `./locale` — stored choice, then
+      // language subtag, then region — so a bare `zh` becomes `zh-CN` instead of falling
+      // through to English. The detector runs this over the STORED value too, which is
+      // why `toSupportedLocale` is idempotent for every tag in `supportedLngs`: a stored
+      // choice comes back unchanged. There is no timezone lookup and no network call.
+      convertDetectedLanguage: (lng) => toSupportedLocale(lng, supportedLngs),
     },
 
     // The i18next "non-explicit supported languages" option (the flag whose name is

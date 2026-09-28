@@ -52,3 +52,29 @@ All user-facing copy lives in the locale files, `src/i18n/locales/en.json` and
 `src/i18n/locales/zh-CN.json`. Components read strings through the translation
 function and must not hardcode user-visible text, so anything added to one
 locale must be added to the other.
+
+### Which language a first visit gets
+
+A visitor's language is resolved in exactly this order, and the order is the contract:
+
+1. **A stored choice** — whatever the visitor picked last. It wins over everything,
+   including a browser that reports something else.
+2. **The language subtag** — `zh`, `zh-TW`, `zh-Hans` are all Chinese (`zh-CN`); any
+   `en…` tag is English.
+3. **The region subtag** — an unrelated language (`de`, `fr`) in `CN`, `HK`, `MO` or
+   `TW` gets `zh-CN`; anywhere else gets `en`.
+
+The rule lives in one place — `toSupportedLocale` in `src/i18n/locale.ts` — and is wired
+in as the language detector's `convertDetectedLanguage` hook in `src/i18n/config.ts`.
+The detector runs that hook over the *stored* value as well as the detected one, which is
+only safe because the rule returns every supported tag unchanged.
+
+There is deliberately **no timezone lookup and no network call** anywhere in this path.
+The site makes zero external requests, so resolving a visitor's country by IP address
+would mean a third-party request on every first visit: a privacy leak, and a new failure
+mode (offline, blocked, slow) bought only to guess a default. `navigator.language` is
+already local data.
+
+The switcher shows each language in its own language, named by `Intl.DisplayNames` — with
+one override in `LANGUAGE_LABELS` (`src/i18n/locale.ts`): `zh-CN` reads `中文`, because
+ICU would render `中文（中国）`, which names a country rather than the language.

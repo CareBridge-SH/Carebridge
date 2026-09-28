@@ -27,20 +27,19 @@ function subscribe(listener: () => void): () => void {
  * "the toggle is broken" report on this project.
  */
 function readAppliedTheme(): Theme {
-  if (typeof document === 'undefined') return 'dark';
+  if (typeof document === 'undefined') return 'light';
   const applied = document.documentElement.getAttribute('data-theme');
   if (applied === 'light' || applied === 'dark') return applied;
-  // No attribute at all (only reachable if the inline script did not run):
-  // fall back to the OS preference, exactly as that script does.
-  return typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-color-scheme: light)').matches
-    ? 'light'
-    : 'dark';
+  // No attribute at all (only reachable if the inline script did not run): the default is
+  // light, exactly as that script does. There is no OS system-preference read here
+  // either — the first painted frame is light for everyone without a stored choice, and a
+  // preference that is read but no longer acted on is a trap for the next round.
+  return 'light';
 }
 
 /** No server render here; this only keeps `useSyncExternalStore` happy. */
 function getServerSnapshot(): Theme {
-  return 'dark';
+  return 'light';
 }
 
 function applyTheme(next: Theme): void {
