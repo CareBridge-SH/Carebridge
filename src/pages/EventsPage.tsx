@@ -36,7 +36,7 @@ export default function EventsPage() {
       <Section as="section" rhythm="loose" aria-labelledby="events-title">
         <h1
           id="events-title"
-          className="page-turn font-serif text-display-1 font-semibold leading-[0.95] tracking-display text-balance text-white"
+          className="page-turn font-serif text-display-2 font-semibold leading-[0.95] tracking-display text-balance text-white"
         >
           {t('events.title')}
         </h1>
