@@ -43,7 +43,7 @@ export default function AboutUs() {
         </h1>
 
         {/* The frontispiece. */}
-        <Plate slug="about" number="01" className="mt-10" />
+        <Plate slug="about" className="mt-10" />
 
         {/*
           `lg:block` and `lg:columns-2` are what turn the measured column into a

@@ -63,7 +63,7 @@ export default function LedgerTable() {
    * honest shape of "there is a ledger here, and it is not published yet".
    */
   if (!ledger.sheetName || ledger.rows.length === 0) {
-    return <Plate slug="ledger" number="01" className="mt-6" />;
+    return <Plate slug="ledger" className="mt-6" />;
   }
 
   const numberFormat = new Intl.NumberFormat(i18n.language, {

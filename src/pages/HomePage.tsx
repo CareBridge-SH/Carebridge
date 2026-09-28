@@ -4,7 +4,6 @@ import { RouteMeta } from '../components/RouteMeta';
 import {
   Button,
   Container,
-  Numeral,
   Plate,
   Rule,
   Section,
@@ -64,7 +63,7 @@ export default function HomePage() {
           the slug `cover`. No recomposition either way.
         */}
         <div aria-hidden="true" className="absolute inset-0 -z-10">
-          <Plate slug="cover" number="01" className="absolute inset-0" />
+          <Plate slug="cover" className="absolute inset-0" />
         </div>
 
         <Container>
@@ -122,42 +121,35 @@ export default function HomePage() {
         </p>
 
         {/*
-          A ruled band, not a 3-up card grid. The three are peers with no primary
-          item, so they share one row and are divided by rules rather than
-          boxed — an `<ol>`, because the visible `01/02/03` claims an order and
-          the markup should not contradict it.
+          Full-width rows: a short heading and one sentence, separated by a rule.
 
-          The numerals are `decorative`: each one's heading already names the
-          entry, so announcing "01" first would be noise. The headings carry the
-          meaning.
+          ROUND 6, T37 deleted the `01 / 02 / 03`. The operator:
+
+            "On the home page, for Our Impact, avoid using structures like this
+             for 01, 02, and 03."
+
+          Nothing replaced them. Explicitly not bullets, ticks, icons or arrows —
+          the rows separate themselves with whitespace and a rule, because a list
+          is not a diagram. This is the same shape About's pillars use.
+
+          The list is a `<ul>` now rather than an `<ol>`. The old markup was
+          ordered *because* the visible figures claimed an order; with the
+          figures gone, an ordered list would assert something the content does
+          not say.
         */}
-        <Rule className="mt-8" />
-        <ol className="grid grid-cols-1 md:grid-cols-3">
+        <ul className="mt-8 flex flex-col">
           {IMPACT_IDS.map((id, index) => (
-            <li
-              key={id}
-              className={[
-                'flex flex-col md:border-l md:border-lavender-dk md:pl-8',
-                'md:first:border-l-0 md:first:pl-0',
-                index > 0
-                  ? 'border-t border-lavender-dk pt-6 md:border-t-0 md:pt-0'
-                  : 'pt-6',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-            >
-              <Numeral decorative size="md">
-                {String(index + 1).padStart(2, '0')}
-              </Numeral>
-              <SectionHeading id={`impact-${id}-title`} level={3} className="mt-3">
+            <li key={id} className={index === 0 ? undefined : 'mt-8'}>
+              {index === 0 ? null : <Rule className="mb-8" />}
+              <SectionHeading id={`impact-${id}-title`} level={3}>
                 {t(`home.impact.${id}.title`)}
               </SectionHeading>
-              <p className="mt-2 font-sans text-white">
+              <p className="mt-2 max-w-3xl font-sans text-white">
                 {t(`home.impact.${id}.description`)}
               </p>
             </li>
           ))}
-        </ol>
+        </ul>
       </Section>
 
       {/* ── Events preview — quiet: a ruled list, no boxes ────────────────── */}

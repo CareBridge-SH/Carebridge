@@ -45,7 +45,7 @@ export default function EventsPage() {
         </p>
 
         {/* The frontispiece: the season opens on a plate. */}
-        <Plate slug="events" number="02" className="mt-10" />
+        <Plate slug="events" className="mt-10" />
 
         {/*
           The year every initiative on this page belongs to: ONE label for the

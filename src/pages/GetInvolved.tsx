@@ -48,7 +48,7 @@ export default function GetInvolved() {
         </p>
 
         {/* The frontispiece: the routes open on a plate. */}
-        <Plate slug="involved" number="03" className="mt-10" />
+        <Plate slug="involved" className="mt-10" />
 
         <ol className="mt-12">
           <li>

@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { INSTAGRAM_PROFILE_URL } from '../../data/site';
-import { Folio } from '../ui';
 
 export interface FooterProps {
   className?: string;
@@ -26,16 +25,6 @@ export function Footer({ className }: FooterProps) {
 
   return (
     <footer className={classes}>
-      {/*
-        The folio sits INSIDE the `<footer>` landmark, for the same reason the
-        running head sits inside the header: bare content between landmarks is a
-        `region` violation, and axe's `region` rule caught exactly that on all
-        60 matrix cells before this moved. The folio is decoration — a rule and
-        an `aria-hidden` number — so it adds nothing to the reading order it now
-        lives in.
-      */}
-      <Folio />
-
       <div className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-3">
           <div>

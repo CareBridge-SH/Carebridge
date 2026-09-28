@@ -26,7 +26,7 @@ export function InstagramFeed() {
    * is an existing key (`footer.instagramHandle`), not new copy.
    */
   if (posts.length === 0) {
-    return <Plate slug="instagram" number="01" captionKey="footer.instagramHandle" />;
+    return <Plate slug="instagram" captionKey="footer.instagramHandle" />;
   }
 
   return (

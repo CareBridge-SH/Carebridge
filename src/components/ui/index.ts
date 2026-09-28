@@ -16,8 +16,6 @@ export type { GridProps } from './Grid';
 export { Numeral } from './Numeral';
 export type { NumeralProps } from './Numeral';
 
-export { Folio, RunningHead } from './PageFurniture';
-
 export { Plate } from './Plate';
 export type { PlateProps } from './Plate';
 
