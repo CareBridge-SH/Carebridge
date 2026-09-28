@@ -144,6 +144,27 @@ html {
   --shadow-plate: 0 6px 20px rgba(6, 15, 38, 0.45);
   /* T28, added. */
   --plate-duotone-opacity: 0.8;
+
+  /*
+   * ── Round 6, T38: the two measure tokens ─────────────────────────────────
+   *
+   * They live HERE, in the base `html` block, and not in either sky: they are a
+   * line box and a gap, and neither theme has asked for its own. T39 and T40
+   * consume them, and before this task they did not exist — every page
+   * improvised its own spacing, which is part of why they read alike.
+   *
+   * --leading-prose: the line box for running text. 1.6, which computes to
+   *   25.6px on the 16px body. Chosen by measurement: the inherited 1.5 gave
+   *   24px, which is tight for the multi-line paragraphs About is made of.
+   *
+   * --gap-heading-body: the space between a heading and the text under it.
+   *   20px. The transparency page used a bare `mt-3` (12px) beneath a
+   *   `leading-tight` serif heading, which is why it read as cramped — a heading
+   *   set at 0.95 leading puts its descenders closer to the next line than 12px
+   *   can absorb.
+   */
+  --leading-prose: 1.6;
+  --gap-heading-body: 1.25rem;
 }
 
 @layer base {
@@ -277,4 +298,48 @@ a[href^='mailto:'] {
   background-color: transparent;
   border-width: 0;
   padding: 0.25rem 0;
+}
+
+/*
+ * ── Round 6, T38: THE NUMERAL RULE ────────────────────────────────────────
+ *
+ * **Numerals are set in the text face, never the display face.** A figure that
+ * is content — a date, an amount, a count, a row number in a table — is set in
+ * the sans with `font-variant-numeric: lining-nums tabular-nums`.
+ *
+ * The operator, twice:
+ *
+ *   "the font looks ugly displaying numbers"
+ *   "for Our Impact, avoid using structures like this for 01, 02, and 03."
+ *
+ * Cormorant Garamond's figures are the problem: they are old-style and
+ * proportional, so they sit on the baseline at odd heights and will not line up
+ * in a column. The sans has lining tabular figures and is what a document uses
+ * for figures. `lining-nums` fixes the height, `tabular-nums` fixes the width,
+ * and both together are why a column of amounts reads as a column.
+ *
+ * Unlayered on purpose, for the same reason the address rule above is: inside a
+ * layer this would lose to whichever `font-*` utility the element already
+ * carries, which is exactly the element that needs it.
+ */
+.figures {
+  font-family: var(--font-sans);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/*
+ * The events date rail.
+ *
+ * This selector is deliberately narrow, and it is a WART. `EventsPage.tsx` is
+ * not a file this task may write, but ROUND6-PLAN §3 requires the date rail to
+ * take the numeral rule, so the rule has to reach it from a global stylesheet.
+ * `p.text-display-3` is the only hook that is precise: the rail is the only
+ * `<p>` on the site set at that step — About's pull-quote is a `<blockquote>`.
+ *
+ * It should become a class on the element the next time EventsPage is edited,
+ * and this selector should be deleted with it.
+ */
+p.text-display-3 {
+  font-family: var(--font-sans);
+  font-variant-numeric: lining-nums tabular-nums;
 }

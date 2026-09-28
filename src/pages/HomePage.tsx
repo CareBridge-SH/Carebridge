@@ -3,17 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { RouteMeta } from '../components/RouteMeta';
 import {
   Button,
-  Container,
   Plate,
   Rule,
   Section,
   SectionHeading,
 } from '../components/ui';
-/*
- * The Instagram section renders `InstagramFeed` and nothing else -- no fetching,
- * skeleton, or empty-state logic lives here. Everything about *where* the posts
- * come from belongs to that component and `src/data/instagram-posts.json`.
- */
 import { InstagramFeed } from '../components/InstagramFeed';
 import { INSTAGRAM_PROFILE_URL } from '../data/site';
 
@@ -27,14 +21,25 @@ const EVENT_IDS = [
 
 const IMPACT_IDS = ['fundraising', 'awareness', 'directAction'] as const;
 
+/** The lede measure, and the line box every paragraph of running text takes. */
+const LEDE = { marginTop: 'var(--gap-heading-body)', lineHeight: 'var(--leading-prose)' };
+
 /**
- * Home's signature composition is **The Poster** (ROUND4-PLAN §3.1): one message
- * at display scale on the tinted ground, then a ruled band of figures, then
- * quiet, with the Instagram row running off the edge of the viewport.
+ * Home is **the split opening** (ROUND6-PLAN §3.3, the operator's choice B).
  *
- * Everything that is not the poster or the bleed is deliberately plain —
- * `Section` + `Rule` + prose, no boxes. A page with two competing ideas reads as
- * an accident, not as a design.
+ * One screen holds the `<h1>`, the lede, the calls to action, and the field
+ * **beside** them — type left, field right, nothing overlapping anything. There
+ * is no full-bleed cover any more: a full-bleed ground was the thing that made
+ * the five pages open the same way, and it is gone.
+ *
+ * **Home is the only page on the site that opens on `--text-display-1`.** Every
+ * other page opens one step down or smaller. That single rule does more for the
+ * "they all look the same" complaint than any ornament, and it is mechanically
+ * checkable.
+ *
+ * The departure from the approved preview is that step: the preview's `<h1>` sat
+ * one step below the largest. It is measured, not asserted — see the report for
+ * the longest word against the left column at 1024 / 1280 / 1440.
  */
 export default function HomePage() {
   const { t } = useTranslation();
@@ -43,99 +48,68 @@ export default function HomePage() {
     <>
       <RouteMeta namespace="home" />
 
-      {/* ── The Poster ───────────────────────────────────────────────────── */}
-      <Section
-        as="section"
-        aria-labelledby="home-hero"
-        rhythm="loose"
-        bleed="full"
-        className="relative isolate overflow-hidden"
-      >
+      {/* ── The split opening ────────────────────────────────────────────── */}
+      <Section as="section" aria-labelledby="home-hero" rhythm="loose">
         {/*
-          **The cover.** The headline at `--text-display-1` sits over a plate
-          that reaches the page edge.
-
-          The plate is the ground, not a picture beside the text: it is
-          absolutely positioned behind the content and clipped by the section, so
-          the poster reads as one full-bleed panel. With no photograph in the
-          manifest it is the engraved plate — which is the state the site ships
-          in — and it becomes a photograph the moment the operator adds one at
-          the slug `cover`. No recomposition either way.
+          `3fr / 2fr`: the type takes the wider column, because it is carrying a
+          display line and the field beside it is a surface. The columns are
+          explicit rather than a plain 1fr/1fr so the display line has the measure
+          it needs — a `text-balance` headline in a half-width column is what
+          would have forced the smaller step.
         */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10">
-          <Plate slug="cover" className="absolute inset-0" />
-        </div>
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-16">
+          <div className="min-w-0">
+            <p className="flex items-center gap-4 font-serif text-xl italic text-cream md:text-2xl">
+              <span aria-hidden="true" className="h-px w-10 shrink-0 bg-rule md:w-16" />
+              {t('common.slogan')}
+            </p>
 
-        <Container>
-          {/*
-            The slogan, at display scale: the site's own words, in the display
-            serif, led by a hairline rule. Not a new string — `common.slogan`.
-          */}
-          <p className="flex items-center gap-4 font-serif text-2xl italic text-cream md:text-3xl lg:text-4xl">
-            <span
-              aria-hidden="true"
-              /*
-                `bg-rule`, not `bg-cream`: this is a decorative rule, and a rule
-                has a token of its own. It is `aria-hidden`, so it owes no
-                contrast budget — but it does not need to spend the accent
-                either, and on the cover the accent has a ration.
-              */
-              className="h-px w-10 shrink-0 bg-rule md:w-16"
-            />
-            {t('common.slogan')}
-          </p>
+            <h1
+              id="home-hero"
+              className="page-turn mt-6 font-serif text-display-1 font-semibold leading-[0.95] tracking-display text-balance text-white"
+            >
+              {t('home.hero.headline')}
+            </h1>
 
-          <h1
-            id="home-hero"
-            className="page-turn mt-6 font-serif text-display-1 font-semibold leading-[0.95] tracking-display text-balance text-white"
-          >
-            {t('home.hero.headline')}
-          </h1>
+            <p className="mt-6 max-w-xl text-lg text-white" style={LEDE}>
+              {t('home.hero.subheadline')}
+            </p>
 
-          <p className="mt-6 max-w-2xl font-sans text-lg text-white">
-            {t('home.hero.subheadline')}
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Button to="/get-involved" variant="primary" size="lg">
-              {t('home.hero.cta.join')}
-            </Button>
-            {/* Neutral, not accent: same label, same destination, same place. */}
-            <Button to="/get-involved" variant="neutral" size="lg">
-              {t('home.hero.cta.partner')}
-            </Button>
-            <Button href="#home-instagram" variant="ghost" size="lg">
-              {t('home.hero.cta.follow')}
-            </Button>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Button to="/get-involved" variant="primary" size="lg">
+                {t('home.hero.cta.join')}
+              </Button>
+              <Button to="/get-involved" variant="neutral" size="lg">
+                {t('home.hero.cta.partner')}
+              </Button>
+              <Button href="#home-instagram" variant="ghost" size="lg">
+                {t('home.hero.cta.follow')}
+              </Button>
+            </div>
           </div>
-        </Container>
+
+          {/*
+            The field, beside the type. It is the FLAT surface — a 1px rule, the
+            plate fill and its shadow, and a computed `background-image` of
+            `none`. No photograph is sourced or committed; the round ships
+            photo-free.
+          */}
+          <Plate slug="cover" className="w-full" />
+        </div>
       </Section>
 
-      {/* ── The numeral strip ────────────────────────────────────────────── */}
+      {/* ── Our Impact — full-width rows, no figures ─────────────────────── */}
       <Section as="section" aria-labelledby="home-impact" rhythm="default">
         <SectionHeading id="home-impact" level={2}>
           {t('home.impact.title')}
         </SectionHeading>
-        <p className="mt-3 max-w-2xl font-sans text-white">
+        <p className="mt-3 max-w-2xl text-white" style={LEDE}>
           {t('home.impact.subtitle')}
         </p>
 
         {/*
-          Full-width rows: a short heading and one sentence, separated by a rule.
-
-          ROUND 6, T37 deleted the `01 / 02 / 03`. The operator:
-
-            "On the home page, for Our Impact, avoid using structures like this
-             for 01, 02, and 03."
-
-          Nothing replaced them. Explicitly not bullets, ticks, icons or arrows —
-          the rows separate themselves with whitespace and a rule, because a list
-          is not a diagram. This is the same shape About's pillars use.
-
-          The list is a `<ul>` now rather than an `<ol>`. The old markup was
-          ordered *because* the visible figures claimed an order; with the
-          figures gone, an ordered list would assert something the content does
-          not say.
+          A list is not a diagram. The rows separate themselves with whitespace
+          and a rule, and there is no numeral, bullet, tick, icon or arrow.
         */}
         <ul className="mt-8 flex flex-col">
           {IMPACT_IDS.map((id, index) => (
@@ -144,7 +118,7 @@ export default function HomePage() {
               <SectionHeading id={`impact-${id}-title`} level={3}>
                 {t(`home.impact.${id}.title`)}
               </SectionHeading>
-              <p className="mt-2 max-w-3xl font-sans text-white">
+              <p className="mt-2 max-w-3xl text-white" style={LEDE}>
                 {t(`home.impact.${id}.description`)}
               </p>
             </li>
@@ -157,7 +131,7 @@ export default function HomePage() {
         <SectionHeading id="home-events" level={2}>
           {t('home.events.title')}
         </SectionHeading>
-        <p className="mt-3 max-w-2xl font-sans text-white">
+        <p className="mt-3 max-w-2xl text-white" style={LEDE}>
           {t('home.events.subtitle')}
         </p>
 
@@ -169,15 +143,11 @@ export default function HomePage() {
                 <SectionHeading id={`event-${id}-title`} level={3}>
                   {t(`home.events.items.${id}.title`)}
                 </SectionHeading>
-                {/*
-                  Cream, not the accent. Five accent dates would spend the whole
-                  page's accent ration before a single call to action, and a date
-                  is a caption — the same voice the Events ledger's rails use.
-                */}
-                <p className="mt-1 font-sans text-sm font-medium text-cream">
+                {/* A date is a figure: sans, tabular, never the display serif. */}
+                <p className="figures mt-1 text-sm font-medium text-cream">
                   {t(`home.events.items.${id}.date`)}
                 </p>
-                <p className="mt-2 font-sans text-white">
+                <p className="mt-2 text-white" style={LEDE}>
                   {t(`home.events.items.${id}.summary`)}
                 </p>
               </div>
@@ -192,73 +162,50 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── Instagram — the row bleeds off the viewport edge ─────────────── */}
-      <Section
-        as="section"
-        aria-labelledby="home-instagram"
-        rhythm="loose"
-        bleed="full"
-      >
-        <Container>
-          <SectionHeading id="home-instagram" level={2}>
-            {t('home.instagram.title')}
-          </SectionHeading>
-          <p className="mt-3 max-w-2xl font-sans text-white">
-            {t('home.instagram.subtitle')}
-          </p>
-        </Container>
-
-        {/*
-          No `Container` around the row: this is the full-bleed band. The row
-          owns its own gutter so its first tile lines up with the text above,
-          and the tiles past the viewport edge are cut — which is what says
-          "there is more where this came from".
-        */}
-        <div className="mt-8">
-          <InstagramFeed />
-        </div>
-
-        <Container>
-          {/*
-            A real link to the real profile, using the same canonical
-            `INSTAGRAM_PROFILE_URL` the footer uses.
-
-            The external hint goes INSIDE the link as `sr-only` text, never as
-            `aria-label`: an `aria-label` here would replace the visible label
-            and break WCAG 2.5.3 (Label in Name).
-          */}
-          <div className="mt-8">
-            <Button
-              href={INSTAGRAM_PROFILE_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              variant="neutral"
-              size="lg"
-            >
-              {t('home.instagram.followCta')}
-              <span className="sr-only"> {t('a11y.externalLink')}</span>
-            </Button>
+      {/* ── Instagram — a split with a band, not a full-bleed hero ────────── */}
+      <Section as="section" aria-labelledby="home-instagram" rhythm="loose">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center lg:gap-16">
+          <div className="min-w-0">
+            <SectionHeading id="home-instagram" level={2}>
+              {t('home.instagram.title')}
+            </SectionHeading>
+            <p className="mt-3 max-w-xl text-white" style={LEDE}>
+              {t('home.instagram.subtitle')}
+            </p>
+            {/*
+              A real link to the real profile, using the same canonical
+              `INSTAGRAM_PROFILE_URL` the footer uses. The external hint goes
+              INSIDE the link as `sr-only` text, never as `aria-label`: an
+              `aria-label` here would replace the visible label and break WCAG
+              2.5.3.
+            */}
+            <div className="mt-8">
+              <Button
+                href={INSTAGRAM_PROFILE_URL}
+                target="_blank"
+                rel="noreferrer noopener"
+                variant="neutral"
+                size="lg"
+              >
+                {t('home.instagram.followCta')}
+                <span className="sr-only"> {t('a11y.externalLink')}</span>
+              </Button>
+            </div>
           </div>
-        </Container>
+
+          <div className="min-w-0">
+            <InstagramFeed />
+          </div>
+        </div>
       </Section>
 
       {/* ── Closing CTA ──────────────────────────────────────────────────── */}
-      {/*
-        `tone` is a two-value contract (`plain` | `tint`), and the closing needs
-        a third ground, so the band's fill comes through `className` rather than
-        by widening the primitive. Same token the page used before.
-      */}
-      <Section
-        as="section"
-        aria-labelledby="home-closing"
-        rhythm="default"
-        className="bg-navy-deep"
-      >
+      <Section as="section" aria-labelledby="home-closing" rhythm="default" tone="tint">
         <div className="text-center">
           <SectionHeading id="home-closing" level={2} className="text-center">
             {t('home.closing.title')}
           </SectionHeading>
-          <p className="mx-auto mt-4 max-w-2xl font-sans text-white">
+          <p className="mx-auto mt-4 max-w-2xl text-white" style={LEDE}>
             {t('home.closing.body')}
           </p>
           <div className="mt-8">
