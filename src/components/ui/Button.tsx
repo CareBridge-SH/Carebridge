@@ -45,8 +45,12 @@ const VARIANT: Record<NonNullable<ButtonProps['variant']>, string> = {
    * drawn as a border: near-white on the dark ground, near-navy on paper. It is
    * neutral by construction rather than by picking a colour that merely does not
    * match the accent detector, and it clears AA in both skies with room —
-   * 16.9:1 on dark and 16.4:1 on light, for both the label and the outline
-   * (WCAG 1.4.11 wants 3:1 for a control's boundary).
+   * 16.9:1 on dark and 15.51:1 on light, for both the label and the outline
+   * (WCAG 1.4.11 wants 3:1 for a control's boundary). The light figure read
+   * `16.4:1` here from Round 5 until T31b measured the painted colours and T42b
+   * reproduced them; it was a typed number, not a measured one, and the
+   * difference matters on this project — a stale figure in the record becomes
+   * evidence the next time someone cites it.
    *
    * Rejected: a border of `--color-rule` (2.38:1 dark, 2.06:1 light — fails
    * 1.4.11, which is the failure mode this project has already paid for once)
