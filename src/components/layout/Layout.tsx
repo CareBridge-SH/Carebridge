@@ -63,7 +63,29 @@ export function Layout() {
       */}
       <Header />
 
-      <main id="main" tabIndex={-1} className="flex-1">
+      {/*
+        `min-h-screen` on `main`, not just `flex-1`.
+
+        Round 5 closed D-1 by giving the FALLBACK a viewport height, which puts
+        the footer below the fold before a route chunk lands. That works for
+        every page whose real content is TALLER than the fallback: the footer
+        only ever moves further down and out, so nothing is counted.
+
+        Get Involved is the exception, and round 6 made it one — removing its
+        opening plate shortened it, and its content region now measures 645px
+        against the fallback's 900px. The footer therefore RISES, from 964 to
+        709, crossing from off-screen into the viewport. Measured CLS 0.038 here,
+        0.056 on Lighthouse, 0.072 on the verifier's instrument.
+
+        Reserving the viewport on `main` makes the two states identical rather
+        than merely ordered: with the fallback, `main` is 900px; with the real
+        content it is max(645, 900) = 900px. The footer sits at 964 either way
+        and never moves. Nothing is hidden, the boundary stays, and a slow
+        connection still sees the same skeleton — it just gets a `main` that is
+        the height of the screen, which is what a content region above a footer
+        should have been all along.
+      */}
+      <main id="main" tabIndex={-1} className="min-h-screen flex-1">
         <Suspense fallback={<PageFallback />}>
           <Outlet />
         </Suspense>
