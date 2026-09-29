@@ -33,7 +33,7 @@ export default function GetInvolved() {
   return (
     <>
       <RouteMeta namespace="involved" />
-      <Section as="section" rhythm="loose" aria-labelledby="involved-title">
+      <Section as="section" rhythm="loose" opening aria-labelledby="involved-title">
         <div className="max-w-3xl">
           <h1
             id="involved-title"

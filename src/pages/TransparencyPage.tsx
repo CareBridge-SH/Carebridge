@@ -76,7 +76,7 @@ export default function TransparencyPage() {
   return (
     <>
       <RouteMeta namespace="transparency" />
-      <Section as="section" rhythm="loose" aria-labelledby="transparency-title">
+      <Section as="section" rhythm="loose" opening aria-labelledby="transparency-title">
         {/*
           The seal: one small accent square, used once on the page, as a
           printer's mark over the title. It is `aria-hidden` — it carries no

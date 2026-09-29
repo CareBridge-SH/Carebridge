@@ -31,7 +31,7 @@ export default function AboutUs() {
   return (
     <>
       <RouteMeta namespace="about" />
-      <Section as="section" rhythm="loose" aria-labelledby="about-title">
+      <Section as="section" rhythm="loose" opening aria-labelledby="about-title">
         {/*
           The opening is `<h1>`, then the lede, then straight into the argument —
           no frontispiece, no metadata line, and no rule immediately under the

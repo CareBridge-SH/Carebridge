@@ -33,7 +33,7 @@ export default function EventsPage() {
   return (
     <>
       <RouteMeta namespace="events" />
-      <Section as="section" rhythm="loose" aria-labelledby="events-title">
+      <Section as="section" rhythm="loose" opening aria-labelledby="events-title">
         <h1
           id="events-title"
           className="page-turn font-serif text-display-2 font-semibold leading-[0.95] tracking-display text-balance text-white"

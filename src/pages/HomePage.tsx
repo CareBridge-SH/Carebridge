@@ -9,6 +9,7 @@ import {
   SectionHeading,
 } from '../components/ui';
 import { InstagramFeed } from '../components/InstagramFeed';
+import { SiteMasthead } from '../components/SiteMasthead';
 import { INSTAGRAM_PROFILE_URL } from '../data/site';
 
 const EVENT_IDS = [
@@ -49,7 +50,8 @@ export default function HomePage() {
       <RouteMeta namespace="home" />
 
       {/* ── The split opening ────────────────────────────────────────────── */}
-      <Section as="section" aria-labelledby="home-hero" rhythm="loose">
+      <SiteMasthead />
+      <Section as="section" aria-labelledby="home-hero" rhythm="loose" opening>
         {/*
           `3fr / 2fr`: the type takes the wider column, because it is carrying a
           display line and the field beside it is a surface. The columns are
