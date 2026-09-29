@@ -50,8 +50,8 @@ export default function HomePage() {
       <RouteMeta namespace="home" />
 
       {/* ── The split opening ────────────────────────────────────────────── */}
-      <SiteMasthead />
       <Section as="section" aria-labelledby="home-hero" rhythm="loose" opening>
+        <SiteMasthead />
         {/*
           `3fr / 2fr`: the type takes the wider column, because it is carrying a
           display line and the field beside it is a surface. The columns are
