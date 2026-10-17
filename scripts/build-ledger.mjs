@@ -261,6 +261,47 @@ async function main() {
     process.exit(1);
   }
 
+  // 7a. Trim scaffolding at the ends. Every trim above works off
+  //     `lastNonEmptyColumn`, which counts a FORMULA cell as "not blank" — so a
+  //     template that pre-fills `=E*F` down the sheet sails past both checks and
+  //     publishes rows whose every cell coerces to null, and a data block that
+  //     starts in column B publishes an unnamed leading column. Neither is data;
+  //     both look like data to the checks above.
+  //
+  //     Only LEADING and TRAILING runs are dropped. An interior blank row or
+  //     column may be deliberate spacing, and removing one would silently change
+  //     the shape of the sheet the operator uploaded.
+  const rowIsEmpty = (row) => row.values.every((v) => v === null);
+  while (rows.length > 0 && rowIsEmpty(rows[rows.length - 1])) rows.pop();
+  while (rows.length > 0 && rowIsEmpty(rows[0])) rows.shift();
+
+  const columnHasValue = (i) =>
+    columns[i] !== null || rows.some((r) => r.values[i] !== null);
+  let firstCol = 0;
+  let lastCol = columns.length - 1;
+  while (firstCol <= lastCol && !columnHasValue(firstCol)) firstCol += 1;
+  while (lastCol >= firstCol && !columnHasValue(lastCol)) lastCol -= 1;
+  if (firstCol <= lastCol && (firstCol > 0 || lastCol < columns.length - 1)) {
+    const droppedLeading = firstCol;
+    const droppedTrailing = columns.length - 1 - lastCol;
+    warn(
+      `dropping ${droppedLeading} leading and ${droppedTrailing} trailing empty column(s) ` +
+        `(no header and no value in any row)`,
+    );
+    const kept = columns.slice(firstCol, lastCol + 1);
+    columns.length = 0;
+    columns.push(...kept);
+    for (const row of rows) row.values = row.values.slice(firstCol, lastCol + 1);
+  }
+
+  if (rows.length === 0) {
+    error(
+      'no data rows left after trimming trailing formula-only rows — ' +
+        'this workbook would publish an empty table (anti-wipe)',
+    );
+    process.exit(1);
+  }
+
   const extraVisible = visibleSheets.filter((ws) => ws !== sheet);
   const ignoredSheets = extraVisible.map((ws) => ws.name);
   if (extraVisible.length > 0) {

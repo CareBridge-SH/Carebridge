@@ -40,18 +40,38 @@ const GRID = 'border-b border-r border-white/40';
  */
 const RAIL =
   'bg-navy-soft font-mono text-label tracking-label whitespace-nowrap text-white/70';
-const DATA = 'font-sans text-xs whitespace-nowrap text-white';
+/*
+ * `overflow-wrap: anywhere` instead of `whitespace-nowrap`, from 2026-10-17.
+ *
+ * The 26–27 inventory sheet has a "MANUFACTURER (paste taobao link)" column whose
+ * cells are 45-character unbroken URLs. With `nowrap` the table laid out **1185px
+ * wide inside a 1028px region at 1440** — so the rightmost column, INVENTORY VALUE,
+ * was cut off on an ordinary desktop and the totals had to be scrolled to. The
+ * region scrolls horizontally on purpose (see the wrapper), but a table that does
+ * not fit its own container at 1440 is not a design decision, it is a data shape
+ * nobody had seen yet.
+ *
+ * `anywhere` rather than `break-word` on purpose: `break-word` does not change a
+ * cell's min-content width, so the table would stay 1185px and merely wrap inside
+ * it. `anywhere` lets the column shrink, which is what makes the table fit.
+ */
+const DATA = 'font-sans text-xs text-white [overflow-wrap:anywhere]';
 
 export default function LedgerTable() {
   const { i18n } = useTranslation();
 
   /*
-   * Empty snapshot — which is the SHIPPED state: `src/data/ledger.json` is
-   * `sheetName: null, columns: [], rows: []`.
+   * Empty snapshot. This WAS the shipped state until 2026-10-17, when the
+   * operator supplied a real workbook (`content/ledger.xlsx`, the 26–27
+   * inventory + expense sheet) and `src/data/ledger.json` stopped being empty.
+   * The branch stays because the snapshot is operator-owned and can go back to
+   * empty if a workbook is withdrawn — and because it is what a fresh clone of
+   * this repository renders before anyone drops a file in `content/`.
    *
-   * This used to render `null`, so the section drew nothing at all. Round 5's
-   * §7.5 asks for the page to look finished with the ledger empty, and §3.5 asks
-   * for it to "look deliberate when empty". Neither is met by a void.
+   * `sheetName: null, columns: [], rows: []` used to render `null`, so the
+   * section drew nothing at all. Round 5's §7.5 asks for the page to look
+   * finished with the ledger empty, and §3.5 asks for it to "look deliberate when
+   * empty". Neither is met by a void.
    *
    * A blank ledger is not available as a fallback here: with `columns: []` there
    * are no column heads to draw, so "an honest blank ledger" would be a ruled
@@ -59,8 +79,8 @@ export default function LedgerTable() {
    * which is the other thing §3.5 allows.
    *
    * What this still does NOT do: apologise, show a zero, or fabricate a row.
-   * `src/data/ledger.json` is operator-owned and stays empty; the plate is the
-   * honest shape of "there is a ledger here, and it is not published yet".
+   * The plate is the honest shape of "there is a ledger here, and it is not
+   * published yet".
    */
   if (!ledger.sheetName || ledger.rows.length === 0) {
     /*

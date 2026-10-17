@@ -1,7 +1,89 @@
 {
-  "sheetName": null,
-  "columns": [],
-  "rows": [],
-  "ignoredSheets": [],
+  "sheetName": "expense sheet - sports meet cha",
+  "columns": [
+    "NAME (of item)",
+    "MANUFACTURER (paste taobao link)",
+    "DESCRIPTION",
+    "COST PER ITEM",
+    "QUANTITY",
+    "INVENTORY VALUE (total cost)"
+  ],
+  "rows": [
+    {
+      "sourceRow": 3,
+      "values": [
+        "Oreos",
+        "https://e.tb.cn/h.8AJH3iLg76fZh7B?tk=5GHXTrOjwGm CZ057 ",
+        "奥利奥混合五彩斑斓礼盒x1",
+        17,
+        1,
+        17
+      ],
+      "isTotal": false
+    },
+    {
+      "sourceRow": 4,
+      "values": [
+        "dragon balloons",
+        "https://e.tb.cn/h.8AJt5vuJ8gMPsat?tk=nxmhTrOQpth CZ005",
+        "奶龙气球飘空氦气铝膜黄色x7+3",
+        13.5,
+        1,
+        13.5
+      ],
+      "isTotal": false
+    },
+    {
+      "sourceRow": 5,
+      "values": [
+        "Heart balloons (blue)",
+        "https://e.tb.cn/h.8AJG09DpWRACL1B?tk=iKtfTrOkOBA CZ193 ",
+        "铝膜气球定制logo18寸心形",
+        0.65,
+        10,
+        6.5
+      ],
+      "isTotal": false
+    },
+    {
+      "sourceRow": 6,
+      "values": [
+        "Lucky draw wheel",
+        "https://e.tb.cn/h.jaI4fI2uY5ZhEjk?tk=PFldTrOPOTL HU108 ",
+        "抽奖转盘幸运转盘",
+        15,
+        1,
+        15
+      ],
+      "isTotal": false
+    },
+    {
+      "sourceRow": 7,
+      "values": [
+        "Customized stickers",
+        "https://e.tb.cn/h.j0bm7YWk2xrKp5W?tk=a7apTrOPyDC MF937 ",
+        "卡通贴纸定制异形模切 (sheets)",
+        2,
+        50,
+        100
+      ],
+      "isTotal": false
+    },
+    {
+      "sourceRow": 8,
+      "values": [
+        "Helium tank",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "isTotal": false
+    }
+  ],
+  "ignoredSheets": [
+    "blank template"
+  ],
   "workbookModifiedAt": null
 }
