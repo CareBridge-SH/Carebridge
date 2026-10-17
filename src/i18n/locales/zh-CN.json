@@ -37,7 +37,7 @@
       },
       "directAction": {
         "title": "直接行动（医院探访）",
-        "description": "志愿者每周五前往复旦大学附属儿科医院，给孩子们读故事、陪他们做手工、聊天、一起玩游戏。"
+        "description": "志愿者每周六、周日前往复旦大学附属儿科医院，给孩子们读故事、陪他们做手工、聊天、一起玩游戏。"
       }
     },
     "events": {
@@ -67,7 +67,7 @@
         },
         "hospitalVisits": {
           "title": "医院探访",
-          "date": "每周五，每次 90 分钟",
+          "date": "每周六、周日，每次 90 分钟",
           "summary": "给孩子们读故事、陪他们做手工、聊天、一起玩游戏。"
         }
       }
@@ -154,12 +154,12 @@
       },
       "hospitalVisits": {
         "title": "探访复旦大学附属儿科医院",
-        "when": "每周五，每次 90 分钟",
+        "when": "每周六、周日，每次 90 分钟",
         "description": "给孩子们读故事、陪他们做手工、聊天、一起玩游戏。",
-        "status": "[Status: Pending Approval / Currently in negotiation - Update upon confirmation]",
+        "status": "已与医院确认。",
         "team": {
           "size": "团队不少于 10 人，每次活动至少 2 名志愿者",
-          "schedule": "每周五，每次 90 分钟，至少持续一个学期",
+          "schedule": "每周六、周日，每次 90 分钟，至少持续一个学期",
           "activities": "读故事、陪孩子们做手工、聊天、一起玩游戏"
         }
       }
@@ -180,7 +180,7 @@
     },
     "hospital": {
       "title": "医院志愿服务",
-      "commitment": "每周五，每次 90 分钟，至少持续一个学期。",
+      "commitment": "每周六、周日，每次 90 分钟，至少持续一个学期。",
       "experience": "和孩子们一起阅读、做手工、玩游戏，是一段很有意义的经历。"
     },
     "partner": {

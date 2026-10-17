@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { RouteMeta } from '../components/RouteMeta';
 import {
   EditorialSplit,
-  PlaceholderText,
   Plate,
   Rule,
   Section,
@@ -121,11 +120,11 @@ function EventEntry({ id }: { id: EventId }) {
          * upper, tracked. The rail answers "when" the way the year label answers
          * "which year", so it belongs to that family.
          *
-         * The strings are PROSE ("Week before Christmas", "Fridays, 90 minutes
-         * per session"), and a previous task refused to split them into day and
-         * month because that would have meant the operator authoring about ten
-         * new strings. That refusal stands; the whole string is set in the one
-         * voice, and nothing was invented.
+         * The strings are PROSE ("Week before Christmas", "Saturdays and
+         * Sundays, 90 minutes per session"), and a previous task refused to
+         * split them into day and month because that would have meant the
+         * operator authoring about ten new strings. That refusal stands; the
+         * whole string is set in the one voice, and nothing was invented.
          */
         <p className="font-sans text-sm font-semibold tracking-wide text-cream uppercase">
           {t(`events.items.${id}.when`)}
@@ -139,13 +138,20 @@ function EventEntry({ id }: { id: EventId }) {
 
       {id === 'hospitalVisits' ? (
         /*
-          The status is a bracketed placeholder, rendered byte-identical and
-          visually distinct from real copy — never reworded, never filled in
-          with a plausible value.
+          This used to be a bracketed placeholder ("Pending Approval /
+          Currently in negotiation"), rendered byte-identical and visually
+          distinct from real copy. On 2026-10-17 the operator confirmed the
+          arrangement, so the string is now real copy and the placeholder
+          treatment is gone with it — the visual distinction was the only
+          honest thing about it, and there is nothing left to distinguish.
+
+          It states the APPROVAL, not the schedule: the rail fifteen lines
+          above already says "Saturdays and Sundays, 90 minutes per session",
+          and a status repeating the line above it is not a status.
         */
-        <PlaceholderText as="p" className="mt-4 inline-block text-base">
+        <p className="mt-4 inline-block text-base font-sans text-white">
           {t('events.items.hospitalVisits.status')}
-        </PlaceholderText>
+        </p>
       ) : null}
 
       <p className="mt-3 max-w-3xl font-sans text-white">

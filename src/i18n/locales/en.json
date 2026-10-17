@@ -37,7 +37,7 @@
       },
       "directAction": {
         "title": "Direct Action (hospital visits)",
-        "description": "Volunteers visit Fudan Children's Hospital on Fridays to read stories, assist with crafts, talk with the children, and play games."
+        "description": "Volunteers visit Fudan Children's Hospital on Saturdays and Sundays to read stories, assist with crafts, talk with the children, and play games."
       }
     },
     "events": {
@@ -67,7 +67,7 @@
         },
         "hospitalVisits": {
           "title": "Hospital Visits",
-          "date": "Fridays, 90 minutes per session",
+          "date": "Saturdays and Sundays, 90 minutes per session",
           "summary": "Reading stories, assisting with crafts, talking with the children, and playing games with them."
         }
       }
@@ -154,12 +154,12 @@
       },
       "hospitalVisits": {
         "title": "Fudan Children's Hospital Visits",
-        "when": "Fridays, 90 minutes per session",
+        "when": "Saturdays and Sundays, 90 minutes per session",
         "description": "Reading stories, assisting with crafts, talking with the children, and playing games with them.",
-        "status": "[Status: Pending Approval / Currently in negotiation - Update upon confirmation]",
+        "status": "Confirmed with the hospital.",
         "team": {
           "size": "No less than 10 people, at least 2 volunteers per session",
-          "schedule": "Fridays, 90 minutes per session, at least one semester",
+          "schedule": "Saturdays and Sundays, 90 minutes per session, at least one semester",
           "activities": "Reading stories, assisting with crafts, talking with the children, and playing games."
         }
       }
@@ -180,7 +180,7 @@
     },
     "hospital": {
       "title": "Hospital Volunteering",
-      "commitment": "Fridays, 90 minutes, at least a semester.",
+      "commitment": "Saturdays and Sundays, 90 minutes, at least a semester.",
       "experience": "The rewarding experience of reading, crafting and playing games with the children."
     },
     "partner": {
