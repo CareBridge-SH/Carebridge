@@ -132,6 +132,7 @@
     "yearLabel": "2026年",
     "intro": "我们的活动与项目涵盖筹款、宣传和直接的志愿服务。",
     "photos": {
+      "alt": "CareBridge 活动中的一张照片。",
       "region": "活动照片",
       "prev": "上一张照片",
       "next": "下一张照片"

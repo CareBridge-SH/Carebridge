@@ -217,6 +217,7 @@ export function EventCoverflow({ className = '' }: EventCoverflowProps) {
                 decoding="async"
                 draggable={false}
                 className="h-full w-full select-none object-cover"
+                style={photo.focus ? { objectPosition: photo.focus } : undefined}
               />
             </div>
           );

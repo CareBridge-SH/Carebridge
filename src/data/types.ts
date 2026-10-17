@@ -131,4 +131,11 @@ export interface EventPhoto {
   file: string;
   /** Full locale key for the alt text, e.g. `events.photos.items.visits1`. */
   altKey: string;
+  /**
+   * Optional `object-position` for photographs that do not survive a 4:3 crop
+   * centred — a portrait frame loses more than half its height to fill a card,
+   * and what it loses is usually the faces. `"50% 30%"` biases upwards; anything
+   * CSS accepts works. Omit it and the crop is dead centre.
+   */
+  focus?: string;
 }

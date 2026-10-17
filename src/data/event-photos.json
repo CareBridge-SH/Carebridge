@@ -1,1 +1,6 @@
-[]
+[
+  { "file": "01.webp", "altKey": "events.photos.alt" },
+  { "file": "02.webp", "altKey": "events.photos.alt" },
+  { "file": "03.webp", "altKey": "events.photos.alt", "focus": "50% 32%" },
+  { "file": "04.webp", "altKey": "events.photos.alt" }
+]
