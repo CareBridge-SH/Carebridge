@@ -78,7 +78,15 @@ function ProfileChrome({ count }: { count: number }) {
   const { t } = useTranslation();
 
   return (
-    <div className="mb-4 flex items-center gap-4">
+    /*
+      `flex-wrap` is load-bearing on phones. The handle is a single unbreakable
+      token, so at 375 the avatar + handle + count came to 358 px inside a 335 px
+      column and the whole document scrolled sideways by 14 px. This header only
+      exists once there is at least one post, which is why it went unseen for as
+      long as the feed was empty: add the first post and the home page broke on
+      every phone. Wrapping sends the count to its own line instead.
+    */
+    <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1">
       <a
         href={INSTAGRAM_PROFILE_URL}
         target="_blank"
@@ -90,7 +98,14 @@ function ProfileChrome({ count }: { count: number }) {
           alt=""
           className="h-14 w-14 shrink-0 rounded-full bg-navy-soft object-cover"
         />
-        <span className="font-sans text-lg font-semibold text-white">
+        {/*
+          `text-base` until the 640px breakpoint. The handle is one unbreakable
+          word: at 18px it is 235px wide, and 235 + a 56px avatar + the gap + the
+          section's padding is wider than a 320px phone, so the page scrolled
+          sideways. 16px fits with 11px to spare and the whole handle stays
+          readable — truncating it would be worse than a smaller size.
+        */}
+        <span className="font-sans text-base font-semibold text-white sm:text-lg">
           {t('footer.instagramHandle')}
         </span>
         <span className="sr-only"> {t('a11y.externalLink')}</span>
