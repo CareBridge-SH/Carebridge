@@ -1,12 +1,16 @@
 import { useTranslation } from 'react-i18next';
+import { EventCoverflow } from '../components/EventCoverflow';
 import { RouteMeta } from '../components/RouteMeta';
 import {
   EditorialSplit,
-  Plate,
   Rule,
   Section,
   SectionHeading,
 } from '../components/ui';
+import EVENT_PHOTOS from '../data/event-photos.json';
+import type { EventPhoto } from '../data/types';
+
+const PHOTOS: EventPhoto[] = EVENT_PHOTOS;
 
 const EVENT_IDS = [
   'fallWorkshop',
@@ -43,8 +47,20 @@ export default function EventsPage() {
           {t('events.intro')}
         </p>
 
-        {/* The frontispiece: the season opens on a plate. */}
-        <Plate slug="events" className="mt-10" />
+        {/*
+          Where the season's photographs go. Round 7: this was a framed 3:2
+          `Plate` — 1088×725 at 1440, bordered, shadowed — kept empty until
+          pictures arrived. The operator asked for the frame cancelled and the
+          space given to a horizontal strip instead.
+
+          The cover flow is 400 px tall (300 on phones) when it has photographs,
+          and it renders nothing at all when it does not, which is the state
+          shipped today. That is deliberate, not a gap: an empty band is the old
+          empty frame with new furniture, and the same guard below already
+          establishes the house rule that a list with nothing in it shows nothing
+          rather than a hollow shell.
+        */}
+        {PHOTOS.length > 0 ? <EventCoverflow className="mt-10" /> : null}
 
         {/*
           The year every initiative on this page belongs to: ONE label for the

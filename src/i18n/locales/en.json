@@ -131,6 +131,11 @@
     "title": "Events & Initiatives",
     "yearLabel": "2026",
     "intro": "Fundraising, awareness and direct volunteering — our events and initiatives.",
+    "photos": {
+      "region": "Event photographs",
+      "prev": "Previous photograph",
+      "next": "Next photograph"
+    },
     "items": {
       "fallWorkshop": {
         "title": "Fall Themed DIY Workshop",

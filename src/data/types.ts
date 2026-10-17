@@ -107,3 +107,28 @@ export interface LedgerSnapshot {
   /** The workbook's own last-saved time (provenance, not a build timestamp), or null. */
   workbookModifiedAt: string | null;
 }
+
+/**
+ * One photograph in the Events cover flow — `src/data/event-photos.json`.
+ *
+ * **The array is `[]` in the repository, and it is meant to be.** There are no
+ * photographs yet, so the page renders no strip at all rather than an empty band:
+ * the space goes back to the title and the ledger. Adding an entry is the whole
+ * of "add a photograph".
+ *
+ * Deliberately *not* `PhotoEntry`. That shape carries `width`/`height` because a
+ * `Plate` reserves its box from the intrinsic aspect ratio. A cover-flow card has
+ * a fixed 4:3 box and crops into it, so there is nothing to reserve and nothing
+ * an operator should have to measure. It also has no caption — the card is a
+ * photograph, and the strip has no place to put words.
+ */
+export interface EventPhoto {
+  /**
+   * File name inside `public/photos/events/`. The `src` is assembled at runtime
+   * with `import.meta.env.BASE_URL`, so this must stay a bare name — a leading
+   * slash would resolve to the domain root and 404 under the Pages base path.
+   */
+  file: string;
+  /** Full locale key for the alt text, e.g. `events.photos.items.visits1`. */
+  altKey: string;
+}
