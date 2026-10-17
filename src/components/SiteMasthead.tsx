@@ -17,17 +17,19 @@ import { useTranslation } from 'react-i18next';
  *
  * Four decisions worth keeping:
  *
- * 1. **Size: `clamp(2.5rem, 7.8vw, 8rem)` — deliberately just under the hero's
- *    `--text-display-1` rather than a token.** `display-1` is
- *    `clamp(3.5rem, 9vw, 9rem)`, so 7.8vw against 9vw keeps this at ~87% of the
- *    headline at every width it is visible (59.9 vs 69.1px at 768, 112.3 vs 129.6px
- *    at 1440, 128 vs 144px at 1920) — "just slightly smaller than the big words
- *    below", which is the instruction. There is no token at that step, and inventing
- *    a `--text-display-0` would change a scale five pages share to serve one page.
- *    **This does mean the page no longer has a single loudest element**: the h1 is
- *    still the `<h1>`, but it is no longer the largest thing on screen by a clear
- *    margin. Recorded, not hidden — it is the one thing the operator's size change
- *    overrode.
+ * 1. **Size: `clamp(1.75rem, 4.2vw, 4.25rem)`, deliberately well under the hero's
+ *    `--text-display-1` rather than a token.** This was `clamp(2.5rem, 7.8vw, 8rem)`
+ *    (112.3px at 1440, ~87% of the old headline), and the operator's instruction on
+ *    2026-10-17 was that both display lines were too large and the headline should
+ *    be relatively larger than this one. It now sits at **~60% of the `<h1>`**
+ *    (60.5 vs 100.8px at 1440, 32.3 vs 53.8 at 768) instead of ~87%, so the page
+ *    reads name-first, headline-second, and the `<h1>` is once again the loudest
+ *    thing on screen. There is still no token at that step, and inventing a
+ *    `--text-display-0` would change a scale five pages share to serve one page.
+ *    The earlier version of this note recorded the opposite: that the page no
+ *    longer had a single loudest element, and that the `<h1>` was barely larger
+ *    than the word above it. That was the cost of the old size, and it is paid off
+ *    by this one.
  *
  * 2. **Italics, at `font-medium` and not `font-semibold`.** Cormorant Garamond is
  *    loaded at 400/500/600/700 **plus 500 italic only** (`src/fonts.css`); there is
@@ -37,9 +39,12 @@ import { useTranslation } from 'react-i18next';
  *    the h1's 600, which helps the two display lines read as different voices.
  *
  * 3. **The logo is aligned to the right edge** (`justify-between`), on the
- *    operator's instruction, and sized `clamp(3rem, 5vw, 5.5rem)` — 48px at 768,
- *    72px at 1440, 88px at 1920, against a flat 36px before. It is `shrink-0` so it
- *    is never squeezed by the nameplate.
+ *    operator's instruction. It came down with the nameplate — **`clamp(1.75rem,
+ *    2.9vw, 2.75rem)`** (41.8px at 1440, 22.3 at 768) instead of `clamp(3rem, 5vw,
+ *    5.5rem)` (72px at 1440). Shrinking the word and leaving a 72px mark beside it
+ *    would have traded one imbalance for another; the mark now sits at ~0.69 of the
+ *    word's size at every visible width, which is where it sat before (0.64–0.80).
+ *    It is `shrink-0` so it is never squeezed by the nameplate.
  *
  * 4. **The image is `alt=""` on purpose.** `common.siteName` sits beside it as real
  *    text, so naming the image as well would make a screen reader announce
@@ -52,7 +57,7 @@ export function SiteMasthead() {
 
   return (
     <div className="mb-12 flex items-center justify-between gap-6 md:mb-16">
-      <span className="font-serif text-[clamp(2.5rem,7.8vw,8rem)] font-medium italic leading-[0.95] tracking-display text-white">
+      <span className="font-serif text-[clamp(1.75rem,4.2vw,4.25rem)] font-medium italic leading-[0.95] tracking-display text-white">
         {t('common.siteName')}
       </span>
       <img
@@ -60,7 +65,7 @@ export function SiteMasthead() {
         alt=""
         width={1008}
         height={454}
-        className="hidden h-[clamp(3rem,5vw,5.5rem)] w-auto shrink-0 sm:block"
+        className="hidden h-[clamp(1.75rem,2.9vw,2.75rem)] w-auto shrink-0 sm:block"
       />
     </div>
   );

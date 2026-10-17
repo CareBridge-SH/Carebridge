@@ -38,6 +38,12 @@ const LEDE = { marginTop: 'var(--gap-heading-body)', lineHeight: 'var(--leading-
  * "they all look the same" complaint than any ornament, and it is mechanically
  * checkable.
  *
+ * On 2026-10-17 the operator judged both display lines in this opening too large
+ * and asked for the headline to be relatively larger than the italic nameplate
+ * above it. `--text-display-1` came down to `clamp(2.75rem, 7vw, 7rem)` (100.8px
+ * at 1440, from 129.6) and the nameplate to ~60% of it. Home still opens on the
+ * loudest step, so the rule above is untouched; only its size moved.
+ *
  * The departure from the approved preview is that step: the preview's `<h1>` sat
  * one step below the largest. It is measured, not asserted — see the report for
  * the longest word against the left column at 1024 / 1280 / 1440.

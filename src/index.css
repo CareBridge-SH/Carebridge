@@ -48,8 +48,17 @@
    * reason recorded there.
    */
 
-  /* The loud voice. Fluid, and never a replacement for an existing size. */
-  --text-display-1: clamp(3.5rem, 9vw, 9rem); /* 129.6px at 1440 */
+  /*
+   * The loud voice. Fluid, and never a replacement for an existing size.
+   *
+   * `--text-display-1` came down from `clamp(3.5rem, 9vw, 9rem)` (129.6px at
+   * 1440) on the operator's instruction — the home hero was too large. That
+   * token has exactly one user, the home `<h1>`; every other page opens on
+   * `display-2`, so this changes one page and no other. It is still a whole
+   * step above `display-2` (100.8px against 72px at 1440), which is the point:
+   * the `<h1>` is the loudest thing on the site again.
+   */
+  --text-display-1: clamp(2.75rem, 7vw, 7rem); /* 100.8px at 1440 (was 129.6) */
   --text-display-2: clamp(2.25rem, 5vw, 4.5rem); /* 72px at 1440 */
   --text-display-3: clamp(1.5rem, 2.6vw, 2.25rem); /* 36px at 1440 */
   --text-label: 0.6875rem; /* 11px — the label voice, and nothing else */
