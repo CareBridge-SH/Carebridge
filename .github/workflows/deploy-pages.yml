@@ -52,12 +52,31 @@ jobs:
         run: npm run build
 
       - name: Confirm the output is deployable
-        # `postbuild` writes 404.html (the SPA deep-link fallback) and .nojekyll.
-        # Fail loudly here rather than discovering a blank site in production.
+        # `postbuild` writes 404.html (the fallback for genuinely unknown paths),
+        # .nojekyll, and one shell per page route. Fail loudly here rather than
+        # discovering in production that a deep link answers 404 while rendering.
+        #
+        # The route list is READ FROM src/App.tsx. There is one source and this is
+        # its second reader, so a page added to the router cannot be deployed
+        # without its shell — that omission is the E-12 defect, and a check in a
+        # report nobody re-runs does not catch it.
         run: |
           test -f dist/index.html || { echo "dist/index.html missing"; exit 1; }
           test -f dist/404.html   || { echo "dist/404.html missing"; exit 1; }
           test -f dist/.nojekyll  || { echo "dist/.nojekyll missing"; exit 1; }
+
+          routes=$(grep '<Route ' src/App.tsx | grep -v 'Navigate' | grep -oP 'path="\K[^"]+' | grep -vx '\*' | grep -vx '/')
+          # An EMPTY route list must fail too. A grep that matches nothing looks
+          # exactly like a pass, and this project has shipped a guard that went
+          # green on a build still containing the bug it was written to catch.
+          test -n "$routes" || { echo "read zero page routes from src/App.tsx — refusing"; exit 1; }
+          echo "route shells expected: $(echo $routes)"
+
+          for r in $routes; do
+            test -f "dist${r}/index.html" \
+              || { echo "dist${r}/index.html missing — the deployed host will answer ${r} with a 404 that only looks right"; exit 1; }
+          done
+
           echo "asset base:" $(grep -o 'src="[^"]*assets/' dist/index.html | head -1)
 
       - uses: actions/configure-pages@v5

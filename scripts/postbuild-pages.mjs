@@ -17,7 +17,7 @@
 //
 // Runs automatically via the `postbuild` npm hook, so `npm run build` and the
 // deploy workflow both produce a deployable directory with no extra steps.
-import { copyFileSync, existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 const DIST = 'dist'
@@ -36,11 +36,61 @@ if (!existsSync(index)) {
 copyFileSync(index, join(DIST, '404.html'))
 writeFileSync(join(DIST, '.nojekyll'), '')
 
+// ---------------------------------------------------------------------------
+// Route shells (Round 7, T47 — E-12).
+//
+// A static host has no rewrite rule. Before this, every deep link answered 404
+// while rendering the right page: Pages served 404.html *for* the missing path,
+// the browser kept the deep URL, and the SPA booted onto it. The page looked
+// right and the status was wrong, which is why six rounds of verification did
+// not see it.
+//
+// Writing the shell to `<route>/index.html` puts a real FILE behind each route,
+// so the host answers 200 and 404.html stays the fallback for genuinely unknown
+// paths. Assets are referenced by ABSOLUTE URL, so a nested copy resolves them
+// unchanged — proved against the deployed host, not assumed.
+//
+// THE ROUTE LIST IS READ FROM src/App.tsx. A second hand-kept list here is how a
+// route goes missing the day someone adds a sixth page, so there is exactly one
+// source and this file reads it.
+// ---------------------------------------------------------------------------
+const APP = 'src/App.tsx'
+if (!existsSync(APP)) {
+  console.error(`postbuild-pages: ${APP} is missing, so the route list cannot be read.`)
+  process.exit(1)
+}
+
+/*
+ * `<Route path="/x" element={<Component ...>}`. Redirects use `<Navigate>` and
+ * are NOT written: `/donate` must redirect, and a shell there would ship a 200
+ * for a URL the router deliberately moves away from.
+ */
+const routeRe = /<Route\s+path="([^"]+)"\s+element=\{<([A-Za-z0-9_]+)/g
+const pageRoutes = [...readFileSync(APP, 'utf8').matchAll(routeRe)]
+  .filter((m) => m[2] !== 'Navigate' && m[1] !== '*' && m[1] !== '/')
+  .map((m) => m[1])
+
+if (pageRoutes.length === 0) {
+  console.error(
+    `postbuild-pages: read zero page routes from ${APP} — refusing to ship a site whose deep links 404.`,
+  )
+  process.exit(1)
+}
+
+for (const route of pageRoutes) {
+  const dir = join(DIST, route.replace(/^\/+/, ''))
+  mkdirSync(dir, { recursive: true })
+  copyFileSync(index, join(dir, 'index.html'))
+}
+
 // Report the resolved base, because a wrong one produces a blank page rather
 // than an error -- this line is the cheapest place to notice that.
 const html = readFileSync(index, 'utf8')
 const asset = html.match(/(?:src|href)="([^"]*\/assets\/[^"]+)"/)
 console.log(`postbuild-pages: wrote 404.html and .nojekyll into ${DIST}/`)
+console.log(
+  `postbuild-pages: route shells written for ${pageRoutes.join(', ')} (read from ${APP}).`,
+)
 console.log(`postbuild-pages: first asset URL resolves to ${asset ? asset[1] : '(none found)'}`)
 
 // ---------------------------------------------------------------------------
