@@ -97,8 +97,23 @@ export default function AboutUs() {
           said "second-largest", and this is the one clause the operator's
           instruction overrode.
         */}
+        {/*
+          **Centred, from 2026-10-17.** The operator: *"is not properly in the
+          middle, so fix that."* The block was already geometrically centred —
+          measured at 1440/1024/768/375, its box centre matched the `<h1>`'s and the
+          section's to the tenth of a pixel — but it was `text-align: start`, so the
+          lines were ragged right and the band's visual mass sat left of centre. At
+          1440 the first line ended 171px short of the block's own right edge; that
+          gap is what reads as "not in the middle".
+          
+          So the fix is alignment, not position: `text-center`. With `text-balance`
+          still on, the lines come out close to equal length and the band reads as a
+          centred statement. This does NOT bring the sentence back inside `COLUMN`
+          and does not impose a measure — the width argument above still stands, and
+          the band is still the only full-width italic line on the page.
+        */}
         <p
-          className="text-balance font-serif font-medium italic text-cream text-[clamp(1.5rem,0.9vw+1.15rem,1.875rem)]"
+          className="text-balance text-center font-serif font-medium italic text-cream text-[clamp(1.5rem,0.9vw+1.15rem,1.875rem)]"
           style={{ marginTop: 'calc(var(--gap-heading-body) * 2)', lineHeight: 1.25 }}
         >
           {t('about.mission.body')}
