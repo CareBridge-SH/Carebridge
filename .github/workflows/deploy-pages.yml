@@ -72,9 +72,12 @@ jobs:
           test -n "$routes" || { echo "read zero page routes from src/App.tsx — refusing"; exit 1; }
           echo "route shells expected: $(echo $routes)"
 
+          # Either shell shape counts: Pages resolves `route.html` for a pretty
+          # URL and `route/index.html` for a directory. The build writes both
+          # because the first deploy showed the directory shape answering 301.
           for r in $routes; do
-            test -f "dist${r}/index.html" \
-              || { echo "dist${r}/index.html missing — the deployed host will answer ${r} with a 404 that only looks right"; exit 1; }
+            test -f "dist${r}.html" -o -f "dist${r}/index.html" \
+              || { echo "no shell for ${r} — the deployed host will answer it with a 404 that only looks right"; exit 1; }
           done
 
           echo "asset base:" $(grep -o 'src="[^"]*assets/' dist/index.html | head -1)

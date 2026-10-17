@@ -77,8 +77,25 @@ if (pageRoutes.length === 0) {
   process.exit(1)
 }
 
+/*
+ * BOTH SHAPES, because the measured host decides which one answers 200.
+ *
+ * `<route>/index.html` puts a file behind the route, and the first deploy of
+ * this fix turned every deep link's 404 into a **301** — Pages canonicalises a
+ * directory to a trailing slash, so `/about` answered 301 and `/about/` answered
+ * 200. That is a different status from the one the gate asks for, and it changes
+ * the canonical URL, so it is not what this task set out to do.
+ *
+ * `<route>.html` is the shape Pages resolves for a pretty URL: `/about` serves
+ * `about.html` directly, with a 200 and the URL unchanged. Writing both means
+ * whichever resolution the host prefers, the deep link ends at a real file —
+ * and the directory copy remains as the fallback for a host that only
+ * canonicalises directories.
+ */
 for (const route of pageRoutes) {
-  const dir = join(DIST, route.replace(/^\/+/, ''))
+  const name = route.replace(/^\/+/, '')
+  writeFileSync(join(DIST, `${name}.html`), readFileSync(index))
+  const dir = join(DIST, name)
   mkdirSync(dir, { recursive: true })
   copyFileSync(index, join(dir, 'index.html'))
 }
