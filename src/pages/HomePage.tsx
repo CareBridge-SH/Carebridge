@@ -97,12 +97,22 @@ export default function HomePage() {
           </div>
 
           {/*
-            The field, beside the type. It is the FLAT surface — a 1px rule, the
-            plate fill and its shadow, and a computed `background-image` of
-            `none`. No photograph is sourced or committed; the round ships
-            photo-free.
+            The plate beside the type.
+
+            It shipped photo-free — a flat field with a computed
+            `background-image: none` — and the operator has since asked for the
+            reserved picture slots to be filled with a rotating stand-in until
+            real photographs exist. So this is a real `<img>` now, chosen at
+            random from the pictures already in the repo by
+            `scripts/rotate-plate-photos.mjs` (`npm run photos:rotate`), and
+            cropped to the 3:2 the flat field already reserved so the hero cannot
+            move when the picture changes. Delete the `photos.cover` entry from
+            `src/data/photos.json` and this returns to the flat field.
+
+            `priority` because it sits beside the `h1`, above the fold: lazy
+            would delay the largest paint on the page for no benefit.
           */}
-          <Plate slug="cover" className="w-full" />
+          <Plate slug="cover" priority className="w-full" />
         </div>
       </Section>
 
