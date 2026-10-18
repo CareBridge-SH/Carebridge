@@ -7,6 +7,9 @@ export type { CardProps } from './Card';
 export { Container } from './Container';
 export type { ContainerProps } from './Container';
 
+export { deckCard } from './deck';
+export type { DeckCardOptions } from './deck';
+
 export { EditorialSplit } from './EditorialSplit';
 export type { EditorialSplitProps } from './EditorialSplit';
 

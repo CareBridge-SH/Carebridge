@@ -8,8 +8,12 @@
  *     # or: npm run check:instagram
  *
  * Exit codes: 0 on a valid snapshot (including the empty array `[]`),
- * non-zero on any hard error. Missing `date` / `width` / `height` are warnings,
- * not errors.
+ * non-zero on any hard error. Missing `date` / per-picture `width` / `height` are
+ * warnings, not errors.
+ *
+ * Schema note: a post holds `images: [{ src, alt, width, height }]` — the plural
+ * is the point. These are carousels; a post-level `image` + `alt` (which this
+ * validator used to accept) could not describe more than one photograph.
  */
 
 import { existsSync, readFileSync } from 'node:fs';
@@ -93,31 +97,58 @@ for (const [index, post] of posts.entries()) {
     seenIds.add(post.id);
   }
 
-  // image — required, local path under /instagram/, never an http(s) URL.
-  if (typeof post.image !== 'string' || post.image.trim() === '') {
-    fail(`${label}: \`image\` is required and must be a non-blank string`);
-  } else if (/^https?:\/\//i.test(post.image)) {
-    fail(`${label}: \`image\` is a URL ("${post.image}") — Instagram CDN URLs expire; use a local /instagram/... path`);
-  } else if (!post.image.startsWith('/instagram/')) {
-    fail(`${label}: \`image\` must start with "/instagram/" (got "${post.image}")`);
-  } else if (!existsSync(resolve(PUBLIC_DIR, post.image.replace(/^\//, '')))) {
-    fail(`${label}: image file not found on disk: ${post.image}`);
+  // images — required, one or more pictures, each a local path under /instagram/.
+  if (!Array.isArray(post.images) || post.images.length === 0) {
+    fail(`${label}: \`images\` is required and must be a non-empty array`);
+  } else {
+    for (const [pictureIndex, image] of post.images.entries()) {
+      const where = `${label} images[${pictureIndex}]`;
+
+      if (image === null || typeof image !== 'object' || Array.isArray(image)) {
+        fail(`${where}: not an object`);
+        continue;
+      }
+
+      if (typeof image.src !== 'string' || image.src.trim() === '') {
+        fail(`${where}: \`src\` is required and must be a non-blank string`);
+      } else if (/^https?:\/\//i.test(image.src)) {
+        fail(
+          `${where}: \`src\` is a URL ("${image.src}") — Instagram CDN URLs expire; use a local /instagram/... path`,
+        );
+      } else if (!image.src.startsWith('/instagram/')) {
+        fail(`${where}: \`src\` must start with "/instagram/" (got "${image.src}")`);
+      } else if (!existsSync(resolve(PUBLIC_DIR, image.src.replace(/^\//, '')))) {
+        fail(`${where}: image file not found on disk: ${image.src}`);
+      }
+
+      // alt — per picture, and a real description. Five pictures of five
+      // different things need five sentences; one shared alt is indistinguishable
+      // to anyone using a screen reader.
+      const alt = typeof image.alt === 'string' ? image.alt.trim() : '';
+      if (typeof image.alt !== 'string' || PLACEHOLDER_ALTS.has(alt.toLowerCase())) {
+        fail(
+          `${where}: \`alt\` is required and must be real descriptive text (got ${JSON.stringify(image.alt ?? '')})`,
+        );
+      }
+
+      // Per-picture, because a carousel genuinely mixes shapes — 1080×1440 next
+      // to 805×1073 — and one post-level ratio would shift the layout for the rest.
+      if (image.width === undefined || image.height === undefined) {
+        warn(`${where}: missing \`width\`/\`height\` — the picture has no intrinsic size`);
+      }
+    }
   }
 
-  // alt — required, real description.
-  const alt = typeof post.alt === 'string' ? post.alt.trim() : '';
-  if (typeof post.alt !== 'string' || PLACEHOLDER_ALTS.has(alt.toLowerCase())) {
-    fail(`${label}: \`alt\` is required and must be real descriptive text (got ${JSON.stringify(post.alt ?? '')})`);
+  // The half-migrated file: post-level image/alt, left behind by a hand edit.
+  if (post.image !== undefined || post.alt !== undefined) {
+    fail(
+      `${label}: post-level \`image\`/\`alt\` are gone — each picture carries its own \`src\`/\`alt\` inside \`images\``,
+    );
   }
 
   // date — informational only; missing is a warning, not an error.
   if (post.date === undefined || post.date === null || post.date === '') {
     warn(`${label}: missing \`date\` (informational only — never used for sort order)`);
-  }
-
-  // width/height — optional, but missing them causes layout shift.
-  if (post.width === undefined || post.height === undefined) {
-    warn(`${label}: missing \`width\`/\`height\` — the tile falls back to a 1:1 aspect box`);
   }
 }
 
@@ -126,8 +157,9 @@ console.log('');
 console.log('Per-post summary:');
 for (const [index, post] of posts.entries()) {
   const label = postLabel(post, index);
-  const ok = seenIds.has(post?.id) && typeof post?.image === 'string' && post.image.startsWith('/instagram/') && typeof post?.alt === 'string' && !PLACEHOLDER_ALTS.has(post.alt.trim().toLowerCase());
-  console.log(`  ${ok ? 'ok ' : 'BAD'} ${label} — ${post?.image ?? '<no image>'}`);
+  const pictures = Array.isArray(post?.images) ? post.images.length : 0;
+  const ok = seenIds.has(post?.id) && pictures > 0;
+  console.log(`  ${ok ? 'ok ' : 'BAD'} ${label} — ${pictures} picture(s)`);
 }
 
 if (errors > 0) {

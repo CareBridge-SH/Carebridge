@@ -18,7 +18,9 @@ To add a photo you touch exactly two things:
 1. `public/instagram/` — the image file (a `.jpg`).
 2. `src/data/instagram-posts.json` — add one entry for it.
 
-Then rebuild. That's it.
+Then rebuild. That's it. Both steps are done for you by
+`add-instagram-post.mjs` (one picture) or `ingest-instagram-folder.mjs` (a whole
+folder of posts, including carousels) — see §2.
 
 ---
 
@@ -57,18 +59,62 @@ fails. `--image` and `--alt` are required; `--date` (defaults to today),
    ```json
    {
      "id": "fall-workshop-2026",
-     "image": "/instagram/2026-10-24-fall-workshop.jpg",
-     "alt": "Students making fall bracelets at a workshop table",
+     "images": [
+       {
+         "src": "/instagram/2026-10-24-fall-workshop.jpg",
+         "alt": "Students making fall bracelets at a workshop table",
+         "width": 1080,
+         "height": 1440
+       }
+     ],
      "permalink": "https://www.instagram.com/p/EXAMPLE/",
      "caption": "Our fall DIY workshop — bracelets and painted pumpkins.",
-     "date": "24 October 2026"
+     "date": "2026-10-24"
    }
    ```
 
-   (`width`/`height` are optional — the site crops every tile square, and the
-   guard only warns, not fails, when they are absent.)
+   A post with several pictures simply has more objects in `images` — they render
+   as the overlapping deck (§3). `width`/`height` are per picture and optional;
+   the guard only warns, not fails, when they are absent.
 
 3. **Commit** both files together.
+
+### C. A whole folder of posts — the batch path
+
+When the posts arrive as folders (one folder per post, named for its date), this
+is one command instead of N:
+
+```bash
+node scripts/ingest-instagram-folder.mjs --from "D:\path\to\instagram-posts"
+```
+
+```
+instagram-posts/
+  20260904/
+    photo.jpg          the picture(s), in filename order
+    link.txt           the post's permalink
+    alt.txt            one description per line, one per picture (see below)
+  20260910/
+    1.jpg … 5.jpg
+    link.txt
+```
+
+It downscales and re-encodes each picture to WebP (≤1080 px wide) with Pillow,
+writes `public/instagram/<date>-<shortcode>-<n>.webp`, merges the posts into the
+JSON newest-first, runs the guard, and rolls everything back if the guard fails.
+It is idempotent (a post already in the snapshot is skipped), `--force` rebuilds
+one, `--dry` prints the plan and writes nothing. The source folder is never
+modified.
+
+**`alt.txt` is the one thing the script cannot do for you.** It cannot see the
+pictures, so a post with no `alt.txt` ships with a fallback that says where the
+picture came from, not what is in it:
+
+> `CareBridge post of 2026-09-10, picture 3 of 5.`
+
+That is a floor, not a description — it tells a screen-reader user that a
+photograph exists and nothing else. Write one line per picture, in picture order,
+then re-run with `--force`.
 
 ### Either way
 
@@ -84,41 +130,66 @@ fails. `--image` and `--alt` are required; `--date` (defaults to today),
 | Field | Required? | Meaning | A bad value looks like |
 |---|---|---|---|
 | `id` | **yes** | Unique identifier for this post. Never repeat it. | `""`, or the same id as another post |
-| `image` | **yes** | The image path, **starting with `/instagram/`**. Never an `http(s)` URL. | `"https://scontent…"` (expires), `"/img/1.jpg"` (wrong folder) |
-| `alt` | **yes** | Real description of what the photo shows, for screen readers (WCAG 1.1.1). | `""`, `"image"`, `"photo"`, `"instagram post"` |
-| `permalink` | no | The post's Instagram URL. When present, the tile links out in a new tab. | a made-up or non-Instagram URL |
-| `caption` | no | A short caption under the tile. | — |
+| `images` | **yes** | A **non-empty array**, one object per picture, in display order. One picture renders as a plain tile; more than one renders as the overlapping deck. | `[]`, or the old post-level `image`/`alt` pair (see below) |
+| `images[].src` | **yes** | The picture's path, **starting with `/instagram/`**. Never an `http(s)` URL. | `"https://scontent…"` (expires), `"/img/1.jpg"` (wrong folder) |
+| `images[].alt` | **yes** | Real description of **that** picture, for screen readers (WCAG 1.1.1). Five pictures need five sentences — there is no post-level `alt`. | `""`, `"image"`, `"photo"`, `"instagram post"` |
+| `images[].width` / `height` | no | That picture's intrinsic size in px. Avoids layout shift. Per picture, because a carousel mixes shapes. | a string like `"1080"` (use a number) |
+| `permalink` | no | The post's Instagram URL. On a single-picture tile the whole tile links out; on a carousel it becomes the corner `↗` control (a tile cannot be both a link and a carousel). | a made-up or non-Instagram URL |
+| `caption` | no | A short caption, revealed over the tile on hover/focus. | — |
 | `isVideo` | no | `true` shows a "Video" badge on the tile. | — |
-| `date` | no | Shown under the tile. **Informational only** — never used for ordering. | — |
-| `width` | no | Intrinsic image width in px. Avoids layout shift. | a string like `"1080"` (use a number) |
-| `height` | no | Intrinsic image height in px. Avoids layout shift. | — |
+| `date` | no | Shown under the caption. **Informational only** — never used for ordering. | — |
+
+> ⚠️ **`image` and `alt` at post level no longer exist.** They were replaced by
+> `images[]` when the first carousel arrived: one `alt` cannot describe five
+> different photographs. A file that still has them fails the guard with a message
+> saying exactly that. `add-instagram-post.mjs` writes the new shape, so re-adding
+> a picture that way is the quickest fix.
+
+**How a carousel renders.** A post with more than one picture becomes a deck at
+**85% overlap** — the same rolling method as the Events page, at `DECK_OVERLAP`
+in `InstagramFeed.tsx`, with the arithmetic shared through
+`src/components/ui/deck.ts` so the two decks cannot drift apart. Each neighbour
+shows a 15% edge, the `n/N` counter says how many there are, and `‹ ›` (or the
+arrow keys) step through. A carousel tile is **1.3× as wide** as a single-post
+tile and the same height: the extra width is the room the fanned edges need, and
+the photograph inside stays exactly the same size as a single post's.
+
+A carousel tile cannot also be a link — a button inside an anchor is invalid
+markup — so its `permalink` becomes the `↗` control in the corner instead of
+wrapping the whole tile.
 
 **Why `alt` matters:** every image needs text that says what it shows. A screen
 reader reads this aloud; if it's `"image"` or empty, a blind visitor hears
 nothing useful. Write a sentence a human would say.
 
-**Why `image` must be a local path, never a URL:** Instagram CDN URLs expire.
+**Why `alt` is per picture:** these are carousels. One sentence covering five
+photographs is five photographs nobody who cannot see them can tell apart — and
+the deck's whole job is stepping between them.
+
+**Why `src` must be a local path, never a URL:** Instagram CDN URLs expire.
 If the feed pointed at `https://scontent…`, the photo would silently break weeks
 later with no warning. A local file in `public/instagram/` is served with the
 site and never expires.
 
 **Why `width`/`height` matter:** without them the page can't reserve space for
 the image before it loads, so the layout jumps. They're optional — a missing
-pair falls back to a square tile and the guard warns (not fails) — but include
-them for a stable page.
+pair falls back to the card's own 3:4 box and the guard warns (not fails) — but
+include them for a stable page.
 
 ---
 
 ## 4. Image guidelines
 
 - **Folder:** `public/instagram/`. Nothing else lives there.
-- **Format:** `.jpg` (or `.webp`/`.png` if you must). `.jpg` is preferred.
+- **Format:** `.jpg` for `add-instagram-post.mjs` (or `.webp`/`.png` if you must).
+  The folder ingest writes `.webp`, because it re-encodes anyway.
 - **Target file size:** keep each image under **~250 KB** if you can. A 5 MB
-  photo makes the page slow for everyone.
-- **Max width:** **1080 px** is plenty (Instagram's own maximum). Larger files
-  are just wasted bytes.
-- **Naming rule:** `YYYY-MM-<short-slug>.jpg`. The date in the name is what
-  busts the browser cache.
+  photo makes the page slow for everyone. The ingest lands 1080-wide pictures at
+  about 130 KB.
+- **Max width:** **1080 px** is plenty (Instagram's own maximum). The ingest
+  downscales anything wider.
+- **Naming rule:** `YYYY-MM-<short-slug>.jpg` from `add-instagram-post.mjs`, or
+  `<date>-<shortcode>-<n>.webp` from the folder ingest. Either way the date leads.
 
   > ⚠️ **Files in `public/` are not content-hashed.** If you replace a photo but
   > keep the same filename, some visitors will still see the *old* one because
@@ -142,21 +213,24 @@ It is also wired as `prebuild`, so `npm run build` runs it automatically.
 It checks, and **fails** (exit code 1) on:
 
 - the JSON not being an array, or being invalid JSON;
-- a post missing `id`, `image`, or `alt`;
-- a **blank or placeholder `alt`** (`""`, `"image"`, `"photo"`, `"instagram post"`);
+- a post missing `id`, or whose `images` is not a non-empty array;
+- a **blank or placeholder `alt`** on any picture (`""`, `"image"`, `"photo"`,
+  `"instagram post"`);
+- the old **post-level `image`/`alt`** — the schema moved into `images[]`;
 - a **duplicate `id`**;
-- an `image` that is an `http://`/`https://` URL, or that does **not** start with
-  `/instagram/`;
-- an `image` whose file does **not exist** in `public/instagram/`.
+- a picture `src` that is an `http://`/`https://` URL, or that does **not** start
+  with `/instagram/`;
+- a picture `src` whose file does **not exist** in `public/instagram/`.
 
-It **warns** (but does not fail) on a missing `date` or a missing `width`/`height`.
+It **warns** (but does not fail) on a missing `date` or missing per-picture
+`width`/`height`.
 
 `[]` (no posts) is **valid** — it prints `PASS … empty array is valid` and exits 0.
 
 Every error message names the post and the field, e.g.:
 
 ```
-FAIL  post "fall-workshop-2026": `alt` is required and must be real descriptive text (got "")
+FAIL  post "fall-workshop-2026" images[0]: `alt` is required and must be real descriptive text (got "")
 ```
 
 Fix what it names, run it again until it prints `PASS`.
@@ -178,11 +252,10 @@ The order of the remaining posts does not change.
 
 `[]` is the **correct, shipped state** until the club's first event photos exist.
 
-While the list is empty, the home page's Instagram section shows
-**"Photos coming soon"** and a short explanation — designed, not a placeholder
-— and renders **no image at all**, so it can never show a broken image, a
-spinner, or an error. This is the state a visitor sees first, and it is
-deliberate.
+While the list is empty, the home page's Instagram section shows the engraved
+**plate band**, captioned with the club's real handle — a composed band, not an
+apology — and renders **no image at all**, so it can never show a broken image,
+a spinner, or an error.
 
 ---
 
@@ -216,7 +289,7 @@ place.
   integration was removed on purpose.
 - **No automatic re-sorting.** Array order is display order. If you want a
   different order, move the entries in the file.
-- **No fallback image.** A post with a missing or bad `image` fails the guard; it
-  is never silently shown as a broken picture.
+- **No fallback image.** A post with a missing or bad picture `src` fails the
+  guard; it is never silently shown as a broken picture.
 - **No caching surprises.** Renaming a photo means giving it a new dated filename
   (§4) — the system does not try to work around the browser cache for you.

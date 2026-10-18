@@ -5,6 +5,7 @@ import type {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from './ui/Button';
+import { deckCard } from './ui/deck';
 import type { EventPhoto } from '../data/types';
 import EVENT_PHOTOS from '../data/event-photos.json';
 
@@ -192,22 +193,26 @@ export function EventCoverflow({ className = '' }: EventCoverflowProps) {
                 width: cardWidth,
                 height: cardHeight,
                 /*
-                 * `brightness` rather than `opacity` for the near neighbours: a
-                 * second photograph showing through the first is exactly the mud
-                 * an overlap invites. Only the far ones fade, and by then there
-                 * is nothing behind them to show through.
+                 * Position, depth cueing, shadow and transition all come from
+                 * `deckCard` — the same function the Instagram deck uses, so the
+                 * two can never drift apart. Only the constants are this page's
+                 * (the header comment says why 40% and not less).
                  */
-                filter: `brightness(${1 - Math.min(0.34, depth * 0.09)})`,
-                opacity: clamp(1 - Math.max(0, depth - 2) * 0.34, 0, 1),
-                transform: `translate(-50%, -50%) translateX(${distance * stepWidth}px) rotateY(${
-                  clamp(distance, -MAX_TILT, MAX_TILT) * -TILT_DEG
-                }deg) scale(${1 - Math.min(0.3, depth * 0.11)})`,
-                zIndex: 500 - Math.round(depth * 10),
+                ...deckCard({
+                  distance,
+                  step: `${stepWidth}px`,
+                  tiltDeg: TILT_DEG,
+                  maxTilt: MAX_TILT,
+                  scaleStep: 0.11,
+                  maxScale: 0.3,
+                  dimStep: 0.09,
+                  maxDim: 0.34,
+                  fadeFrom: 2,
+                  fadeStep: 0.34,
+                  shadow: 'var(--shadow-deck)',
+                  duration: reduced ? 0 : 500,
+                }),
                 pointerEvents: depth > 6 ? 'none' : 'auto',
-                boxShadow: 'var(--shadow-deck)',
-                transition: reduced
-                  ? 'none'
-                  : 'transform 500ms cubic-bezier(.2,.7,.2,1), filter 500ms, opacity 500ms',
               }}
             >
               <img

@@ -79,6 +79,9 @@
       "altFallback": "Photo from a CareBridge event.",
       "viewPost": "View this post on Instagram",
       "videoLabel": "Video",
+      "imagePosition": "Picture {{index}} of {{total}}",
+      "prevImage": "Previous picture",
+      "nextImage": "Next picture",
       "postCount_one": "{{count}} post",
       "postCount_other": "{{count}} posts"
     },

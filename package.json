@@ -10,6 +10,7 @@
     "predev": "node scripts/build-ledger.mjs --header-row 2",
     "postbuild": "node scripts/postbuild-pages.mjs",
     "check:instagram": "node scripts/check-instagram.mjs",
+    "instagram:ingest": "node scripts/ingest-instagram-folder.mjs",
     "ledger:build": "node scripts/build-ledger.mjs --header-row 2",
     "ledger:check": "node scripts/build-ledger.mjs --check --header-row 2",
     "lint": "oxlint",

@@ -191,11 +191,16 @@ if (posts.some((post) => post && post.id === id)) {
 // 5. Do the work: copy, append, write, validate — and roll back on failure.
 copyFileSync(imageSrc, targetPath);
 
-const post = { id, image: `/instagram/${filename}`, alt: trimmedAlt };
-if (dimensions) {
-  post.width = dimensions.width;
-  post.height = dimensions.height;
-}
+const post = {
+  id,
+  images: [
+    {
+      src: `/instagram/${filename}`,
+      alt: trimmedAlt,
+      ...(dimensions ? { width: dimensions.width, height: dimensions.height } : {}),
+    },
+  ],
+};
 if (caption) post.caption = caption;
 if (dateStr) post.date = dateStr;
 if (permalink) post.permalink = permalink;

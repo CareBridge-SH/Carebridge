@@ -6,25 +6,55 @@
  * Instagram integration was deliberately removed, so
  * this type describes static, hand-maintained data only.
  */
+/**
+ * One picture inside an Instagram post.
+ *
+ * A post is one or more of these. One picture renders as a plain tile; more than
+ * one renders as the same overlapping "deck" the Events page uses, at a much
+ * higher overlap (see `src/components/ui/deck.ts`).
+ */
+export interface InstagramImage {
+  /**
+   * Local path, e.g. `/instagram/2026-09-10-DdGw-3.webp`.
+   *
+   * MUST start with `/instagram/` and MUST NOT be an `http(s)` URL: Instagram CDN
+   * URLs expire and would silently break the live site. Files live under
+   * `public/instagram/` (see docs/INSTAGRAM.md).
+   */
+  src: string;
+
+  /**
+   * REQUIRED, and per-picture — five photographs of five different things need
+   * five descriptions, so there is no post-level `alt`. Real, human-written alt
+   * text (WCAG 1.1.1); never `""`, `"image"`, `"photo"` or `"instagram post"`,
+   * which the validator (`scripts/check-instagram.mjs`) rejects.
+   */
+  alt: string;
+
+  /**
+   * Intrinsic size in px, as measured from the file at ingest time.
+   *
+   * Per-picture rather than per-post because a carousel really does mix shapes —
+   * treating the first picture's ratio as the post's would shift the layout for
+   * every other picture in it.
+   */
+  width?: number;
+  height?: number;
+}
+
 export interface InstagramPost {
   /** Unique id for the post. Used as the React key; must be unique in the file. */
   id: string;
 
   /**
-   * Local path to the image, e.g. `/instagram/2026-10-fall-workshop.jpg`.
+   * The pictures, in display order. `images[0]` is what the tile shows first.
    *
-   * MUST start with `/instagram/` and MUST NOT be an `http(s)` URL: Instagram CDN
-   * URLs expire and would silently break the live site. Images live under
-   * `public/instagram/` (see docs/INSTAGRAM.md).
+   * This replaced a single `image` + post-level `alt` when the operator's first
+   * carousel arrived: a post is a thing that can hold several photographs, and
+   * five pictures under one alt sentence is five indistinguishable pictures for
+   * anyone using a screen reader.
    */
-  image: string;
-
-  /**
-   * REQUIRED. Real, human-written alt text describing the photo (WCAG 1.1.1).
-   * Never `""`, `"image"`, `"photo"` or `"instagram post"` — the validator
-   * (`scripts/check-instagram.mjs`) rejects those.
-   */
-  alt: string;
+  images: InstagramImage[];
 
   /** When present, the tile links out to this URL in a new tab. */
   permalink?: string;
@@ -40,12 +70,6 @@ export interface InstagramPost {
    * order is the display order (most recent first by convention).
    */
   date?: string;
-
-  /** Intrinsic image width (px). Optional, but avoids layout shift. */
-  width?: number;
-
-  /** Intrinsic image height (px). Optional, but avoids layout shift. */
-  height?: number;
 }
 
 /**
