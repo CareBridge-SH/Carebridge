@@ -88,10 +88,13 @@ export interface PhotoEntry {
   height: number;
   /** Full locale key for the alt text, e.g. `photos.fall-workshop.alt`. */
   altKey: string;
-  /** Full locale key for the caption, e.g. `photos.fall-workshop.caption`. */
-  captionKey: string;
-  /** CSS `object-position`, e.g. `"50% 30%"` — which part survives the crop. */
-  focus: string;
+  /** Full locale key for the caption, e.g. `photos.fall-workshop.caption`.
+   *  Optional: a plate may carry no caption at all, and the Home cover slot
+   *  deliberately does not — it is a photograph, not an illustrated caption. */
+  captionKey?: string;
+  /** CSS `object-position`, e.g. `"50% 30%"` — which part survives the crop.
+   *  Optional; omit and the picture is centred. */
+  focus?: string;
   /**
    * Set when `public/photos/<slug>@2x.webp` exists.
    *

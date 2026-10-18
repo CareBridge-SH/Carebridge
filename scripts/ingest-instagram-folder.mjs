@@ -49,7 +49,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_FILE = resolve(ROOT, 'src', 'data', 'instagram-posts.json');
 const PUBLIC_INSTAGRAM = resolve(ROOT, 'public', 'instagram');
 const CHECK_SCRIPT = resolve(ROOT, 'scripts', 'check-instagram.mjs');
-const PY_SCRIPT = resolve(ROOT, 'scripts', 'lib', 'instagram-image.py');
+const PY_SCRIPT = resolve(ROOT, 'scripts', 'lib', 'image-encode.py');
 
 /** Image formats the encoder can actually read. HEIC is deliberately absent. */
 const EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
@@ -270,7 +270,7 @@ const python = spawnSync('python', ['-X', 'utf8', PY_SCRIPT], {
 
 if (python.error) {
   fail(
-    `cannot run \`python\`: ${python.error.message}. The encoder needs Python 3 with Pillow (scripts/lib/instagram-image.py).`,
+    `cannot run \`python\`: ${python.error.message}. The encoder needs Python 3 with Pillow (scripts/lib/image-encode.py).`,
   );
 }
 if (python.status !== 0) {
