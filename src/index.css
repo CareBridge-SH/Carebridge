@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
 /*
- * ── Round 5: safelist the display scale ─────────────────────────────────────
+ * ── Safelist the display scale ───────────────────────────────────────────────
  *
  * Tailwind v4 emits a utility only when it finds the class name in scanned
- * source. `text-display-1` is not used by anything yet — T30 is what puts it on
- * the five pages — so without this it would be ABSENT from the shipped
- * stylesheet, and a misspelled theme key would fail silently at T30's call site
- * instead of here, where it is cheap to notice.
+ * source. `text-display-1` is used by exactly one page, so without this it would
+ * be ABSENT from the shipped stylesheet, and a misspelled theme key would fail
+ * silently at the call site instead of here, where it is cheap to notice.
  *
  * `@source inline(...)` forces those utilities into the build, which is what
  * makes "the display scale is addressable" a fact to grep rather than a claim
@@ -33,16 +32,15 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 
   /*
-   * ── Round 5: The Printed Report ────────────────────────────────────────
+   * ── The Printed Report ──────────────────────────────────────────────────
    *
-   * Everything from here down was ADDED in round 5. No value above this line
-   * changed — that is a hard rule for the round, and `git diff src/index.css`
-   * is the proof.
+   * Everything from here down was ADDED for this design. No value above this
+   * line changed, and `git diff src/index.css` is the proof.
    *
    * These live in `@theme` on purpose: Tailwind v4 reads its `--text-*`,
    * `--tracking-*`, `--color-*` and `--font-*` namespaces to EMIT UTILITIES, so
    * a token defined here is addressable as `text-display-1`, `tracking-label`,
-   * `border-rule`, `bg-plate-field`, `font-mono`. The brief asks for exactly
+   * `border-rule`, `bg-plate-field`, `font-mono`. The design asks for exactly
    * that. The two that no utility needs (`--paper-grain-opacity`,
    * `--shadow-plate`) are plain custom properties further down instead, for the
    * reason recorded there.
@@ -52,7 +50,7 @@
    * The loud voice. Fluid, and never a replacement for an existing size.
    *
    * `--text-display-1` came down from `clamp(3.5rem, 9vw, 9rem)` (129.6px at
-   * 1440) on the operator's instruction — the home hero was too large. That
+   * 1440) because the home hero was too large. That
    * token has exactly one user, the home `<h1>`; every other page opens on
    * `display-2`, so this changes one page and no other. It is still a whole
    * step above `display-2` (100.8px against 72px at 1440), which is the point:
@@ -67,13 +65,13 @@
 
   /*
    * Two rule weights instead of one. The hairline is deliberately QUIETER than
-   * the `--color-lavender-dk` the rules used through round 4 (2.38:1 against
+   * the `--color-lavender-dk` the rules used before (2.38:1 against
    * the dark ground, where lavender-dk measured 4.48:1): a printed rule is a
    * structure line, not a highlight, and the strong weight keeps the old
    * strength for anywhere a rule has to carry emphasis.
    */
   --color-rule: #455785; /* 2.38:1 on the dark ground */
-  --color-rule-strong: #8b7ab8; /* the round-4 rule strength, 4.48:1 */
+  --color-rule-strong: #8b7ab8; /* the previous rule strength, 4.48:1 */
 
   /* The field a plate is mounted on — one tonal step off the page. */
   --color-plate-field: #14264a;
@@ -118,12 +116,12 @@ html[data-theme='light'] {
   --shadow-ambient-low: 0 4px 16px rgba(11, 27, 63, 0.08);
   --shadow-ambient-hover: 0 8px 24px rgba(11, 27, 63, 0.12);
 
-  /* ── Round 5, added. No value above changed. ─────────────────────────── */
+  /* ── Added. No value above changed. ──────────────────────────────────── */
   --color-rule: #b6ac99; /* 2.06:1 on the light ground */
-  --color-rule-strong: #453a70; /* the round-4 rule strength, 9.21:1 */
+  --color-rule-strong: #453a70; /* the previous rule strength, 9.21:1 */
   --color-plate-field: #eee9df;
   --shadow-plate: 0 6px 20px rgba(11, 27, 63, 0.1);
-  /* Round 7, added. No value above changed.
+  /* Added. No value above changed.
      The Events cover flow stacks photographs and lets them overlap by 40% of a
      card, so two edges are always touching. `--shadow-plate` is calibrated for a
      surface that sits *on* the page and is far too shallow to say which of two
@@ -131,7 +129,7 @@ html[data-theme='light'] {
      smeared rectangle. This is the same lift, tightened and deepened. */
   --shadow-deck: 0 22px 44px -20px rgba(11, 27, 63, 0.38),
     0 2px 6px -2px rgba(11, 27, 63, 0.18);
-  /* T28, added. Weaker on paper than on the dark ground: the light accent is a
+  /* Weaker on paper than on the dark ground: the light accent is a
      dark purple, and the same strength would muddy every photograph. */
   --plate-duotone-opacity: 0.55;
 }
@@ -150,7 +148,7 @@ html {
   --shadow-ambient-hover: 0 8px 24px rgba(6, 15, 38, 0.32);
 
   /*
-   * ── Round 5, added. No value above changed. ────────────────────────────
+   * ── Added. No value above changed. ──────────────────────────────────────
    *
    * These two are plain custom properties rather than `@theme` tokens, for the
    * reason already recorded above: Tailwind v4 bakes the colour out of an
@@ -159,21 +157,21 @@ html {
    * has no reason to be a theme token either.
    */
   --shadow-plate: 0 6px 20px rgba(6, 15, 38, 0.45);
-  /* Round 7, added. On the navy ground a shadow cannot be *seen*, only felt: it
+  /* Added. On the navy ground a shadow cannot be *seen*, only felt: it
      is a touch stronger and far wider than the light one, so the overlap reads as
      a gap in the light rather than as a line. */
   --shadow-deck: 0 26px 52px -22px rgba(2, 6, 20, 0.72),
     0 2px 8px -2px rgba(2, 6, 20, 0.55);
-  /* T28, added. */
+  /* Stronger on the dark ground, so the duotone reads the same. */
   --plate-duotone-opacity: 0.8;
 
   /*
-   * ── Round 6, T38: the two measure tokens ─────────────────────────────────
+   * ── The two measure tokens ───────────────────────────────────────────────
    *
    * They live HERE, in the base `html` block, and not in either sky: they are a
-   * line box and a gap, and neither theme has asked for its own. T39 and T40
-   * consume them, and before this task they did not exist — every page
-   * improvised its own spacing, which is part of why they read alike.
+   * line box and a gap, and neither theme has asked for its own. Before they
+   * existed every page improvised its own spacing, which is part of why the pages
+   * read alike.
    *
    * --leading-prose: the line box for running text. 1.6, which computes to
    *   25.6px on the 16px body. Chosen by measurement: the inherited 1.5 gave
@@ -189,18 +187,16 @@ html {
   --gap-heading-body: 1.25rem;
 
   /*
-   * ── Round 6, T45: the article measure ────────────────────────────────────
+   * ── The article measure ──────────────────────────────────────────────────
    *
-   * A fixed 62ch column is the right MEASURE and the wrong PAGE. Gate B18
-   * certified it as readable, and it is — but B18 was silent about the window,
-   * and the operator saw what that costs: "it is currently not adjusting its
-   * width by window size, so my fullscreen does not have the sentences extended
-   * but rather clustered to the left side."
+   * A fixed 62ch column is the right MEASURE and the wrong PAGE. It is readable,
+   * but it says nothing about the window: a fullscreen did not extend the
+   * sentences, it left them clustered to the left side.
    *
-   * So the measure scales INSIDE the band B18 certified: 62ch at 1024 and below,
+   * So the measure scales INSIDE that readable band: 62ch at 1024 and below,
    * rising to 72ch by 1440 and holding there. It never exceeds 72ch, because
-   * prose much past ~72 characters is measurably harder to read and the operator
-   * asking for wider lines does not make that untrue.
+   * prose much past ~72 characters is measurably harder to read, and asking for
+   * wider lines does not make that untrue.
    *
    * The rising term is deliberately small — about a quarter of each pixel of
    * window growth — so the band is reached gradually rather than snapped.
@@ -239,17 +235,12 @@ html {
   }
 
   /*
-   * ── Round 6, T37: the paper grain was REMOVED ─────────────────────────
+   * ── The paper grain was REMOVED ───────────────────────────────────────
    *
-   * This is a deliberate ROLLBACK of a Round-5 decision, on the operator's
-   * instruction, and it is recorded as one rather than as a bug someone found:
-   *
-   *   "Also, get rid of the dotted background and replace with something
-   *    better."
-   *
-   * ROUND6-PLAN §3.4 decides what replaces it: nothing. The `body::before`
+   * This is a deliberate ROLLBACK of an earlier decision, recorded as one rather
+   * than as a bug someone found. Nothing replaces it. The `body::before`
    * overlay and its `--paper-grain-opacity` token went together, because a
-   * declaration nothing reads is the defect this round exists to clean up.
+   * declaration nothing reads is exactly the kind of defect worth cleaning up.
    *
    * There is now no repeating pattern anywhere in the shipped stylesheet — no
    * gradient, no data-URI texture, no noise. The plate field is flat.
@@ -258,11 +249,11 @@ html {
 
 @layer utilities {
   /*
-   * ── Round 5: motion — only what a page turn does (§2.6) ─────────────────
+   * ── Motion — only what a page turn does ─────────────────────────────────
    *
    * The page's opening settles in: opacity and transform only, never a property
-   * that changes layout, which is how T27's CLS fix would come undone. 320ms is
-   * inside §2.6's 200-400ms band.
+   * that changes layout, which is how the layout-shift fix would come undone.
+   * 320ms is inside the 200-400ms band.
    *
    * `both` fill-mode means the element is fully opaque when the animation ends,
    * so nothing is ever left invisible if the animation never runs.
@@ -306,12 +297,11 @@ html {
 }
 
 /*
- * ── Round 6, T37: THE ADDRESS TREATMENT, DEFINED ONCE ─────────────────────
+ * ── THE ADDRESS TREATMENT, DEFINED ONCE ───────────────────────────────────
  *
- * The operator, exactly:
- *
- *   "On the get involved page, the three places with the email look different,
- *    although it would be more reasonable to look at least the same."
+ * The complaint, in short: on the Get Involved page the three places with the
+ * email look different from each other, when they would more reasonably look
+ * the same.
  *
  * They did, because each context styled the address with its own classes — one
  * got a filled Button, two got ghost links, and the footer set it as white body
@@ -342,16 +332,14 @@ a[href^='mailto:'] {
 }
 
 /*
- * ── Round 6, T38: THE NUMERAL RULE ────────────────────────────────────────
+ * ── THE NUMERAL RULE ──────────────────────────────────────────────────────
  *
  * **Numerals are set in the text face, never the display face.** A figure that
  * is content — a date, an amount, a count, a row number in a table — is set in
  * the sans with `font-variant-numeric: lining-nums tabular-nums`.
  *
- * The operator, twice:
- *
- *   "the font looks ugly displaying numbers"
- *   "for Our Impact, avoid using structures like this for 01, 02, and 03."
+ * Two complaints drove it: the display face sets numbers badly, and the
+ * `01 / 02 / 03` numerals were not wanted on Our Impact.
  *
  * Cormorant Garamond's figures are the problem: they are old-style and
  * proportional, so they sit on the baseline at odd heights and will not line up
@@ -371,9 +359,9 @@ a[href^='mailto:'] {
 /*
  * The events date rail.
  *
- * This selector is deliberately narrow, and it is a WART. `EventsPage.tsx` is
- * not a file this task may write, but ROUND6-PLAN §3 requires the date rail to
- * take the numeral rule, so the rule has to reach it from a global stylesheet.
+ * This selector is deliberately narrow, and it is a WART. The rule belongs on
+ * the rail itself, in `EventsPage.tsx`, but for now it has to reach the rail
+ * from a global stylesheet.
  * `p.text-display-3` is the only hook that is precise: the rail is the only
  * `<p>` on the site set at that step — About's pull-quote is a `<blockquote>`.
  *

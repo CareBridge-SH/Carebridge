@@ -33,7 +33,7 @@ function readAppliedTheme(): Theme {
   // No attribute at all (only reachable if the inline script did not run): the default is
   // light, exactly as that script does. There is no OS system-preference read here
   // either — the first painted frame is light for everyone without a stored choice, and a
-  // preference that is read but no longer acted on is a trap for the next round.
+  // preference that is read but no longer acted on is a trap for the next reader.
   return 'light';
 }
 

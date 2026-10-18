@@ -13,10 +13,10 @@ import EVENT_PHOTOS from '../data/event-photos.json';
  * The Events cover flow — the season's photographs stand in a row, the one in
  * front faces you, its neighbours turn inwards and overlap it.
  *
- * Round 7. This replaces the framed 3:2 `Plate` that used to open this page. The
- * brief: "cancel the original frame of that space", "the background should be in
- * its original color except for the 图片滚动 part" — so there is no frame, no
- * ground of its own, and nothing between the photographs but the page.
+ * This replaces the framed 3:2 `Plate` that used to open this page. The frame
+ * around that space was cancelled, and the ground stays the page's own colour
+ * except where the pictures roll — so there is no frame, no ground of its own,
+ * and nothing between the photographs but the page.
  *
  * ── The geometry, and the one number that matters ───────────────────────────
  *
@@ -28,7 +28,7 @@ import EVENT_PHOTOS from '../data/event-photos.json';
  * so `step` is *smaller* than a card and the neighbours genuinely overlap —
  * at 470 px cards and OVERLAP 0.40 the step is 282 px, i.e. 188 px of the next
  * photograph is sitting on top of the previous one. Setting OVERLAP to 0 gives
- * the old "side by side" look, which the operator explicitly rejected.
+ * the old "side by side" look, which was explicitly rejected.
  *
  * ── Why `overflow: hidden` on the stage ─────────────────────────────────────
  *

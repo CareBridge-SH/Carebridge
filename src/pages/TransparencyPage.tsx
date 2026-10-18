@@ -1,17 +1,16 @@
 import type { ReactNode } from 'react';
 /*
- * ── The document's rhythm, T40 ──────────────────────────────────────────────
+ * ── The document's rhythm ───────────────────────────────────────────────────
  *
  * Every body paragraph used to be a bare `mt-3` (12px) under a `leading-tight`
  * serif heading, with NO line-height class at all — it inherited whatever the
  * element happened to have. Nobody chose those numbers; they are the defaults
  * that were left, which is why the page read as cramped without anyone being
- * able to point at the culprit. The operator asked for exactly this:
+ * able to point at the culprit. The ask was exactly that: fix the distance
+ * between lines and headings.
  *
- *   "just fix the distance between lines and headings"
- *
- * So the numbers now come from T38's measure tokens, and the measure is stated
- * in characters rather than in pixels.
+ * So the numbers now come from the measure tokens, and the measure is stated in
+ * characters rather than in pixels.
  */
 const BODY = {
   marginTop: 'var(--gap-heading-body)',
@@ -40,13 +39,13 @@ import {
 } from '../components/ui';
 
 /**
- * Transparency's signature composition is **The Document** (ROUND4-PLAN §3.5):
+ * Transparency's signature composition is **The Document**:
  * numbered sections, grouped by a rule, with the ledger table reading as a
  * ledger rather than as a bordered card.
  *
- * This page is the one that started the round — six identical "hairline +
- * heading + paragraph" blocks in a row. Numbers alone would not have fixed
- * that, so the six are also **grouped** into three bands:
+ * This page arrived as six identical "hairline + heading + paragraph" blocks
+ * in a row. Numbers alone would not have fixed that, so the six are also
+ * **grouped** into three bands:
  *
  *   01–02  how we record what happens      (commitment, receipts)
  *   03–04  how you can inspect it          (public tracking, per-event)
@@ -57,7 +56,7 @@ import {
  * heading. Real group *names* would be client copy and do not exist in either
  * locale; that is reported, not guessed.
  *
- * **The banding is not only visual (D-2).** Each band is a real `region`
+ * **The banding is not only visual.** Each band is a real `region`
  * landmark — a `<section>` named by `aria-labelledby` pointing at its FIRST
  * entry's heading, which is existing copy. A screen reader therefore gets three
  * named groups of two headings rather than six equal peers, which is what the
@@ -212,7 +211,7 @@ interface DocBandProps {
 
 /**
  * One band of the document: a real `region` so the grouping the page draws is
- * also the grouping a screen reader hears (D-2).
+ * also the grouping a screen reader hears.
  */
 function DocBand({ labelledBy, className, children }: DocBandProps) {
   return (

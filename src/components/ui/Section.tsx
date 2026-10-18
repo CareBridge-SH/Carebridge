@@ -33,9 +33,9 @@ export interface SectionProps {
    * band of blank ground. It keeps the bottom half of its rhythm and drops the
    * top half.
    *
-   * The operator asked for exactly this: "the same space that looks empty exists
-   * in all other pages, and for all other pages, just remove that space and bring
-   * the title & content higher, closer to the top bar."
+   * Asked for directly: the same empty space appears at the top of every other
+   * page, so remove it and bring the title and content higher, closer to the top
+   * bar.
    *
    * **Only ever set it on a page's first band.** A band in the middle of a page
    * is setting its distance from the band above it, and shrinking *that* would

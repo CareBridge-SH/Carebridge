@@ -26,7 +26,7 @@
  *
  * ## "Random rotation"
  *
- * The operator's words. A stand-in until real photographs exist, so there is no
+ * Asked for as a stand-in until real photographs exist, so there is no
  * taste in the choice: it takes the middle 3:2 band of a random photograph from
  * everything already in `public/`, writes it to `public/photos/<slug>.webp`, and
  * records the real pixel size in the manifest.
@@ -159,7 +159,7 @@ const python = spawnSync('python', ['-X', 'utf8', PY_SCRIPT], {
   input: JSON.stringify(jobs),
   encoding: 'utf8',
   maxBuffer: 1024 * 1024 * 32,
-  // See ingest-instagram-folder.mjs: without UTF-8 mode a 桌面 path reaches
+  // See ingest-instagram-folder.mjs: without UTF-8 mode a non-ASCII path reaches
   // Python mangled by the ANSI code page and every job dies on a path that exists.
   env: { ...process.env, PYTHONUTF8: '1', PYTHONIOENCODING: 'utf-8' },
 });

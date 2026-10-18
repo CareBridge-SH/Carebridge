@@ -39,7 +39,7 @@ const VARIANT: Record<NonNullable<ButtonProps['variant']>, string> = {
   secondary: 'border-2 border-lavender text-lavender hover:bg-navy-soft',
   ghost: 'text-lavender underline underline-offset-4 hover:text-cream',
   /*
-   * ROUND 5, T30b — a quiet variant that spends no accent.
+   * A quiet variant that spends no accent.
    *
    * `--color-white` is the text colour, so this outline is the text colour
    * drawn as a border: near-white on the dark ground, near-navy on paper. It is
@@ -47,8 +47,8 @@ const VARIANT: Record<NonNullable<ButtonProps['variant']>, string> = {
    * match the accent detector, and it clears AA in both skies with room —
    * 16.9:1 on dark and 15.51:1 on light, for both the label and the outline
    * (WCAG 1.4.11 wants 3:1 for a control's boundary). The light figure read
-   * `16.4:1` here from Round 5 until T31b measured the painted colours and T42b
-   * reproduced them; it was a typed number, not a measured one, and the
+   * `16.4:1` here until the painted colours were measured; it was a typed
+   * number, not a measured one, and the
    * difference matters on this project — a stale figure in the record becomes
    * evidence the next time someone cites it.
    *

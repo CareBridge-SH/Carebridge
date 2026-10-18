@@ -10,7 +10,7 @@ export interface PlateProps {
   /**
    * An **existing** locale key for the caption, when the plate has one.
    *
-   * The caption survives the Round-6 removal: what the operator rejected was the
+   * The caption survives the apparatus removal: what was rejected was the
    * `PLATE 01` apparatus above it, not the sentence. Deleting it would lose real
    * content, and the row it sits in is the one place the Instagram band names
    * itself.
@@ -26,23 +26,21 @@ export interface PlateProps {
 /**
  * One plate: a figure with a fixed-ratio box.
  *
- * **Round 6, T37 — the apparatus came off.** This component used to print a
- * `<figcaption>` reading `PLATE 01`, and before that it painted a diagonal dot
- * lattice inside the field. The operator:
- *
- *   "below the photo frames it says PLATE 01. Get rid of these as they look AI.
- *    Also, get rid of the dotted background and replace with something better."
+ * **The apparatus came off.** This component used to print a `<figcaption>`
+ * reading `PLATE 01`, and before that it painted a diagonal dot lattice inside
+ * the field. Both were invented apparatus: a numeral that named nothing, and a
+ * texture that existed to fill space. Plainer was the answer — the number and
+ * the dotted field both went.
  *
  * So the number prop is gone from the signature and from every call site, the
  * caption is gone, and the lattice is gone. What is left when there is no
  * photograph is ONE FLAT SURFACE — `--color-plate-field`, a 1px `--color-rule`
  * border and the plate shadow — and deliberately no pattern of any kind. Not a
- * subtler texture: ROUND6-PLAN §3.4 rejects a halftone, a noise overlay at a
- * different scale, and a "paper texture but smaller" as the same idea at a
- * different opacity.
+ * subtler texture: a halftone, a noise overlay at a different scale, or a "paper
+ * texture but smaller" would all be the same idea at a different opacity.
  *
- * The component itself stays. It becomes worth keeping the moment the operator
- * supplies photographs (§4).
+ * The component itself stays. It becomes worth keeping the moment there are
+ * photographs to place.
  */
 export function Plate({
   slug,

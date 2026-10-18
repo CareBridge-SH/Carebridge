@@ -6,7 +6,7 @@
  *     node scripts/ingest-instagram-folder.mjs --from "<folder>" --force
  *     node scripts/ingest-instagram-folder.mjs --from "<folder>" --dry
  *
- * The folder is the thing the operator actually has: one subfolder per post,
+ * The folder is the thing the club actually has: one subfolder per post,
  * named for its date, holding that post's pictures in order.
  *
  *     instagram-posts/
@@ -20,7 +20,7 @@
  *         link.txt
  *
  * Why a folder rather than `add-instagram-post.mjs` (which still exists, and is
- * the right tool for a single photo): the operator's posts arrive in batches,
+ * the right tool for a single photo): posts arrive in batches,
  * and a carousel has to be added as ONE post with several pictures. Running the
  * single-photo command five times would create five posts.
  *
@@ -80,7 +80,7 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
       '',
       'Example:',
       '  node scripts/ingest-instagram-folder.mjs \\',
-      '    --from "D:\\桌面\\Carebridge-internal\\samples\\instagram-posts"',
+      '    --from "./posts"',
     ].join('\n'),
   );
   process.exit(0);
@@ -260,7 +260,7 @@ const python = spawnSync('python', ['-X', 'utf8', PY_SCRIPT], {
    * `-X utf8` and PYTHONUTF8 are load-bearing on Windows, not tidiness.
    *
    * Python's default stdin/stdout encoding here follows the ANSI code page
-   * (cp936 on a Chinese Windows install), so a JSON path containing 桌面
+   * (cp936 on a Chinese Windows install), so a JSON path containing non-ASCII characters
    * arrives at the encoder mangled and every job fails with
    * FileNotFoundError on a path that plainly exists. Forcing UTF-8 mode on the
    * child is the only part of this the parent controls.

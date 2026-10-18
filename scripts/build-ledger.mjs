@@ -11,7 +11,7 @@
  *     node scripts/build-ledger.mjs --check         # validate, write nothing
  *     node scripts/build-ledger.mjs --from-file x.xlsx --sheet Ledger --header-row 2
  *
- * `--header-row` is where the column names live. The operator's workbook keeps a
+ * `--header-row` is where the column names live. The club's workbook keeps a
  * title row above the real header, so the header is on **row 2**; that value is
  * passed by the `package.json` scripts (`prebuild`, `predev`, `ledger:build`,
  * `ledger:check`) rather than baked in here, so changing the workbook layout is
@@ -270,7 +270,7 @@ async function main() {
   //
   //     Only LEADING and TRAILING runs are dropped. An interior blank row or
   //     column may be deliberate spacing, and removing one would silently change
-  //     the shape of the sheet the operator uploaded.
+  //     the shape of the sheet that was uploaded.
   const rowIsEmpty = (row) => row.values.every((v) => v === null);
   while (rows.length > 0 && rowIsEmpty(rows[rows.length - 1])) rows.pop();
   while (rows.length > 0 && rowIsEmpty(rows[0])) rows.shift();

@@ -17,9 +17,9 @@
       // must not await React.
       //
       // A stored choice wins; with nothing stored the first painted frame is LIGHT. There
-      // is deliberately NO OS system-preference read here (ROUND6-PLAN 6.1 B20): the site
-      // has one default for everyone, and a preference that is still read but no longer
-      // acted on is exactly the kind of dead branch the next round trips over.
+      // is deliberately NO OS system-preference read here: the site has one
+      // default for everyone, and a preference that is still read but no longer
+      // acted on is exactly the kind of dead branch that trips up later work.
       (function () {
         var KEY = 'carebridge-theme';
         try {

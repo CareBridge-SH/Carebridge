@@ -37,13 +37,13 @@ copyFileSync(index, join(DIST, '404.html'))
 writeFileSync(join(DIST, '.nojekyll'), '')
 
 // ---------------------------------------------------------------------------
-// Route shells (Round 7, T47 — E-12).
+// Route shells.
 //
 // A static host has no rewrite rule. Before this, every deep link answered 404
 // while rendering the right page: Pages served 404.html *for* the missing path,
 // the browser kept the deep URL, and the SPA booted onto it. The page looked
-// right and the status was wrong, which is why six rounds of verification did
-// not see it.
+// right and the status was wrong, which is why verification against a local
+// preview never saw it.
 //
 // Writing the shell to `<route>/index.html` puts a real FILE behind each route,
 // so the host answers 200 and 404.html stays the fallback for genuinely unknown
@@ -83,8 +83,8 @@ if (pageRoutes.length === 0) {
  * `<route>/index.html` puts a file behind the route, and the first deploy of
  * this fix turned every deep link's 404 into a **301** — Pages canonicalises a
  * directory to a trailing slash, so `/about` answered 301 and `/about/` answered
- * 200. That is a different status from the one the gate asks for, and it changes
- * the canonical URL, so it is not what this task set out to do.
+ * 200. That is a different status from the one the check asks for, and it
+ * changes the canonical URL, so it is not what this was meant to do.
  *
  * `<route>.html` is the shape Pages resolves for a pretty URL: `/about` serves
  * `about.html` directly, with a 200 and the URL unchanged. Writing both means

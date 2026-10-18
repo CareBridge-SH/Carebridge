@@ -23,7 +23,7 @@ const EVENT_IDS = [
 type EventId = (typeof EVENT_IDS)[number];
 
 /**
- * Events' signature composition is **The Season Ledger** (ROUND4-PLAN §3.3):
+ * Events' signature composition is **The Season Ledger**:
  * an entry per event, the date in the rail and the entry in the wide column,
  * read *down* the page in order.
  *
@@ -48,9 +48,9 @@ export default function EventsPage() {
         </p>
 
         {/*
-          Where the season's photographs go. Round 7: this was a framed 3:2
+          Where the season's photographs go. This was a framed 3:2
           `Plate` — 1088×725 at 1440, bordered, shadowed — kept empty until
-          pictures arrived. The operator asked for the frame cancelled and the
+          pictures arrived. The frame was cancelled and the
           space given to a horizontal strip instead.
 
           The cover flow is 400 px tall (300 on phones) when it has photographs,
@@ -71,7 +71,7 @@ export default function EventsPage() {
           today, so it never fires, but an empty list must not leave a dangling
           year above nothing. There is no empty-state copy in either locale, so
           "presentable when empty" means the page simply shows no ledger rather
-          than an empty one — reported in the T24 report.
+          than an empty one.
         */}
         {EVENT_IDS.length > 0 ? (
           <>
@@ -119,11 +119,8 @@ function EventEntry({ id }: { id: EventId }) {
         /*
          * The date rail is a LABEL, not a display moment.
          *
-         * The operator, looking at the built page:
-         *
-         *   "The left column of Events page, in Gold, only signify the time of
-         *    the events and are way too big. Remake the format of the page and
-         *    make it smaller."
+         * The left column, in gold, signified only the time of the events and was
+         * far too big. The format was remade smaller.
          *
          * They were right, and measured: the rail was `--text-display-3` —
          * 24 / 24 / 26.624 / 36.0 px at 375 / 768 / 1024 / 1440 — in a column a
@@ -137,9 +134,9 @@ function EventEntry({ id }: { id: EventId }) {
          * "which year", so it belongs to that family.
          *
          * The strings are PROSE ("Week before Christmas", "Saturdays and
-         * Sundays, 90 minutes per session"), and a previous task refused to
-         * split them into day and month because that would have meant the
-         * operator authoring about ten new strings. That refusal stands; the
+         * Sundays, 90 minutes per session"), and they were not split into day
+         * and month because that would have meant authoring about ten new
+         * strings. That refusal stands; the
          * whole string is set in the one voice, and nothing was invented.
          */
         <p className="font-sans text-sm font-semibold tracking-wide text-cream uppercase">
@@ -156,8 +153,8 @@ function EventEntry({ id }: { id: EventId }) {
         /*
           This used to be a bracketed placeholder ("Pending Approval /
           Currently in negotiation"), rendered byte-identical and visually
-          distinct from real copy. On 2026-10-17 the operator confirmed the
-          arrangement, so the string is now real copy and the placeholder
+          distinct from real copy. On 2026-10-17 the arrangement was confirmed,
+          so the string is now real copy and the placeholder
           treatment is gone with it — the visual distinction was the only
           honest thing about it, and there is nothing left to distinguish.
 
@@ -183,7 +180,7 @@ function EventEntry({ id }: { id: EventId }) {
  * The three `team.*` facts, as a clearly separated sub-block rather than one
  * run-on paragraph. A bullet list, because the locale provides the three values
  * but no "Team size" / "Schedule" / "Activities" label keys to hang a
- * definition list off — raised in T21's key list and not yet written.
+ * definition list off — noted but not yet written.
  */
 function HospitalTeam() {
   const { t } = useTranslation();

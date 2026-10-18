@@ -16,7 +16,7 @@ const TransparencyPage = lazy(() => import('./pages/TransparencyPage'));
  * solely so old shared links do not 404.
  *
  * `BrowserRouter` lives here rather than in `main.tsx` because `main.tsx` is a
- * fixed contract this task may not edit.
+ * fixed contract, and not the place to change it.
  *
  * **`basename` is not decoration, and its absence was a live defect.** The site is
  * served from `/Carebridge/` on GitHub Pages, and `BASE_URL` is the only thing that
@@ -26,8 +26,8 @@ const TransparencyPage = lazy(() => import('./pages/TransparencyPage'));
  * refresh on a page other than Home, silently landed on Home.**
  *
  * It could not be seen locally: `BASE_URL` is `/` there, so the paths match by
- * accident. Six rounds of headless-Chrome verification, every one of them against a
- * local preview, therefore never exercised it. Measured on the deployed build with
+ * accident. Headless-Chrome verification, every run of it against a local
+ * preview, therefore never exercised it. Measured on the deployed build with
  * `--dump-dom`: `/Carebridge/about` and `/Carebridge/events` both returned Home's
  * `<h1>` with `aria-current` on Home.
  *

@@ -26,7 +26,7 @@ const IMPACT_IDS = ['fundraising', 'awareness', 'directAction'] as const;
 const LEDE = { marginTop: 'var(--gap-heading-body)', lineHeight: 'var(--leading-prose)' };
 
 /**
- * Home is **the split opening** (ROUND6-PLAN §3.3, the operator's choice B).
+ * Home is **the split opening**.
  *
  * One screen holds the `<h1>`, the lede, the calls to action, and the field
  * **beside** them — type left, field right, nothing overlapping anything. There
@@ -38,8 +38,8 @@ const LEDE = { marginTop: 'var(--gap-heading-body)', lineHeight: 'var(--leading-
  * "they all look the same" complaint than any ornament, and it is mechanically
  * checkable.
  *
- * On 2026-10-17 the operator judged both display lines in this opening too large
- * and asked for the headline to be relatively larger than the italic nameplate
+ * On 2026-10-17 both display lines in this opening were judged too large, and
+ * the headline should be relatively larger than the italic nameplate
  * above it. `--text-display-1` came down to `clamp(2.75rem, 7vw, 7rem)` (100.8px
  * at 1440, from 129.6) and the nameplate to ~60% of it. Home still opens on the
  * loudest step, so the rule above is untouched; only its size moved.
@@ -100,8 +100,8 @@ export default function HomePage() {
             The plate beside the type.
 
             It shipped photo-free — a flat field with a computed
-            `background-image: none` — and the operator has since asked for the
-            reserved picture slots to be filled with a rotating stand-in until
+            `background-image: none` — and since then the reserved picture slots
+            are to be filled with a rotating stand-in until
             real photographs exist. So this is a real `<img>` now, chosen at
             random from the pictures already in the repo by
             `scripts/rotate-plate-photos.mjs` (`npm run photos:rotate`), and

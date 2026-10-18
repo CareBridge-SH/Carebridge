@@ -18,7 +18,7 @@ function columnLetter(index: number): string {
 }
 
 /*
- * Excel-look styling, opened out into a ledger (ROUND4-PLAN §3.5): row and
+ * Excel-look styling, opened out into a ledger: row and
  * column rules, figures right-aligned on `tabular-nums` so digits line up down
  * the page — and **no outer border and no fill**, so it reads as a ruled table
  * on the page rather than as a bordered card floating on it.
@@ -34,7 +34,7 @@ function columnLetter(index: number): string {
  */
 const GRID = 'border-b border-r border-white/40';
 /*
- * T30: the table heads move to the LABEL VOICE (round 5 §2.5), which is what a
+ * The table heads move to the LABEL VOICE, which is what a
  * printed table's column heads are. Roman numerals are not involved, so the
  * label voice is safe here — it is Latin-only and the heads are Latin.
  */
@@ -61,22 +61,22 @@ export default function LedgerTable() {
   const { i18n } = useTranslation();
 
   /*
-   * Empty snapshot. This WAS the shipped state until 2026-10-17, when the
-   * operator supplied a real workbook (`content/ledger.xlsx`, the 26–27
+   * Empty snapshot. This WAS the shipped state until 2026-10-17, when a real
+   * workbook was supplied (`content/ledger.xlsx`, the 26–27
    * inventory + expense sheet) and `src/data/ledger.json` stopped being empty.
-   * The branch stays because the snapshot is operator-owned and can go back to
+   * The branch stays because the snapshot is club-owned and can go back to
    * empty if a workbook is withdrawn — and because it is what a fresh clone of
    * this repository renders before anyone drops a file in `content/`.
    *
    * `sheetName: null, columns: [], rows: []` used to render `null`, so the
-   * section drew nothing at all. Round 5's §7.5 asks for the page to look
-   * finished with the ledger empty, and §3.5 asks for it to "look deliberate when
+   * section drew nothing at all. An earlier revision asks for the page to look
+   * finished with the ledger empty, and for it to "look deliberate when
    * empty". Neither is met by a void.
    *
    * A blank ledger is not available as a fallback here: with `columns: []` there
    * are no column heads to draw, so "an honest blank ledger" would be a ruled
    * region with nothing in it. So it renders the **designed plate** instead,
-   * which is the other thing §3.5 allows.
+   * which is also allowed.
    *
    * What this still does NOT do: apologise, show a zero, or fabricate a row.
    * The plate is the honest shape of "there is a ledger here, and it is not

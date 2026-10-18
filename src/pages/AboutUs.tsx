@@ -10,12 +10,12 @@ const PROSE = { lineHeight: 'var(--leading-prose)' };
 const HEADING_GAP = 'var(--gap-heading-body)';
 
 /**
- * About is **the calm article** (ROUND6-PLAN §3.1, the operator's choice A).
+ * About is **the calm article**.
  *
- * This is the page the operator singled out, and the only one they described
- * twice: *"About us page is overloading and ugly"*, *"get rid of the photo frame
- * on About us Page"*, and *"the golden 'we support…healthcare' can have a better
- * font"*. Three complaints, one cause — the page carried four display devices
+ * This is the page that was singled out, and the only one described more than
+ * once: it was overloaded and ugly, it wanted the photo frame gone, and the
+ * golden "we support…healthcare" line needed a better face. Three complaints,
+ * one cause — the page carried four display devices
  * (a framed photograph, a drop initial, a decorated pull-quote, a four-item
  * structure) and none of them was the sentence that matters.
  *
@@ -35,8 +35,8 @@ export default function AboutUs() {
         {/*
           The opening is `<h1>`, then the lede, then straight into the argument —
           no frontispiece, no metadata line, and no rule immediately under the
-          title. That absence is this page's identity in the round's "no two
-          openings share a shape" rule.
+          title. That absence is this page's identity in the "no two openings
+          share a shape" rule.
         */}
         <div className={COLUMN}>
           <h1
@@ -56,28 +56,28 @@ export default function AboutUs() {
         </div>
 
         {/*
-          ── The one display moment — REVERSED in T45, re-measured 2026-09-29 ──
+          ── The one display moment — re-measured 2026-09-29 ──
 
-          T45: this sentence had been set in the TEXT face — Inter, weight 500,
+          This sentence had been set in the TEXT face — Inter, weight 500,
           display tracking, 24-34px — and the comment argued for it: a sentence in
           the text face reads as a commitment, while the ornamented serif reads as
           a caption someone styled.
 
-          **The operator saw that rendered and overruled it**, verbatim: *"the
-          Golden sentence below looks too big and informal. Try to use fonts with
-          curly edges and with a smaller font and Italics for that."* So it became
+          **That was seen rendered and overruled.** The golden sentence below
+          looked too big and informal; the ask was a face with curled edges, set
+          smaller and in italics. So it became
           Cormorant Garamond 500 italic — the only italic the site loads, and not
           a new voice: `HomePage` sets its cream serif italic line in it at
           20-24px, and `Prose` sets a pull-quote in it at 24-30px. The old
           argument is recorded rather than deleted: the next reader needs to know
           it was made and lost, not that nobody made it.
 
-          ── The addendum: still too narrow ──────────────────────────────────
+          ── Still too narrow ─────────────────────────────────────────────────
 
-          **The operator, on the built site, again:** *"…is still too narrow on a
-          computer page, you can make them fit the length of the page (potentially
-          longer than the margins of other contents if there is enough space) and
-          make the font slightly, just slightly, smaller."*
+          **Noted again on the built site:** the line was still too narrow on a
+          computer page. It should fit the length of the page — potentially
+          longer than the margins of other content, if there is space — with the
+          font slightly, just slightly, smaller.
 
           So this sentence is the one element on About that is deliberately NOT
           inside `COLUMN`, and the only one that ignores a measure. `26ch` was the
@@ -93,13 +93,13 @@ export default function AboutUs() {
           it: "slightly, just slightly, smaller". It now TIES the 30px section
           headings at 1440. The sentence stays the page's display moment by width
           and by voice — the only full-width italic band on the page — not by
-          being two pixels larger. Recorded rather than hidden: T45's acceptance
-          said "second-largest", and this is the one clause the operator's
-          instruction overrode.
+          being two pixels larger. Recorded rather than hidden: the target was
+          "second-largest", and this is the one clause the instruction overrode.
         */}
         {/*
-          **Centred, from 2026-10-17.** The operator: *"is not properly in the
-          middle, so fix that."* The block was already geometrically centred —
+          **Centred, from 2026-10-17.** It was not properly in the middle, and
+          fixing that was the request. The block was already geometrically
+          centred —
           measured at 1440/1024/768/375, its box centre matched the `<h1>`'s and the
           section's to the tenth of a pixel — but it was `text-align: start`, so the
           lines were ragged right and the band's visual mass sat left of centre. At

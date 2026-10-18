@@ -49,7 +49,7 @@ export interface InstagramPost {
   /**
    * The pictures, in display order. `images[0]` is what the tile shows first.
    *
-   * This replaced a single `image` + post-level `alt` when the operator's first
+   * This replaced a single `image` + post-level `alt` when the first
    * carousel arrived: a post is a thing that can hold several photographs, and
    * five pictures under one alt sentence is five indistinguishable pictures for
    * anyone using a screen reader.
@@ -73,18 +73,18 @@ export interface InstagramPost {
 }
 
 /**
- * One photograph in the operator-owned manifest — `src/data/photos.json`.
+ * One photograph in the club-managed manifest — `src/data/photos.json`.
  *
  * **The manifest is `{}` in the repository, and it is meant to be.** No
  * photograph is committed; the site ships with every plate engraved, and it
- * gets better the moment the operator drops files in. `Plate` reads this map and
+ * gets better the moment photographs are dropped in. `Plate` reads this map and
  * falls back to the engraved plate for any slug it cannot find.
  */
 export interface PhotoEntry {
   /** Intrinsic width in px. With `height`, this is the plate's `aspect-ratio`. */
   width: number;
   /** Intrinsic height in px. Reserving the box is what keeps a photograph from
-   *  reintroducing the layout shift T27 closed. */
+   *  reintroducing the layout shift this guards against. */
   height: number;
   /** Full locale key for the alt text, e.g. `photos.fall-workshop.alt`. */
   altKey: string;
@@ -146,7 +146,7 @@ export interface LedgerSnapshot {
  * Deliberately *not* `PhotoEntry`. That shape carries `width`/`height` because a
  * `Plate` reserves its box from the intrinsic aspect ratio. A cover-flow card has
  * a fixed 4:3 box and crops into it, so there is nothing to reserve and nothing
- * an operator should have to measure. It also has no caption — the card is a
+ * anyone should have to measure. It also has no caption — the card is a
  * photograph, and the strip has no place to put words.
  */
 export interface EventPhoto {

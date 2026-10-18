@@ -18,8 +18,8 @@ const posts: InstagramPost[] = postsJson;
  * A post's pictures are a *deck*, not a grid: the same rolling method as the
  * Events page, at a much higher overlap.
  *
- * 85%, from the operator's "use the same picture-rolling method, except for a
- * high overlap 80-90%". The number is not a style choice — it is what makes the
+ * 85% — the same picture-rolling method as Events, at a high overlap. The
+ * number is not a style choice — it is what makes the
  * gesture legible at tile size. The Events deck at 40% shows each neighbour as a
  * *picture*; these tiles are 160–256 px wide, where a 40% overlap would show
  * three unreadable slivers of photo. At 85% each neighbour is a 15% edge, which
@@ -61,7 +61,7 @@ const DECK_CARD_WIDTH = '76.9231%';
 
 /**
  * This component is rendered **outside** a `Container`, inside a full-bleed
- * band (ROUND4-PLAN §3.1), so it owns its own gutters in both branches.
+ * band, so it owns its own gutters in both branches.
  */
 export function InstagramFeed() {
   /*
@@ -186,7 +186,7 @@ const MULTI_FRAME = 'relative aspect-[39/40] overflow-hidden bg-navy-soft';
 /**
  * 3:4, not 1:1.
  *
- * Every photograph the operator has published is 3:4 portrait (1080×1440 and
+ * Every photograph published so far is 3:4 portrait (1080×1440 and
  * friends) — it is what Instagram itself composes. A square tile crops 25% of
  * the picture, and on a portrait shot of people, the 25% it takes is their legs
  * or their heads. The tile takes the shape of the thing it holds.

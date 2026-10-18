@@ -8,12 +8,12 @@ export interface RuleProps {
    */
   label?: ReactNode;
   /**
-   * **Round 5: two weights instead of one.**
+   * **Two weights instead of one.**
    *
-   * `hairline` (the default) is one pixel at the round-4 strength. T27 briefly
-   * made it quieter than round 4 and that changed how four existing pages look;
-   * T30 reverted it on the Lead's instruction. `strong` is the same colour at
-   * two pixels, for a rule that has to carry emphasis rather than just separate.
+   * `hairline` (the default) is one pixel at the established strength. It was
+   * briefly made quieter, and that changed how four existing pages look, so it
+   * was reverted. `strong` is the same colour at two pixels, for a rule that has
+   * to carry emphasis rather than just separate.
    *
    * A rule is never a highlight; that is what the accent is for, and the accent
    * is rationed to three uses a page.
@@ -36,9 +36,9 @@ export interface RuleProps {
  */
 const LINE: Record<NonNullable<RuleProps['weight']>, string> = {
   /*
-   * `--color-rule-strong` carries the round-4 strength, so pointing the hairline
-   * back at it restores the previous appearance WITHOUT changing a token value —
-   * which this round forbids. `--color-rule` (T27's quieter hairline) therefore
+   * `--color-rule-strong` carries the established strength, so pointing the
+   * hairline back at it restores the previous appearance WITHOUT changing a token
+   * value — which the rules forbid. `--color-rule` (the quieter hairline) therefore
    * has no consumer today; it stays defined rather than deleted, because
    * removing a token is as much a change as editing one.
    */
@@ -66,7 +66,7 @@ export function Rule({ label, weight = 'hairline', className }: RuleProps) {
   return (
     <div className={['flex items-center gap-3', className].filter(Boolean).join(' ')}>
       <hr aria-hidden="true" className={[LINE[weight], 'flex-1'].join(' ')} />
-      {/* The label voice — small, loose and monospaced, per §2.5. */}
+      {/* The label voice — small, loose and monospaced. */}
       <span className="font-mono text-label tracking-label text-lavender uppercase">
         {label}
       </span>

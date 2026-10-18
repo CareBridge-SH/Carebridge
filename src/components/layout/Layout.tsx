@@ -10,7 +10,7 @@ import { Header } from './Header';
  * frozen key set, and inventing one is not allowed -- so it is a skeleton marked
  * `aria-hidden` instead. `motion-safe:` honours prefers-reduced-motion.
  *
- * **`min-h-screen` is the D-1 fix, and it reserves space rather than hiding the
+ * **`min-h-screen` is the fix, and it reserves space rather than hiding the
  * shift.** The layout shift was the footer: with a short fallback the footer sat
  * inside the viewport, and the moment a route chunk arrived the real page pushed
  * it down and out (measured 0.21-0.46 CLS, one shift, footer-attributed). A
@@ -20,8 +20,8 @@ import { Header } from './Header';
  *
  * It is still the same skeleton — nothing is hidden, no boundary is removed, and
  * a slow connection sees *more* fallback than before, not less. The extra blocks
- * make it the shape of a page in this round (display headline, body lines,
- * plate) rather than three bars at the top of an empty box.
+ * make it the shape of a page (display headline, body lines, plate) rather
+ * than three bars at the top of an empty box.
  */
 function PageFallback() {
   return (
@@ -66,16 +66,16 @@ export function Layout() {
       {/*
         `min-h-screen` on `main`, not just `flex-1`.
 
-        Round 5 closed D-1 by giving the FALLBACK a viewport height, which puts
-        the footer below the fold before a route chunk lands. That works for
+        The FALLBACK was given a viewport height, which puts the footer below
+        the fold before a route chunk lands. That works for
         every page whose real content is TALLER than the fallback: the footer
         only ever moves further down and out, so nothing is counted.
 
-        Get Involved is the exception, and round 6 made it one — removing its
-        opening plate shortened it, and its content region now measures 645px
+        Get Involved is the exception — removing its opening plate shortened it,
+        and its content region now measures 645px
         against the fallback's 900px. The footer therefore RISES, from 964 to
         709, crossing from off-screen into the viewport. Measured CLS 0.038 here,
-        0.056 on Lighthouse, 0.072 on the verifier's instrument.
+        0.056 on Lighthouse, 0.072 on the audit's own measurement.
 
         Reserving the viewport on `main` makes the two states identical rather
         than merely ordered: with the fallback, `main` is 900px; with the real

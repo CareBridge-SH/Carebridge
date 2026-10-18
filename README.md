@@ -1,80 +1,172 @@
 # CareBridge
 
-The public website for CareBridge.
+**serve, care, and empower**
 
-A static single-page application built with Vite, React and TypeScript, styled
-with Tailwind CSS and translated with `i18next`.
+CareBridge is a 100% youth-led club at SHSID. We support, motivate and empower
+children in healthcare through fundraising, awareness and hospital volunteering.
 
-## Requirements
+**The website: <https://carebridge-sh.github.io/Carebridge/>**
 
-- **Node.js 24** — the build and the helper scripts in `scripts/` use APIs that
-  require a recent Node (verified on 24.x).
+This repository is the source of that site. Everything below describes what a
+visitor finds there.
 
-## Commands
+---
 
-| Command | What it does |
-| --- | --- |
-| `npm install` | Install dependencies |
-| `npm run dev` | Start the local development server |
-| `npm run build` | Production build into `dist/` — validates the Instagram data first, then generates the static-host files |
-| `npm run preview` | Serve the built `dist/` locally |
-| `npm run lint` | Lint with oxlint |
-| `npm run check:instagram` | Validate `src/data/instagram-posts.json` |
+## What the site is for
 
-## Deployment
+It has one job for each audience:
 
-Deployed to **GitHub Pages** by `.github/workflows/deploy-pages.yml` on every
-push to `master` (and on manual dispatch).
+- **Families, hospitals and partner organisations** — see what the club actually
+  does, who runs it, and where the money goes.
+- **Students at international schools across Shanghai** — find out how to join,
+  and what volunteering involves before committing to it.
+- **Anyone who wants to check us** — read the club's own tracking sheet,
+  published on the site rather than summarised.
 
-See **[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)** for the base-path rules, the
-two failure modes (blank page / deep-link 404) and the local preview commands.
+There are five pages: **Home**, **About Us**, **Events & Initiatives**,
+**Get Involved**, and **Transparency**.
 
-> The site is served from a sub-path (`/<repo-name>/`), so `base` in
-> `vite.config.ts` is set from the `VITE_BASE_PATH` environment variable. A
-> wrong value produces a blank page, not an error.
+---
 
-## Project layout
+## Home
 
-| Path | Contents |
-| --- | --- |
-| `src/pages/` | One component per route |
-| `src/components/` | Shared UI primitives and layout |
-| `src/i18n/` | Locale files and i18n setup |
-| `src/data/` | Build-time data (the Instagram snapshot) |
-| `scripts/` | Build-time helpers invoked by npm |
-| `docs/` | Deployment and data-contract documentation |
+The opening states the mission — *Bridging Care and Compassion* — and three
+calls to action: join the team, partner with us, or follow the journey.
 
-## Content and translations
+**Our Impact** breaks the work into the three things the club does:
 
-The site is bilingual — **English** and **Simplified Chinese** (`zh-CN`).
+| | |
+|---|---|
+| **Fundraising** | Events such as the Fall Themed DIY Workshop and the Christmas Charity Sale raise funds through entry fees and sales. |
+| **Awareness** | Awareness Raising Trivia and PA Lectures raise awareness of children in healthcare. |
+| **Direct Action (hospital visits)** | Volunteers visit Fudan Children's Hospital on Saturdays and Sundays to read stories, assist with crafts, talk with the children, and play games. |
 
-All user-facing copy lives in the locale files, `src/i18n/locales/en.json` and
-`src/i18n/locales/zh-CN.json`. Components read strings through the translation
-function and must not hardcode user-visible text, so anything added to one
-locale must be added to the other.
+Below that: **Upcoming Events** — the season at a glance, each with its date and
+a line of detail — and a rolling **Instagram** feed of photographs from events
+and hospital visits.
 
-### Which language a first visit gets
+---
 
-A visitor's language is resolved in exactly this order, and the order is the contract:
+## About Us
 
-1. **A stored choice** — whatever the visitor picked last. It wins over everything,
-   including a browser that reports something else.
-2. **The language subtag** — `zh`, `zh-TW`, `zh-Hans` are all Chinese (`zh-CN`); any
-   `en…` tag is English.
-3. **The region subtag** — an unrelated language (`de`, `fr`) in `CN`, `HK`, `MO` or
-   `TW` gets `zh-CN`; anywhere else gets `en`.
+The club's own account of itself: that it is a 100% youth-led nonprofit
+organisation and school club based in SHSID, that it works for children whose
+medical conditions' severity remains unseen by the vast public — especially
+those who lack parental care — and what it wants to achieve.
 
-The rule lives in one place — `toSupportedLocale` in `src/i18n/locale.ts` — and is wired
-in as the language detector's `convertDetectedLanguage` hook in `src/i18n/config.ts`.
-The detector runs that hook over the *stored* value as well as the detected one, which is
-only safe because the rule returns every supported tag unchanged.
+Then the **structure**, four operational pillars:
 
-There is deliberately **no timezone lookup and no network call** anywhere in this path.
-The site makes zero external requests, so resolving a visitor's country by IP address
-would mean a third-party request on every first visit: a privacy leak, and a new failure
-mode (offline, blocked, slow) bought only to guess a default. `navigator.language` is
-already local data.
+| Pillar | Does |
+|---|---|
+| **Treasurer** | Transparent tracking (spreadsheets), calculating profits for charity, ensuring every purchase has an official receipt. |
+| **Outreach** | Surveys, event proposals, contacting outside organizations. |
+| **Event** | Planning materials, ideating activities, purchasing lists. |
+| **Design** | Promotional posters, Instagram content, activity tickets. |
 
-The switcher shows each language in its own language, named by `Intl.DisplayNames` — with
-one override in `LANGUAGE_LABELS` (`src/i18n/locale.ts`): `zh-CN` reads `中文`, because
-ICU would render `中文（中国）`, which names a country rather than the language.
+---
+
+## Events & Initiatives
+
+The whole season in one place — the five things the club runs, with when each
+happens and what it involves:
+
+- **Fall Themed DIY Workshop** — 3rd week of October, Friday, at ZXB.
+  Fundraising, with an entry fee. Fall bracelets and paint mini-pumpkins.
+- **Awareness Raising Trivia** — mid-November, three days after midterm exams.
+  A trivia night that raises awareness of children in healthcare.
+- **Christmas Charity Sale** — the week before Christmas. Part of the club's
+  fundraising.
+- **PA Lectures** — early December. Medical professionals, organizers and
+  initiators of Children Homes.
+- **Fudan Children's Hospital Visits** — Saturdays and Sundays, 90 minutes per
+  session. Confirmed with the hospital.
+
+The hospital visits are the one item with the practical detail a volunteer needs
+before signing up: a team of no less than 10 people, at least 2 volunteers per
+session, a commitment of at least one semester, and what the sessions actually
+consist of — reading stories, assisting with crafts, talking with the children,
+and playing games.
+
+Above the list is a strip of photographs from the season. Click the arrows either
+side, or use the arrow keys, to roll through them.
+
+---
+
+## Get Involved
+
+Three ways in:
+
+- **Join the Team** — open to all students across international schools in
+  Shanghai. No membership fees required.
+- **Hospital Volunteering** — Saturdays and Sundays, 90 minutes, at least a
+  semester; the rewarding experience of reading, crafting and playing games with
+  the children.
+- **Partner With Us** — for external organizations and schools.
+
+Each one carries the same contact address, which is also in the footer of every
+page.
+
+---
+
+## Transparency
+
+The page exists because the club is student-run and says so. It sets out how
+money is handled:
+
+- **Our Commitment** — what is received and what is spent is recorded; every
+  purchase keeps an official receipt; the tracking sheet stays open.
+- **Receipts & Invoices** — every purchase documented with an official receipt;
+  no exceptions.
+- **Public Tracking** — the club's spreadsheet, shown as a table on the page
+  itself rather than described.
+- **Per-Event Accounting** — every item tracked per event, so each activity's
+  costs and proceeds can be inspected separately.
+- **Where Funds Go** — profits are consolidated into one account before being
+  donated; the physical visits go to Fudan Children's Hospital
+  (复旦大学附属儿科医院).
+
+The tracking table lists each item with its description, cost per item, quantity
+and inventory value — the sheet as the club keeps it, not a tidied summary.
+
+---
+
+## Using the site
+
+- **On a phone or a laptop** — the layout adapts to the screen rather than
+  offering a cut-down version.
+- **Light and dark** — the toggle in the header switches between the paper-like
+  light theme and the navy dark one. The choice is remembered in your browser,
+  along with your language — nothing else is stored.
+- **English and 中文** — the language switcher in the header. English is the
+  original; the Chinese text is a translation of it.
+- **Keyboard and screen reader** — every page can be used without a mouse: there
+  is a skip link, the navigation and page regions are labelled, and the
+  photograph strips answer to the arrow keys.
+- **Sharing** — every page has its own address, so a link can be sent directly to
+  About, Events, Get Involved or Transparency rather than to the front page.
+- **No accounts** — there is nothing to sign up for and nothing to log in to.
+
+---
+
+## Following and contacting
+
+**Instagram** — [@CAREBRIDGE.SHANGHAI](https://www.instagram.com/carebridge.shanghai/).
+The photographs on the site are the club's own; the feed on the home page mirrors
+the club's posts, and each one carries a link back to the post it came from —
+which is where the captions are.
+
+**Email** — <melonieema@163.com>, for joining, partnering, volunteering, or any
+question about the club's finances.
+
+---
+
+## Corrections
+
+If something on the site is wrong, out of date, or a photograph should not be
+there, email the address above — that is faster than a GitHub issue, and it is
+the same inbox the club already reads.
+
+*Deployment and content-format notes, for whoever maintains the site, are in
+`docs/`.*
+
+© CareBridge

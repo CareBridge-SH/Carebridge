@@ -22,7 +22,7 @@ export interface EditorialSplitProps {
  * Full class strings, not interpolated names: Tailwind v4 resolves utilities by
  * scanning source text, so a computed class name compiles to nothing.
  *
- * T44: the rail was 1fr of a 1fr:2fr split — a THIRD OF THE PAGE — for what is now a
+ * The rail was 1fr of a 1fr:2fr split — a THIRD OF THE PAGE — for what is now a
  * small label. It is capped at 12rem, so the column that carries the event title gets
  * everything else. The label column is content-sized rather than proportional, because
  * a proportion gives a caption a share of the page and a label only needs its words.

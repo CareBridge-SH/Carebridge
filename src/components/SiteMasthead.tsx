@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next';
  *
  * **This is content, not a band.** The first version sat *above* the hero on
  * `bg-navy-deep` — the header's own surface — so it read as the top bar growing
- * taller rather than as the page saying its name. The operator's correction was
- * exact: "The 'CareBridge' should not be on the top bar, it should be part of the
- * content section." So it now renders as the hero's **first child**, inside the
+ * taller rather than as the page saying its name. The correction was exact: the
+ * name should not sit on the top bar but inside the content section. So it now
+ * renders as the hero's **first child**, inside the
  * `<Section>`'s `Container`, on the page's own ground, sharing the column edge with
  * the display line beneath it. That is also why there is no `Container` here: the
  * `Section` already supplies one, and a second would double the gutter.
@@ -19,9 +19,9 @@ import { useTranslation } from 'react-i18next';
  *
  * 1. **Size: `clamp(1.75rem, 4.2vw, 4.25rem)`, deliberately well under the hero's
  *    `--text-display-1` rather than a token.** This was `clamp(2.5rem, 7.8vw, 8rem)`
- *    (112.3px at 1440, ~87% of the old headline), and the operator's instruction on
- *    2026-10-17 was that both display lines were too large and the headline should
- *    be relatively larger than this one. It now sits at **~60% of the `<h1>`**
+ *    (112.3px at 1440, ~87% of the old headline), and on 2026-10-17 both display
+ *    lines were judged too large and the headline should be relatively larger than
+ *    this one. It now sits at **~60% of the `<h1>`**
  *    (60.5 vs 100.8px at 1440, 32.3 vs 53.8 at 768) instead of ~87%, so the page
  *    reads name-first, headline-second, and the `<h1>` is once again the loudest
  *    thing on screen. There is still no token at that step, and inventing a
@@ -38,8 +38,8 @@ import { useTranslation } from 'react-i18next';
  *    *is* the italic, so 500 is what is asked for. It also sits a step lighter than
  *    the h1's 600, which helps the two display lines read as different voices.
  *
- * 3. **The logo is aligned to the right edge** (`justify-between`), on the
- *    operator's instruction. It came down with the nameplate — **`clamp(1.75rem,
+ * 3. **The logo is aligned to the right edge** (`justify-between`), by the same
+ *    instruction. It came down with the nameplate — **`clamp(1.75rem,
  *    2.9vw, 2.75rem)`** (41.8px at 1440, 22.3 at 768) instead of `clamp(3rem, 5vw,
  *    5.5rem)` (72px at 1440). Shrinking the word and leaving a 72px mark beside it
  *    would have traded one imbalance for another; the mark now sits at ~0.69 of the
@@ -49,8 +49,8 @@ import { useTranslation } from 'react-i18next';
  * 4. **The image is `alt=""` on purpose.** `common.siteName` sits beside it as real
  *    text, so naming the image as well would make a screen reader announce
  *    "CareBridge CareBridge". The text carries the name; the image is decoration.
- *    Below `sm` the logo is **omitted, not shrunk** — the repetition the operator
- *    named, and the same logo is 36px tall in the header directly above.
+ *    Below `sm` the logo is **omitted, not shrunk** — it repeats the same logo
+ *    that is 36px tall in the header directly above.
  */
 export function SiteMasthead() {
   const { t } = useTranslation();
