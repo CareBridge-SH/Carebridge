@@ -35,11 +35,13 @@ calls to action: join the team, partner with us, or follow the journey.
 
 **Our Impact** breaks the work into the three things the club does:
 
-| | |
-|---|---|
-| **Fundraising** | Events such as the Fall Themed DIY Workshop and the Christmas Charity Sale raise funds through entry fees and sales. |
-| **Awareness** | Awareness Raising Trivia and PA Lectures raise awareness of children in healthcare. |
-| **Direct Action (hospital visits)** | Volunteers visit Fudan Children's Hospital on Saturdays and Sundays to read stories, assist with crafts, talk with the children, and play games. |
+- **Fundraising** — events such as the Fall Themed DIY Workshop and the Christmas
+  Charity Sale raise funds through entry fees and sales.
+- **Awareness** — Awareness Raising Trivia and PA Lectures raise awareness of
+  children in healthcare.
+- **Direct Action (hospital visits)** — volunteers visit Fudan Children's
+  Hospital on Saturdays and Sundays to read stories, assist with crafts, talk
+  with the children, and play games.
 
 Below that: **Upcoming Events** — the season at a glance, each with its date and
 a line of detail — and a rolling **Instagram** feed of photographs from events
@@ -56,12 +58,11 @@ those who lack parental care — and what it wants to achieve.
 
 Then the **structure**, four operational pillars:
 
-| Pillar | Does |
-|---|---|
-| **Treasurer** | Transparent tracking (spreadsheets), calculating profits for charity, ensuring every purchase has an official receipt. |
-| **Outreach** | Surveys, event proposals, contacting outside organizations. |
-| **Event** | Planning materials, ideating activities, purchasing lists. |
-| **Design** | Promotional posters, Instagram content, activity tickets. |
+- **Treasurer** — transparent tracking (spreadsheets), calculating profits for
+  charity, ensuring every purchase has an official receipt.
+- **Outreach** — surveys, event proposals, contacting outside organizations.
+- **Event** — planning materials, ideating activities, purchasing lists.
+- **Design** — promotional posters, Instagram content, activity tickets.
 
 ---
 
@@ -110,8 +111,7 @@ page.
 
 ## Transparency
 
-The page exists because the club is student-run and says so. It sets out how
-money is handled:
+The club is student-run, and the page says so. It sets out how money is handled:
 
 - **Our Commitment** — what is received and what is spent is recorded; every
   purchase keeps an official receipt; the tracking sheet stays open.
