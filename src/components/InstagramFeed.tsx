@@ -381,9 +381,22 @@ function PhotoDeck({ post }: { post: InstagramPost }) {
           });
 
           /*
-           * Past the fan's reach the picture stays mounted but invisible: it is
-           * already decoded, so stepping back to it is instant, and unmounting
-           * would put a blank frame in the middle of a gesture.
+           * Within two steps of the active picture the image is EAGER, beyond it
+           * lazy. `lazy` alone is not enough here and quietly broke the deck: these
+           * cards are moved by a CSS transform inside a clipped tile, and the
+           * browser's lazy-loading heuristics never re-evaluate that — so a
+           * five-picture post showed a blank frame from the third picture on, and
+           * still did after the card became the active one. Flipping the attribute
+           * to `eager` as the deck reaches a card starts the fetch two steps ahead
+           * of it, which is what the "already decoded" note below assumes.
+           */
+          const loading = Math.abs(distance) <= 2 ? 'eager' : 'lazy';
+
+          /*
+           * Past the fan's reach the picture stays mounted but invisible: on its
+           * way back into the fan it is already fetched, so returning to it is
+           * instant, and unmounting would put a blank frame in the middle of a
+           * gesture.
            */
           if (Math.abs(distance) > DECK_DEPTH) {
             style.opacity = 0;
@@ -397,7 +410,7 @@ function PhotoDeck({ post }: { post: InstagramPost }) {
               alt={image.alt}
               width={image.width}
               height={image.height}
-              loading={index < 2 ? 'eager' : 'lazy'}
+              loading={loading}
               decoding="async"
               draggable={false}
               /* Only the picture facing you is announced; the rest are edges. */
